@@ -23,6 +23,18 @@ def _content_lines(content, stage) -> str:
     return "\n".join(out).rstrip()
 
 
+def _assembly_lines(assembly) -> str:
+    """The accumulated package: every prior accepted stage's content."""
+    if not assembly:
+        return ""
+    out = ["", "BUILT ON (the package so far):"]
+    for stage_name, content in assembly.items():
+        out.append(f"  [{stage_name}]")
+        for k, v in (content or {}).items():
+            out.append(f"    {k.replace('_', ' ').capitalize()}: {v}")
+    return "\n".join(out)
+
+
 def to_text(record: dict, stage) -> str:
     bar = "=" * 70
     return "\n".join([
@@ -35,6 +47,7 @@ def to_text(record: dict, stage) -> str:
         "",
         f"THE {stage.content_label}",
         _content_lines(record.get("content", {}) or {}, stage),
+        _assembly_lines(record.get("assembly")),
         "",
         "GATE",
         f"  Verdict:  {record.get('verdict', '')}",
