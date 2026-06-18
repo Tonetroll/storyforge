@@ -1,0 +1,14 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+.tmp/
+
+# Generated runtime data (regenerated each run; folder structure kept via .gitkeep)
+outputs/ideas/**/*.json
+outputs/ideas/**/*.txt
+logs/*.log
+metrics/*.jsonl
+memory/run_index.jsonl
+memory/trainset.jsonl
+memory/compiled/*.json

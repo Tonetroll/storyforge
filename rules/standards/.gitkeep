@@ -1,0 +1,2 @@
+# Drop your standards MD files here (e.g. SOL.md). They are concatenated into the
+# evaluation rubric and should be mirrored into pipeline/signatures.py field descs.
