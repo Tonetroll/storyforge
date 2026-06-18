@@ -17,7 +17,7 @@ import shutil
 from datetime import datetime, timezone
 
 import config
-from pipeline import naming, render
+from pipeline import naming, render, stages
 
 
 def _load_reviews():
@@ -45,8 +45,9 @@ def _promote_to_trainset(record: dict, review: dict) -> None:
     """Accepted artifact becomes a training example for the generator."""
     config.MEMORY_DIR.mkdir(parents=True, exist_ok=True)
     example = {
+        "stage": record.get("stage"),
         "brief": record.get("brief", ""),
-        "idea": record.get("idea", {}),
+        "content": record.get("content", {}),
         "story_id": record.get("story_id"),
         "human_score": review.get("score"),
         "reason": review.get("reason"),
@@ -88,7 +89,8 @@ def route_all(verbose: bool = True) -> list:
                             "next_action": review.get("next_action")}
         dest = dest_dir / f"{new_base}.json"
         dest.write_text(json.dumps(record, indent=2), encoding="utf-8")
-        (dest_dir / f"{new_base}.txt").write_text(render.to_text(record), encoding="utf-8")
+        stage = stages.get_stage(record.get("stage", "idea"))
+        (dest_dir / f"{new_base}.txt").write_text(render.to_text(record, stage), encoding="utf-8")
         src.unlink()
         src.with_suffix(".txt").unlink(missing_ok=True)
         actions.append({"asset_id": asset_id, "version": version, "result": new_status,

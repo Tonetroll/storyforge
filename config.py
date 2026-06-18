@@ -37,18 +37,8 @@ TARGET_SCORE     = 95    # iterate any passing idea scoring BELOW this (set 100 
 MAX_ITER         = 3     # max iteration attempts; if still below target after these, the idea is PARKED
 MAX_GEN_ATTEMPTS = 5     # gate: regenerate a NEW idea up to this many times until one PASSES
 
-# Per-criterion weights for the 0-100 quality score. MUST sum to SCORE_SCALE.
-# Emotion-weighted: the two reactions + "two different emotions" carry 70 of 100.
-# Each criterion is graded 0..its weight (how strongly it's met); a 0 = absent = gate REJECT.
-CRITERION_WEIGHTS = {1: 25, 2: 25, 3: 20, 4: 10, 5: 10, 6: 10}
-CRITERION_LABELS = {
-    1: "pull-in emotion (LOL/WTF/WOW)",
-    2: "resolution emotion (Aah/Oooh/Finally)",
-    3: "two DIFFERENT emotions",
-    4: "exactly one viewer action",
-    5: "open loop (premise doesn't give away the answer)",
-    6: "one-liner concrete & speakable in <4s",
-}
+# Per-criterion weights + labels now live PER STAGE in pipeline/stages.py
+# (each stage defines its own checks; weights must sum to SCORE_SCALE).
 
 # ---------------------------------------------------------------------------
 # Paths (all relative to this folder -- never outside it)

@@ -1,12 +1,10 @@
-"""The learning loop: your real decisions retrain the generator.
+"""The learning loop (generic over a stage): your real decisions retrain a
+stage's generator.
 
-Reads memory/trainset.jsonl (accepted ideas, written by the router), turns each
-into a dspy.Example with the five story fields, and runs a DSPy optimizer to
-compile a better generator. The compiled program is saved to memory/compiled/
-as JSON state (verified API: program.save(path, save_program=False)).
-
-Scoring during optimization uses the SEPARATE evaluator/gate (pipeline/metric.py),
-so the #1 rule holds even while the system learns.
+Reads memory/trainset.jsonl (accepted artifacts, written by the router), keeps
+the rows for this stage, turns each into a dspy.Example, and runs a DSPy
+optimizer. The compiled program is saved to memory/compiled/<stage>_generator.json.
+Scoring uses the SEPARATE evaluator (pipeline/metric.py), so the #1 rule holds.
 """
 
 import json
@@ -15,12 +13,18 @@ import dspy
 from dspy.teleprompt import BootstrapFewShot
 
 import config
+from pipeline import stages
 from pipeline.generator import Generator
 from pipeline.evaluator import Evaluator
 from pipeline.metric import make_metric
 
 
-def load_trainset(gen_standard: str):
+def _read_standard(filename: str, fallback: str) -> str:
+    path = config.STANDARDS_DIR / filename
+    return path.read_text(encoding="utf-8") if path.exists() else fallback
+
+
+def load_trainset(stage, gen_standard: str):
     if not config.TRAINSET_FILE.exists():
         return []
     examples = []
@@ -30,56 +34,57 @@ def load_trainset(gen_standard: str):
             if not line:
                 continue
             row = json.loads(line)
-            idea = row.get("idea", {})
+            if row.get("stage") and row["stage"] != stage.name:
+                continue
+            content = row.get("content", {})
+            fields = {fld: content.get(fld, "") for fld in stage.content_fields}
             examples.append(
-                dspy.Example(
-                    brief=row.get("brief", ""),
-                    standard=gen_standard,
-                    one_liner=idea.get("one_liner", ""),
-                    resolution=idea.get("resolution", ""),
-                    reaction_1=idea.get("reaction_1", ""),
-                    reaction_2=idea.get("reaction_2", ""),
-                    viewer_action=idea.get("viewer_action", ""),
-                ).with_inputs("brief", "standard")
+                dspy.Example(brief=row.get("brief", ""), standard=gen_standard, **fields)
+                .with_inputs("brief", "standard")
             )
     return examples
 
 
-def compile_generator(gen_standard: str, eval_criteria: str, dry_run: bool = False):
-    trainset = load_trainset(gen_standard)
+def compile_generator(stage_name: str = "idea", dry_run: bool = False):
+    stage = stages.get_stage(stage_name)
+    gen_standard = _read_standard(stage.gen_standard_file, "PLACEHOLDER generator standard.")
+    eval_criteria = _read_standard(stage.eval_standard_file, "PLACEHOLDER gate criteria.")
+
+    trainset = load_trainset(stage, gen_standard)
     if not trainset:
-        print("No accepted examples in memory/trainset.jsonl yet -- nothing to learn from.")
-        print("Accept some ideas via review + router first.")
+        print(f"No accepted '{stage.name}' examples in memory/trainset.jsonl yet -- nothing to learn from.")
         return None
 
-    generator = Generator()
-    evaluator = Evaluator()
+    generator = Generator(stage.gen_sig)
+    evaluator = Evaluator(stage.gate_sig, stage.weights)
     if dry_run:
         from dspy.utils.dummies import DummyLM
-        gen_lm = DummyLM([{"reasoning": "r", "one_liner": "x", "resolution": "y",
-                           "reaction_1": "WTF", "reaction_2": "Aah", "viewer_action": "Reflect"}] * 50)
-        eval_lm = DummyLM([{"reasoning": "r", "verdict": "PASS", "score": "95", "reaction_1": "WTF",
-                            "reaction_2": "Aah", "viewer_action": "Reflect", "failed_checks": "none",
-                            "why": "good"}] * 50)
-        gen_lm.model, eval_lm.model = "dummy/generator-A", "dummy/evaluator-B"
+        gen_a = {"reasoning": "r", stage.topic_field: "t"}
+        for fld in stage.content_fields:
+            gen_a[fld] = "x"
+            gen_a[f"improved_{fld}"] = "x"
+        eval_a = {"reasoning": "r", "verdict": "PASS", "failed_checks": "none", "why": "good"}
+        for k, w in stage.weights.items():
+            eval_a[f"score_{k}"] = str(w)
+        gen_lm = DummyLM([gen_a] * 50)
+        eval_lm = DummyLM([eval_a] * 50)
+        gen_lm.model, eval_lm.model = "manual/generator", "manual/evaluator"
     else:
         gen_lm = dspy.LM(**config.GENERATOR_LM)
         eval_lm = dspy.LM(**config.EVALUATOR_LM)
 
-    # The optimizer's reset_copy() of the student wipes per-predictor .lm, so set a
-    # global default (the generator's). The evaluator keeps its own bound LM via
-    # set_lm and resolves it before the default, so the #1 rule still holds.
+    # reset_copy() of the student wipes per-predictor .lm, so set a global default.
     dspy.configure(lm=gen_lm)
     generator.set_lm(gen_lm)
     evaluator.set_lm(eval_lm)
 
-    metric = make_metric(evaluator, eval_criteria)
+    metric = make_metric(evaluator, eval_criteria, stage.content_fields)
     optimizer = BootstrapFewShot(metric=metric, max_bootstrapped_demos=4, max_rounds=2)
-    print(f"Compiling generator on {len(trainset)} accepted example(s)...")
+    print(f"Compiling '{stage.name}' generator on {len(trainset)} accepted example(s)...")
     compiled = optimizer.compile(student=generator, trainset=trainset)
 
     config.COMPILED_DIR.mkdir(parents=True, exist_ok=True)
-    out = config.COMPILED_DIR / "generator.json"
+    out = config.COMPILED_DIR / f"{stage.name}_generator.json"
     compiled.save(str(out), save_program=False)
     print(f"Saved compiled generator -> {out.relative_to(config.BASE_DIR)}")
     return out

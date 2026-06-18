@@ -4,6 +4,14 @@ These are the standing rules for this pipeline. They override convenience. This
 folder is a closed system: no code reads or writes outside it, and no data comes
 from anywhere except the inputs placed here.
 
+## A multi-stage engine
+This is a reusable engine, not a single generator. Each pipeline step is a
+"stage" registered in `pipeline/stages.py` (`idea`, then `topic-theme`,
+`story-structure`, …). The engine — the four roles, the gate → score → iterate
+loop, naming, logging, review, and learning — is generic; a stage is defined by
+its standards MD, its signatures, and one registry entry. To add one, see
+`ADDING_A_STAGE.md`. The rules below apply to every stage.
+
 ## 1. Evaluator independence (the #1 rule)
 The **evaluator and reevaluator run on a different LLM provider** than the
 generator and iterator. They must never share an LM instance or model. The

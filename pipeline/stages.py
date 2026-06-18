@@ -1,0 +1,62 @@
+"""Stage registry: the pipeline as a list of reusable stages.
+
+Each Stage fully defines one step. To add a new step you add: its three
+signatures (in signatures.py), two standards MD files (in rules/standards/), and
+one Stage entry here. The engine (orchestrator, scoring, naming, logging,
+router, render) is generic over a Stage and needs no changes.
+"""
+
+from dataclasses import dataclass, field
+from typing import Callable, Optional
+
+from pipeline import signatures as S
+
+
+@dataclass
+class Stage:
+    name: str                       # "idea", "title", ...
+    content_label: str              # human label for the artifact, e.g. "IDEA"
+    gen_sig: type                   # generator Signature
+    gate_sig: type                  # evaluator/gate Signature
+    iter_sig: type                  # iterator Signature
+    content_fields: list            # judged + stored output field names
+    topic_field: str                # which generator output names the artifact (for the slug)
+    weights: dict                   # {criterion_number: max_points}  (must sum to SCORE_SCALE)
+    labels: dict                    # {criterion_number: short label}
+    gen_standard_file: str          # filename in rules/standards/ for the generator standard
+    eval_standard_file: str         # filename in rules/standards/ for the gate criteria
+    upstream: Optional[str] = None  # name of the stage whose accepted artifact feeds this one
+    build_brief: Optional[Callable] = None  # (upstream_record) -> brief string
+
+
+IDEA = Stage(
+    name="idea",
+    content_label="IDEA",
+    gen_sig=S.GenerateIdea,
+    gate_sig=S.GateIdea,
+    iter_sig=S.IterateIdea,
+    content_fields=["one_liner", "resolution", "reaction_1", "reaction_2", "viewer_action"],
+    topic_field="topic",
+    weights={1: 25, 2: 25, 3: 20, 4: 10, 5: 10, 6: 10},
+    labels={
+        1: "pull-in emotion (LOL/WTF/WOW)",
+        2: "resolution emotion (Aah/Oooh/Finally)",
+        3: "two DIFFERENT emotions",
+        4: "exactly one viewer action",
+        5: "open loop (premise doesn't give away the answer)",
+        6: "one-liner concrete & speakable in <4s",
+    },
+    gen_standard_file="generator.md",
+    eval_standard_file="evaluator.md",
+    upstream=None,
+    build_brief=None,
+)
+
+
+STAGES = {IDEA.name: IDEA}
+
+
+def get_stage(name: str) -> Stage:
+    if name not in STAGES:
+        raise ValueError(f"Unknown stage '{name}'. Known: {sorted(STAGES)}")
+    return STAGES[name]

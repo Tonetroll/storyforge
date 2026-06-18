@@ -1,24 +1,29 @@
-"""Render an artifact record as human-readable plain text.
+"""Render an artifact record as human-readable plain text, generic over a stage.
 
 Every artifact is saved twice: <name>.json (for the pipeline) and <name>.txt
 (for you, at the review step). This builds the .txt.
 """
 
-import config
 
-
-def _breakdown_lines(breakdown) -> str:
+def _breakdown_lines(breakdown, stage) -> str:
     if not breakdown:
         return "    (not scored)"
     out = []
-    for k in sorted(config.CRITERION_WEIGHTS):
+    for k in sorted(stage.weights):
         pts = breakdown.get(k, breakdown.get(str(k), 0))
-        out.append(f"    {k}. {config.CRITERION_LABELS[k]}: {pts} / {config.CRITERION_WEIGHTS[k]}")
+        out.append(f"    {k}. {stage.labels[k]}: {pts} / {stage.weights[k]}")
     return "\n".join(out)
 
 
-def to_text(record: dict) -> str:
-    idea = record.get("idea", {}) or {}
+def _content_lines(content, stage) -> str:
+    out = []
+    for f in stage.content_fields:
+        label = f.replace("_", " ").capitalize()
+        out += [f"  {label}:", f"    {content.get(f, '')}", ""]
+    return "\n".join(out).rstrip()
+
+
+def to_text(record: dict, stage) -> str:
     bar = "=" * 70
     return "\n".join([
         bar,
@@ -28,23 +33,15 @@ def to_text(record: dict) -> str:
         "",
         f"BRIEF:  {record.get('brief', '')}",
         "",
-        "THE IDEA",
-        "  One-liner (open loop):",
-        f"    {idea.get('one_liner', '')}",
-        "",
-        "  Resolution (payoff):",
-        f"    {idea.get('resolution', '')}",
-        "",
-        f"  Pull-in emotion (#1):    {idea.get('reaction_1', '')}",
-        f"  Resolution emotion (#2): {idea.get('reaction_2', '')}",
-        f"  Viewer action:           {idea.get('viewer_action', '')}",
+        f"THE {stage.content_label}",
+        _content_lines(record.get("content", {}) or {}, stage),
         "",
         "GATE",
         f"  Verdict:  {record.get('verdict', '')}",
         f"  Score:    {record.get('score', '')} / 100",
         "",
         "  Breakdown:",
-        _breakdown_lines(record.get("breakdown")),
+        _breakdown_lines(record.get("breakdown"), stage),
         "",
         f"  Why:  {record.get('why', '')}",
         f"  Failed checks:  {record.get('failed_checks', '')}",

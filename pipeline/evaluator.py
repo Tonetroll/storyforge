@@ -1,10 +1,9 @@
-"""Evaluator / gate stage. Runs on Provider B (a DIFFERENT provider from the
-generator and iterator) so it cannot inflate work it did not produce.
+"""Evaluator / gate stage (generic). Runs on Provider B (a DIFFERENT provider
+from the generator/iterator) so it cannot inflate work it did not produce.
 
-It grades each of the six checks 0..its weight (config.CRITERION_WEIGHTS), sums
-them deterministically in code to the 0-100 quality score, and sets the verdict:
-a criterion scoring 0 = absent = gate REJECT. The separation is the #1 rule and
-is enforced at startup in orchestrator.py.
+Grades each criterion 0..its weight, sums to the 0-100 quality score in code,
+and sets the verdict: any criterion at 0 = absent = REJECT. Weights come from the
+stage, so the same code serves any number of criteria.
 """
 
 import re
@@ -12,7 +11,6 @@ import re
 import dspy
 
 import config
-from pipeline.signatures import GateStoryIdea
 
 
 def parse_int(raw) -> int:
@@ -28,32 +26,22 @@ def normalize_verdict(raw) -> str:
         return "REJECT"
     if "PASS" in text:
         return "PASS"
-    return "REJECT"  # default-deny: anything unclear fails the gate
+    return "REJECT"  # default-deny
 
 
 class Evaluator(dspy.Module):
-    def __init__(self):
+    def __init__(self, gate_sig, weights: dict):
         super().__init__()
-        self.gate = dspy.ChainOfThought(GateStoryIdea)
+        self.gate = dspy.ChainOfThought(gate_sig)
+        self.weights = weights  # {criterion_number: max_points}
 
-    def forward(self, idea: dict, criteria: str) -> dspy.Prediction:
-        o = self.gate(
-            one_liner=idea["one_liner"],
-            resolution=idea["resolution"],
-            proposed_reaction_1=idea["reaction_1"],
-            proposed_reaction_2=idea["reaction_2"],
-            proposed_viewer_action=idea["viewer_action"],
-            criteria=criteria,
-        )
-        # Grade each criterion 0..weight, then sum to the 0-100 quality score.
+    def forward(self, content: dict, criteria: str) -> dspy.Prediction:
+        o = self.gate(**content, criteria=criteria)
         breakdown = {}
-        for k, weight in config.CRITERION_WEIGHTS.items():
-            pts = max(0, min(parse_int(getattr(o, f"score_{k}")), weight))
-            breakdown[k] = pts
+        for k, weight in self.weights.items():
+            breakdown[k] = max(0, min(parse_int(getattr(o, f"score_{k}")), weight))
         total = sum(breakdown.values())
 
-        # Verdict: the gate is binary. Any criterion at 0 = absent = REJECT,
-        # regardless of what the model wrote in `verdict` (default-deny).
         verdict = normalize_verdict(o.verdict)
         if any(v == 0 for v in breakdown.values()):
             verdict = "REJECT"
@@ -63,9 +51,6 @@ class Evaluator(dspy.Module):
             verdict=verdict,
             score=score,
             breakdown=breakdown,
-            reaction_1=o.reaction_1,
-            reaction_2=o.reaction_2,
-            viewer_action=o.viewer_action,
-            failed_checks=o.failed_checks,
-            why=o.why,
+            failed_checks=getattr(o, "failed_checks", ""),
+            why=getattr(o, "why", ""),
         )
