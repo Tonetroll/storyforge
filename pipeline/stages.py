@@ -77,17 +77,48 @@ STORY = Stage(
     },
     gen_standard_file="story_generator.md",
     eval_standard_file="story_evaluator.md",
-    upstream="idea",
+    upstream="theme",
     build_brief=lambda rec: (
-        f"Premise (from accepted idea {rec.get('story_id', '')}):\n"
-        f"  One-liner: {rec['content']['one_liner']}\n"
-        f"  Resolution: {rec['content']['resolution']}\n"
-        "Turn this into a full 3-act outline with a protagonist whose misbelief is overcome."
+        f"{rec.get('brief', '')}\n"
+        f"Theme: {rec['content']['theme_statement']}\n"
+        f"Central question: {rec['content']['central_question']}\n"
+        f"Belief shift to dramatize: {rec['content']['belief_shift']}\n"
+        "Build the 3-act outline so the protagonist's misbelief -> Recovery dramatizes this belief shift."
     ),
 )
 
 
-STAGES = {IDEA.name: IDEA, STORY.name: STORY}
+THEME = Stage(
+    name="theme",
+    content_label="THEME",
+    gen_sig=S.GenerateTheme,
+    gate_sig=S.GateTheme,
+    iter_sig=S.IterateTheme,
+    content_fields=["topic", "theme_statement", "central_question", "belief_shift"],
+    topic_field="topic",
+    weights={1: 25, 2: 20, 3: 20, 4: 15, 5: 10, 6: 10},
+    labels={
+        1: "stance, not a topic",
+        2: "genuine tension (non-yes/no)",
+        3: "implies a belief-shift",
+        4: "not a moral",
+        5: "universal through the specific",
+        6: "one center of gravity",
+    },
+    gen_standard_file="theme_generator.md",
+    eval_standard_file="theme_evaluator.md",
+    upstream="idea",
+    build_brief=lambda rec: (
+        f"Accepted idea {rec.get('story_id', '')}:\n"
+        f"  One-liner: {rec['content']['one_liner']}\n"
+        f"  Resolution: {rec['content']['resolution']}\n"
+        "Surface the theme this idea is really about."
+    ),
+)
+
+
+# Pipeline order: idea -> theme -> structure
+STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY}
 
 
 def get_stage(name: str) -> Stage:

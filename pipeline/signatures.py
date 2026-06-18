@@ -196,3 +196,58 @@ class IterateStory(dspy.Signature):
     improved_climactic_confrontation = dspy.OutputField()
     improved_victory = dspy.OutputField()
     improved_resolution = dspy.OutputField()
+
+
+# ===========================================================================
+# THEME stage  (downstream of idea; feeds structure)
+# ===========================================================================
+class GenerateTheme(dspy.Signature):
+    """Surface the THEME the accepted idea is really about. Theme is what the
+    story SAYS about life - a stance or question about a topic, in tension. Not
+    the topic, not a moral, not a single word. It lives in the protagonist's
+    belief-shift."""
+
+    brief = dspy.InputField(desc="The accepted idea this theme is drawn from.")
+    standard = dspy.InputField(desc="The generator standard (rules/standards/theme_generator.md).")
+    topic = dspy.OutputField(desc="The arena/subject (love, rivalry, identity). Broad, neutral. NOT the theme. Used for the filename.")
+    theme_statement = dspy.OutputField(desc="The stance: 'This story shows that ____.' A truth/argument about the topic. Never a single word.")
+    central_question = dspy.OutputField(desc="The tension: a hard, non-yes/no question the story wrestles with.")
+    belief_shift = dspy.OutputField(desc="What the protagonist believes at the START -> at the END, and what breaks the old belief.")
+
+
+class GateTheme(dspy.Signature):
+    """You are a strict, impartial gate. The #1 failure is a topic or single word
+    dressed up as a theme; the #2 is a moral. Grade each check 0..its max. A check
+    at 0 = absent = REJECT."""
+
+    topic = dspy.InputField()
+    theme_statement = dspy.InputField()
+    central_question = dspy.InputField()
+    belief_shift = dspy.InputField()
+    criteria = dspy.InputField(desc="The gate: the six checks, their weights, and the verdict rule.")
+    verdict = dspy.OutputField(desc="Exactly 'PASS' or 'REJECT'. REJECT if ANY check scores 0.")
+    score_1 = dspy.OutputField(desc="Check 1 stance not a topic: integer 0-25. 0 = it's still a topic/single word.")
+    score_2 = dspy.OutputField(desc="Check 2 genuine tension: integer 0-20. 0 = no real contradiction / yes-no answerable.")
+    score_3 = dspy.OutputField(desc="Check 3 implies a belief-shift: integer 0-20. 0 = no start->end belief.")
+    score_4 = dspy.OutputField(desc="Check 4 not a moral: integer 0-15. 0 = preachy instruction/slogan.")
+    score_5 = dspy.OutputField(desc="Check 5 universal through the specific: integer 0-10.")
+    score_6 = dspy.OutputField(desc="Check 6 one center of gravity: integer 0-10.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing check numbers + one line each. If PASS: 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IterateTheme(dspy.Signature):
+    """Improve a PASSING theme using the gate's critique to raise the score. Push
+    it further from topic toward stance, sharpen the tension, make the belief-shift
+    concrete. Do not turn it into a moral."""
+
+    topic = dspy.InputField()
+    theme_statement = dspy.InputField()
+    central_question = dspy.InputField()
+    belief_shift = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_topic = dspy.OutputField()
+    improved_theme_statement = dspy.OutputField()
+    improved_central_question = dspy.OutputField()
+    improved_belief_shift = dspy.OutputField()

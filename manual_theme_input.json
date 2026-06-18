@@ -1,0 +1,111 @@
+{
+  "brief": "(downstream: premise pulled from the accepted idea automatically)",
+  "gen_answers": [
+    {
+      "reasoning": "draft v1",
+      "topic": "rivalry and greatness",
+      "improved_topic": "rivalry and greatness",
+      "theme_statement": "This story shows that you should appreciate your rivals, because they make you better.",
+      "improved_theme_statement": "This story shows that you should appreciate your rivals, because they make you better.",
+      "central_question": "Is a rival a threat or a gift?",
+      "improved_central_question": "Is a rival a threat or a gift?",
+      "belief_shift": "Start: he must beat Ronaldo to be the greatest. End: he appreciates Ronaldo's push.",
+      "improved_belief_shift": "Start: he must beat Ronaldo to be the greatest. End: he appreciates Ronaldo's push."
+    },
+    {
+      "reasoning": "draft v2",
+      "topic": "rivalry and greatness",
+      "improved_topic": "rivalry and greatness",
+      "theme_statement": "This story shows that greatness is forged with your rival, not won against them.",
+      "improved_theme_statement": "This story shows that greatness is forged with your rival, not won against them.",
+      "central_question": "Can the man you spent your life trying to beat be the reason you became great?",
+      "improved_central_question": "Can the man you spent your life trying to beat be the reason you became great?",
+      "belief_shift": "Start: 'I must defeat him to matter.' End: 'He made me - the rivalry built us both.'",
+      "improved_belief_shift": "Start: 'I must defeat him to matter.' End: 'He made me - the rivalry built us both.'"
+    },
+    {
+      "reasoning": "draft v3",
+      "topic": "rivalry and greatness",
+      "improved_topic": "rivalry and greatness",
+      "theme_statement": "This story shows that the rival you try to defeat is the one who makes you whole.",
+      "improved_theme_statement": "This story shows that the rival you try to defeat is the one who makes you whole.",
+      "central_question": "Is the rival who haunts you your enemy, or the maker of who you became?",
+      "improved_central_question": "Is the rival who haunts you your enemy, or the maker of who you became?",
+      "belief_shift": "Start: greatness is a war I must win alone, against him. End: greatness was shared - he is the reason I became great; there was never a war to win.",
+      "improved_belief_shift": "Start: greatness is a war I must win alone, against him. End: greatness was shared - he is the reason I became great; there was never a war to win."
+    },
+    {
+      "reasoning": "draft v4",
+      "topic": "rivalry and greatness",
+      "improved_topic": "rivalry and greatness",
+      "theme_statement": "This story shows that greatness is never won alone or against someone - it is forged with the rival you spend your life trying to beat.",
+      "improved_theme_statement": "This story shows that greatness is never won alone or against someone - it is forged with the rival you spend your life trying to beat.",
+      "central_question": "Is the rival you measure yourself against your enemy, or the only person who made you who you are?",
+      "improved_central_question": "Is the rival you measure yourself against your enemy, or the only person who made you who you are?",
+      "belief_shift": "Start: 'To matter, I have to defeat him.' End: 'He is the reason I became great; the rivalry made us both - it was never a war to win.'",
+      "improved_belief_shift": "Start: 'To matter, I have to defeat him.' End: 'He is the reason I became great; the rivalry made us both - it was never a war to win.'"
+    }
+  ],
+  "eval_answers": [
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "A stance is forming but it reads as a moral ('you should appreciate'), the question is near-binary, and the belief-shift is loose.",
+      "score_1": "19",
+      "score_2": "14",
+      "score_3": "15",
+      "score_4": "11",
+      "score_5": "9",
+      "score_6": "8"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "Dropped the moral and found the stance; sharpen the tension and make the belief-shift concrete.",
+      "score_1": "22",
+      "score_2": "17",
+      "score_3": "17",
+      "score_4": "13",
+      "score_5": "9",
+      "score_6": "8"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "Strong stance and a genuine non-yes/no question; name the old and new belief exactly.",
+      "score_1": "23",
+      "score_2": "18",
+      "score_3": "19",
+      "score_4": "13",
+      "score_5": "9",
+      "score_6": "10"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "Stance, tension, and a concrete belief-shift that hands the structure its misbelief->Recovery - advance.",
+      "score_1": "24",
+      "score_2": "19",
+      "score_3": "20",
+      "score_4": "14",
+      "score_5": "10",
+      "score_6": "10"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "Confirmed: a theme, not a topic; in real tension; with a belief-shift the outline can dramatize.",
+      "score_1": "24",
+      "score_2": "19",
+      "score_3": "20",
+      "score_4": "14",
+      "score_5": "10",
+      "score_6": "10"
+    }
+  ]
+}
