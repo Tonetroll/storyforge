@@ -419,7 +419,7 @@ class GateScript(dspy.Signature):
     score_2 = dspy.OutputField(desc="L1 hook opens a loop in the first line: 0 or 12.")
     score_3 = dspy.OutputField(desc="L2 head fake - earned reveal that breaks the prediction: 0 or 12.")
     score_4 = dspy.OutputField(desc="L3 rehooks / no dead air: integer 0-13.")
-    score_5 = dspy.OutputField(desc="V1 tight & punchy - compact, hitting, no filler: integer 0-25.")
+    score_5 = dspy.OutputField(desc="V1 voice & format fit per the format's standard (tight & punchy for short-form, immersive for long-form): integer 0-25.")
     score_6 = dspy.OutputField(desc="V2 visceral & speakable - concrete, present tense, to one viewer: integer 0-18.")
     jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
     failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
@@ -442,4 +442,57 @@ class IterateScript(dspy.Signature):
     improved_body = dspy.OutputField()
     improved_payoff = dspy.OutputField()
     improved_cta = dspy.OutputField()
+    improved_loop_notes = dspy.OutputField()
+
+
+# ===========================================================================
+# SCREENPLAY stage  (a script alternate; two image-generatable parts)
+# ===========================================================================
+class GenerateScreenplay(dspy.Signature):
+    """Write the story as a TWO-PART screenplay - two scenes, each a self-contained,
+    image-generatable beat (slugline, visual action, dialogue). DELIVER the package
+    (stakes, theme's belief-shift, structure's arc, hook) across the two parts, run
+    the addiction loop (part 1 opens the loop / head fake; part 2 pays it off), and
+    keep it visual and concrete. No clinical/AI jargon."""
+
+    brief = dspy.InputField(desc="The assembled story (idea + theme + structure + raised-stakes beats) to dramatize.")
+    standard = dspy.InputField(desc="The generator standard (rules/standards/script_screenplay_generator.md).")
+    topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
+    part_1 = dspy.OutputField(desc="Scene 1: slugline (INT./EXT.), visual action, dialogue. Opens the loop / sets the head fake. Image-generatable.")
+    part_2 = dspy.OutputField(desc="Scene 2: slugline, visual action, dialogue. The head-fake payoff / the turn. Image-generatable.")
+    loop_notes = dspy.OutputField(desc="Where the loop opens, the head fake, and the payoff sit across the two parts.")
+
+
+class GateScreenplay(dspy.Signature):
+    """You are a strict inspection engine for a two-part screenplay. Score delivery,
+    the addiction loop, and the visual/format craft. Binary where marked. Flag jargon."""
+
+    part_1 = dspy.InputField()
+    part_2 = dspy.InputField()
+    loop_notes = dspy.InputField()
+    criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, and floor.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
+    score_1 = dspy.OutputField(desc="D1 delivery - carries stakes/theme/structure/hook from the package across the two parts: integer 0-20.")
+    score_2 = dspy.OutputField(desc="L1 part 1 opens a loop: 0 or 12.")
+    score_3 = dspy.OutputField(desc="L2 head fake - part 2 pays off with an earned reversal: 0 or 12.")
+    score_4 = dspy.OutputField(desc="L3 the two parts chain (part 1 -> part 2, no dead beat): integer 0-13.")
+    score_5 = dspy.OutputField(desc="V1 visual & image-generatable - each part is a clear, shootable image with proper screenplay form: integer 0-25.")
+    score_6 = dspy.OutputField(desc="V2 concrete & dramatic - real action and dialogue, not narration: integer 0-18.")
+    jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IterateScreenplay(dspy.Signature):
+    """Sharpen the two-part screenplay using the gate's critique. Make each part a
+    cleaner, more shootable image, strengthen the loop across the two parts, and
+    push the action/dialogue. No jargon."""
+
+    part_1 = dspy.InputField()
+    part_2 = dspy.InputField()
+    loop_notes = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_part_1 = dspy.OutputField()
+    improved_part_2 = dspy.OutputField()
     improved_loop_notes = dspy.OutputField()

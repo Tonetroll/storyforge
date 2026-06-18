@@ -1,0 +1,74 @@
+{
+  "brief": "(downstream: stakebake pulled automatically)",
+  "gen_answers": [
+    {
+      "reasoning": "draft",
+      "topic": "messi ronaldo answer podcast",
+      "hook": "He just won the World Cup - and the first thing they asked him about was Ronaldo. What he said next? Nobody saw it coming.",
+      "improved_hook": "He just won the World Cup - and the first thing they asked him about was Ronaldo. What he said next? Nobody saw it coming.",
+      "body": "HOST A: Picture it - confetti everywhere, trophy in his hands, twenty years of being told he's only half the argument. And a reporter goes: what about Ronaldo?\nHOST B: Oh, this is the moment to gloat. He earned it - he won the thing Ronaldo never did.\nHOST A: Right? Everyone leans in for it. But he doesn't smile. He just... goes quiet.\nHOST B: Wait, quiet? At the one moment he could win the argument forever?\nHOST A: That's the thing. He wasn't trying to win the argument. He was about to end it.\nHOST B: How do you end the biggest debate in sports history?\nHOST A: Five words.\nHOST B: ...okay, now you have to tell me.",
+      "improved_body": "HOST A: Picture it - confetti everywhere, trophy in his hands, twenty years of being told he's only half the argument. And a reporter goes: what about Ronaldo?\nHOST B: Oh, this is the moment to gloat. He earned it - he won the thing Ronaldo never did.\nHOST A: Right? Everyone leans in for it. But he doesn't smile. He just... goes quiet.\nHOST B: Wait, quiet? At the one moment he could win the argument forever?\nHOST A: That's the thing. He wasn't trying to win the argument. He was about to end it.\nHOST B: How do you end the biggest debate in sports history?\nHOST A: Five words.\nHOST B: ...okay, now you have to tell me.",
+      "payoff": "HOST A: 'We carried each other for twenty years.' Not a rival - a reason.\nHOST B: Oof. So the whole war we all argued about... was actually two guys making each other great.\nHOST A: And only one of them had the guts to say it out loud.",
+      "improved_payoff": "HOST A: 'We carried each other for twenty years.' Not a rival - a reason.\nHOST B: Oof. So the whole war we all argued about... was actually two guys making each other great.\nHOST A: And only one of them had the guts to say it out loud.",
+      "cta": "If a rival made you better, this one's for them. Follow the show - we do the human story behind the moment.",
+      "improved_cta": "If a rival made you better, this one's for them. Follow the show - we do the human story behind the moment.",
+      "loop_notes": "cold open opens the loop (what he said). head fake: expect gloat, get stillness. rehooks: 'wait, quiet?' / 'five words' / 'you have to tell me'. payoff reframes the rivalry.",
+      "improved_loop_notes": "cold open opens the loop (what he said). head fake: expect gloat, get stillness. rehooks: 'wait, quiet?' / 'five words' / 'you have to tell me'. payoff reframes the rivalry."
+    },
+    {
+      "reasoning": "draft",
+      "topic": "messi ronaldo answer podcast",
+      "hook": "He just won the World Cup - and the first thing they asked him about was Ronaldo. What he said next? Nobody saw it coming.",
+      "improved_hook": "He just won the World Cup - and the first thing they asked him about was Ronaldo. What he said next? Nobody saw it coming.",
+      "body": "HOST A: Picture it - confetti everywhere, trophy in his hands, twenty years of being told he's only half the argument. And a reporter goes: what about Ronaldo?\nHOST B: Oh, this is the moment to gloat. He earned it - he won the thing Ronaldo never did.\nHOST A: Right? Everyone leans in for it. But he doesn't smile. He just... goes quiet.\nHOST B: Wait, quiet? At the one moment he could win the argument forever?\nHOST A: That's the thing. He wasn't trying to win the argument. He was about to end it.\nHOST B: How do you end the biggest debate in sports history?\nHOST A: Five words.\nHOST B: ...okay, now you have to tell me.",
+      "improved_body": "HOST A: Picture it - confetti everywhere, trophy in his hands, twenty years of being told he's only half the argument. And a reporter goes: what about Ronaldo?\nHOST B: Oh, this is the moment to gloat. He earned it - he won the thing Ronaldo never did.\nHOST A: Right? Everyone leans in for it. But he doesn't smile. He just... goes quiet.\nHOST B: Wait, quiet? At the one moment he could win the argument forever?\nHOST A: That's the thing. He wasn't trying to win the argument. He was about to end it.\nHOST B: How do you end the biggest debate in sports history?\nHOST A: Five words.\nHOST B: ...okay, now you have to tell me.",
+      "payoff": "HOST A: 'We carried each other for twenty years.' Not a rival - a reason.\nHOST B: Oof. So the whole war we all argued about... was actually two guys making each other great.\nHOST A: And only one of them had the guts to say it out loud.",
+      "improved_payoff": "HOST A: 'We carried each other for twenty years.' Not a rival - a reason.\nHOST B: Oof. So the whole war we all argued about... was actually two guys making each other great.\nHOST A: And only one of them had the guts to say it out loud.",
+      "cta": "If a rival made you better, this one's for them. Follow the show - we do the human story behind the moment.",
+      "improved_cta": "If a rival made you better, this one's for them. Follow the show - we do the human story behind the moment.",
+      "loop_notes": "cold open opens the loop (what he said). head fake: expect gloat, get stillness. rehooks: 'wait, quiet?' / 'five words' / 'you have to tell me'. payoff reframes the rivalry.",
+      "improved_loop_notes": "cold open opens the loop (what he said). head fake: expect gloat, get stillness. rehooks: 'wait, quiet?' / 'five words' / 'you have to tell me'. payoff reframes the rivalry."
+    }
+  ],
+  "eval_answers": [
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Real two-voice conversation that delivers the package and keeps the volley going - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Real two-voice conversation that delivers the package and keeps the volley going - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Real two-voice conversation that delivers the package and keeps the volley going - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "brief": "(downstream: stakebake pulled automatically)",
+  "gen_answers": [
+    {
+      "reasoning": "draft",
+      "topic": "messi ronaldo answer screenplay",
+      "part_1": "INT. STADIUM TUNNEL - NIGHT\n\nConfetti still falling. MESSI, the World Cup trophy under one arm, sweat and gold light. A REPORTER pushes a mic toward him.\n\nREPORTER\nLionel - after everything - what do you say about Ronaldo now?\n\nMessi stops. The noise drops away. He looks at the mic, not the reporter. He says nothing. He just... goes still.",
+      "improved_part_1": "INT. STADIUM TUNNEL - NIGHT\n\nConfetti still falling. MESSI, the World Cup trophy under one arm, sweat and gold light. A REPORTER pushes a mic toward him.\n\nREPORTER\nLionel - after everything - what do you say about Ronaldo now?\n\nMessi stops. The noise drops away. He looks at the mic, not the reporter. He says nothing. He just... goes still.",
+      "part_2": "INT. STADIUM TUNNEL - CONTINUOUS\n\nClose on Messi's face. Twenty years behind his eyes. When he finally speaks, it's quiet, almost to himself.\n\nMESSI\nWe carried each other for twenty years.\n\nHe lets it land. Not a rival. A reason. He walks on into the light, leaving the question - and the war - behind him.",
+      "improved_part_2": "INT. STADIUM TUNNEL - CONTINUOUS\n\nClose on Messi's face. Twenty years behind his eyes. When he finally speaks, it's quiet, almost to himself.\n\nMESSI\nWe carried each other for twenty years.\n\nHe lets it land. Not a rival. A reason. He walks on into the light, leaving the question - and the war - behind him.",
+      "loop_notes": "part 1 opens the loop (what will he say) + sets the head fake (stillness, not a gloat). part 2 pays off with the line; the cut between the two is the rehook.",
+      "improved_loop_notes": "part 1 opens the loop (what will he say) + sets the head fake (stillness, not a gloat). part 2 pays off with the line; the cut between the two is the rehook."
+    },
+    {
+      "reasoning": "draft",
+      "topic": "messi ronaldo answer screenplay",
+      "part_1": "INT. STADIUM TUNNEL - NIGHT\n\nConfetti still falling. MESSI, the World Cup trophy under one arm, sweat and gold light. A REPORTER pushes a mic toward him.\n\nREPORTER\nLionel - after everything - what do you say about Ronaldo now?\n\nMessi stops. The noise drops away. He looks at the mic, not the reporter. He says nothing. He just... goes still.",
+      "improved_part_1": "INT. STADIUM TUNNEL - NIGHT\n\nConfetti still falling. MESSI, the World Cup trophy under one arm, sweat and gold light. A REPORTER pushes a mic toward him.\n\nREPORTER\nLionel - after everything - what do you say about Ronaldo now?\n\nMessi stops. The noise drops away. He looks at the mic, not the reporter. He says nothing. He just... goes still.",
+      "part_2": "INT. STADIUM TUNNEL - CONTINUOUS\n\nClose on Messi's face. Twenty years behind his eyes. When he finally speaks, it's quiet, almost to himself.\n\nMESSI\nWe carried each other for twenty years.\n\nHe lets it land. Not a rival. A reason. He walks on into the light, leaving the question - and the war - behind him.",
+      "improved_part_2": "INT. STADIUM TUNNEL - CONTINUOUS\n\nClose on Messi's face. Twenty years behind his eyes. When he finally speaks, it's quiet, almost to himself.\n\nMESSI\nWe carried each other for twenty years.\n\nHe lets it land. Not a rival. A reason. He walks on into the light, leaving the question - and the war - behind him.",
+      "loop_notes": "part 1 opens the loop (what will he say) + sets the head fake (stillness, not a gloat). part 2 pays off with the line; the cut between the two is the rehook.",
+      "improved_loop_notes": "part 1 opens the loop (what will he say) + sets the head fake (stillness, not a gloat). part 2 pays off with the line; the cut between the two is the rehook."
+    }
+  ],
+  "eval_answers": [
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Delivers the package, runs the loop, fits the format - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Delivers the package, runs the loop, fits the format - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Delivers the package, runs the loop, fits the format - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    }
+  ]
+}

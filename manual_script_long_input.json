@@ -1,0 +1,74 @@
+{
+  "brief": "(downstream: stakebake pulled automatically)",
+  "gen_answers": [
+    {
+      "reasoning": "draft",
+      "topic": "messi ronaldo answer long",
+      "hook": "There's a photo the world has seen a thousand times: Messi on his knees, the World Cup finally in his hands. But the moment that mattered came seconds later - when a reporter leaned in and said one word. Ronaldo.",
+      "improved_hook": "There's a photo the world has seen a thousand times: Messi on his knees, the World Cup finally in his hands. But the moment that mattered came seconds later - when a reporter leaned in and said one word. Ronaldo.",
+      "body": "For twenty years they had been two halves of the same argument. You were a Messi person or a Ronaldo person; there was no third door. And now, at the summit of everything, the trophy still warm in his hands, Messi had the chance every rival dreams of - the last word. The room leaned in for the gloat. He had earned it, hadn't he. He won. But Messi did not smile. He went still. And in that stillness you could feel a man deciding whether to win an argument or end one. What he had believed for two decades - that to matter he had to beat the other man - sat on his tongue. And he let it go.",
+      "improved_body": "For twenty years they had been two halves of the same argument. You were a Messi person or a Ronaldo person; there was no third door. And now, at the summit of everything, the trophy still warm in his hands, Messi had the chance every rival dreams of - the last word. The room leaned in for the gloat. He had earned it, hadn't he. He won. But Messi did not smile. He went still. And in that stillness you could feel a man deciding whether to win an argument or end one. What he had believed for two decades - that to matter he had to beat the other man - sat on his tongue. And he let it go.",
+      "payoff": "'We carried each other for twenty years.' Not a rival. A reason. The debate everyone had built an identity around dissolved in a single sentence - because it was never a war. It was two men making each other into legends, and only one had finally said it out loud.",
+      "improved_payoff": "'We carried each other for twenty years.' Not a rival. A reason. The debate everyone had built an identity around dissolved in a single sentence - because it was never a war. It was two men making each other into legends, and only one had finally said it out loud.",
+      "cta": "Think of the rival who shaped you - and tell them.",
+      "improved_cta": "Think of the rival who shaped you - and tell them.",
+      "loop_notes": "spine loop: what will he say about Ronaldo. head fake: expect gloat, get stillness/grace. nested: 'win an argument or end one'. payoff reframes rivalry as brotherhood.",
+      "improved_loop_notes": "spine loop: what will he say about Ronaldo. head fake: expect gloat, get stillness/grace. nested: 'win an argument or end one'. payoff reframes rivalry as brotherhood."
+    },
+    {
+      "reasoning": "draft",
+      "topic": "messi ronaldo answer long",
+      "hook": "There's a photo the world has seen a thousand times: Messi on his knees, the World Cup finally in his hands. But the moment that mattered came seconds later - when a reporter leaned in and said one word. Ronaldo.",
+      "improved_hook": "There's a photo the world has seen a thousand times: Messi on his knees, the World Cup finally in his hands. But the moment that mattered came seconds later - when a reporter leaned in and said one word. Ronaldo.",
+      "body": "For twenty years they had been two halves of the same argument. You were a Messi person or a Ronaldo person; there was no third door. And now, at the summit of everything, the trophy still warm in his hands, Messi had the chance every rival dreams of - the last word. The room leaned in for the gloat. He had earned it, hadn't he. He won. But Messi did not smile. He went still. And in that stillness you could feel a man deciding whether to win an argument or end one. What he had believed for two decades - that to matter he had to beat the other man - sat on his tongue. And he let it go.",
+      "improved_body": "For twenty years they had been two halves of the same argument. You were a Messi person or a Ronaldo person; there was no third door. And now, at the summit of everything, the trophy still warm in his hands, Messi had the chance every rival dreams of - the last word. The room leaned in for the gloat. He had earned it, hadn't he. He won. But Messi did not smile. He went still. And in that stillness you could feel a man deciding whether to win an argument or end one. What he had believed for two decades - that to matter he had to beat the other man - sat on his tongue. And he let it go.",
+      "payoff": "'We carried each other for twenty years.' Not a rival. A reason. The debate everyone had built an identity around dissolved in a single sentence - because it was never a war. It was two men making each other into legends, and only one had finally said it out loud.",
+      "improved_payoff": "'We carried each other for twenty years.' Not a rival. A reason. The debate everyone had built an identity around dissolved in a single sentence - because it was never a war. It was two men making each other into legends, and only one had finally said it out loud.",
+      "cta": "Think of the rival who shaped you - and tell them.",
+      "improved_cta": "Think of the rival who shaped you - and tell them.",
+      "loop_notes": "spine loop: what will he say about Ronaldo. head fake: expect gloat, get stillness/grace. nested: 'win an argument or end one'. payoff reframes rivalry as brotherhood.",
+      "improved_loop_notes": "spine loop: what will he say about Ronaldo. head fake: expect gloat, get stillness/grace. nested: 'win an argument or end one'. payoff reframes rivalry as brotherhood."
+    }
+  ],
+  "eval_answers": [
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Delivers the package, runs the loop, fits the format - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Delivers the package, runs the loop, fits the format - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Delivers the package, runs the loop, fits the format - no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    }
+  ]
+}

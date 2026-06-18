@@ -186,9 +186,105 @@ SCRIPT = Stage(
 )
 
 
+SCRIPT_LONG = Stage(
+    name="script_long",
+    content_label="SCRIPT (long-form narration)",
+    gen_sig=S.GenerateScript,
+    gate_sig=S.GateScript,
+    iter_sig=S.IterateScript,
+    content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
+    topic_field="topic",
+    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
+    labels={
+        1: "delivery (stakes/theme/structure/hook)",
+        2: "hook opens a loop",
+        3: "head fake",
+        4: "loops chain / no dead air",
+        5: "immersive narration",
+        6: "visceral & concrete",
+    },
+    gen_standard_file="script_long_generator.md",
+    eval_standard_file="script_long_evaluator.md",
+    upstream="stakebake",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nWrite the long-form narration script that delivers all of this."
+    ),
+    penalty_points=15,
+    verdict_floor=60,
+    gate_reads_package=True,
+)
+
+
+SCRIPT_SCREENPLAY = Stage(
+    name="script_screenplay",
+    content_label="SCREENPLAY (two-part)",
+    gen_sig=S.GenerateScreenplay,
+    gate_sig=S.GateScreenplay,
+    iter_sig=S.IterateScreenplay,
+    content_fields=["part_1", "part_2", "loop_notes"],
+    topic_field="topic",
+    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
+    labels={
+        1: "delivery (stakes/theme/structure/hook)",
+        2: "part 1 opens a loop",
+        3: "head fake in part 2",
+        4: "parts chain",
+        5: "visual & image-generatable",
+        6: "concrete & dramatic",
+    },
+    gen_standard_file="script_screenplay_generator.md",
+    eval_standard_file="script_screenplay_evaluator.md",
+    upstream="stakebake",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nWrite the two-part screenplay that delivers all of this."
+    ),
+    penalty_points=15,
+    verdict_floor=60,
+    gate_reads_package=True,
+)
+
+
+SCRIPT_PODCAST = Stage(
+    name="script_podcast",
+    content_label="SCRIPT (podcast)",
+    gen_sig=S.GenerateScript,
+    gate_sig=S.GateScript,
+    iter_sig=S.IterateScript,
+    content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
+    topic_field="topic",
+    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
+    labels={
+        1: "delivery (stakes/theme/structure/hook)",
+        2: "cold open opens a loop",
+        3: "head fake",
+        4: "rehooks / volley",
+        5: "natural conversation",
+        6: "visceral & concrete",
+    },
+    gen_standard_file="script_podcast_generator.md",
+    eval_standard_file="script_podcast_evaluator.md",
+    upstream="stakebake",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nWrite the podcast conversation that delivers all of this."
+    ),
+    penalty_points=15,
+    verdict_floor=60,
+    gate_reads_package=True,
+)
+
+
 # Pipeline order: idea -> theme -> structure -> stakebake -> script
-STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY,
-          STAKEBAKE.name: STAKEBAKE, SCRIPT.name: SCRIPT}
+# Script alternates (all read the accepted stakebake):
+#   script | script_long | script_screenplay | script_podcast
+STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY, STAKEBAKE.name: STAKEBAKE,
+          SCRIPT.name: SCRIPT, SCRIPT_LONG.name: SCRIPT_LONG,
+          SCRIPT_SCREENPLAY.name: SCRIPT_SCREENPLAY, SCRIPT_PODCAST.name: SCRIPT_PODCAST}
 
 
 def get_stage(name: str) -> Stage:
