@@ -74,8 +74,8 @@ def _idea_dummy_lms():
 def build_modules(stage, dry_run: bool = False, scripted: dict = None):
     generator = Generator(stage.gen_sig)
     iterator = Iterator(stage.iter_sig, stage.content_fields)
-    evaluator = Evaluator(stage.gate_sig, stage.weights)
-    reevaluator = Reevaluator(stage.gate_sig, stage.weights)
+    evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
+    reevaluator = Reevaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
     if scripted is not None:
         from dspy.utils.dummies import DummyLM
         lm_a = DummyLM(scripted["gen_answers"])

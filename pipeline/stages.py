@@ -27,6 +27,8 @@ class Stage:
     eval_standard_file: str         # filename in rules/standards/ for the gate criteria
     upstream: Optional[str] = None  # name of the stage whose accepted artifact feeds this one
     build_brief: Optional[Callable] = None  # (upstream_record) -> brief string
+    penalty_points: int = 0         # subtracted from the score if the gate flags it (e.g. jargon); 0 = none
+    verdict_floor: Optional[int] = None  # None = all-pass verdict; int = hybrid PASS if score >= floor
 
 
 IDEA = Stage(
@@ -117,8 +119,43 @@ THEME = Stage(
 )
 
 
-# Pipeline order: idea -> theme -> structure
-STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY}
+STAKEBAKE = Stage(
+    name="stakebake",
+    content_label="STAKEBAKE (raised stakes)",
+    gen_sig=S.GenerateStakebake,
+    gate_sig=S.GateStakebake,
+    iter_sig=S.IterateStakebake,
+    content_fields=["premise", "desire", "fear", "misbelief", "hook",
+                    "setup", "inciting_incident", "build_up", "plot_point_1", "pinch_point_1",
+                    "pre_midpoint", "midpoint", "post_midpoint", "pinch_point_2", "supposed_victory", "disaster",
+                    "dark_moment", "recovery", "climactic_confrontation", "victory", "resolution",
+                    "stakes_added"],
+    topic_field="topic",
+    weights={1: 12, 2: 12, 3: 12, 4: 12, 5: 12, 6: 25, 7: 15},  # R1-R5 binary, G1-G2 graded; sums to 100
+    labels={
+        1: "value established early",
+        2: "ticking clock / urgency",
+        3: "tough choice / no-win",
+        4: "personal consequences",
+        5: "no safety nets",
+        6: "emotional stakes land",
+        7: "specific & relatable",
+    },
+    gen_standard_file="stakebake_generator.md",
+    eval_standard_file="stakebake_evaluator.md",
+    upstream="story",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nSTRUCTURE BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nRaise the stakes of this story per the pillars."
+    ),
+    penalty_points=15,    # jargon penalty
+    verdict_floor=60,     # hybrid: PASS if score >= 60, iterate toward target
+)
+
+
+# Pipeline order: idea -> theme -> structure -> stakebake -> (script)
+STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY, STAKEBAKE.name: STAKEBAKE}
 
 
 def get_stage(name: str) -> Stage:
