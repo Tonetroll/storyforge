@@ -53,7 +53,41 @@ IDEA = Stage(
 )
 
 
-STAGES = {IDEA.name: IDEA}
+STORY = Stage(
+    name="story",
+    content_label="STORY STRUCTURE",
+    gen_sig=S.GenerateStory,
+    gate_sig=S.GateStory,
+    iter_sig=S.IterateStory,
+    content_fields=[
+        "premise", "desire", "fear", "misbelief", "hook",
+        "setup", "inciting_incident", "build_up", "plot_point_1", "pinch_point_1",
+        "pre_midpoint", "midpoint", "post_midpoint", "pinch_point_2", "supposed_victory", "disaster",
+        "dark_moment", "recovery", "climactic_confrontation", "victory", "resolution",
+    ],
+    topic_field="topic",
+    weights={1: 25, 2: 20, 3: 15, 4: 15, 5: 15, 6: 10},
+    labels={
+        1: "character engine (desire/fear/misbelief linked)",
+        2: "character arc closes (misbelief overcome in Recovery)",
+        3: "midpoint is a true reversal",
+        4: "disaster + dark moment land",
+        5: "structural completeness (all beats, right order)",
+        6: "hook + resolution",
+    },
+    gen_standard_file="story_generator.md",
+    eval_standard_file="story_evaluator.md",
+    upstream="idea",
+    build_brief=lambda rec: (
+        f"Premise (from accepted idea {rec.get('story_id', '')}):\n"
+        f"  One-liner: {rec['content']['one_liner']}\n"
+        f"  Resolution: {rec['content']['resolution']}\n"
+        "Turn this into a full 3-act outline with a protagonist whose misbelief is overcome."
+    ),
+)
+
+
+STAGES = {IDEA.name: IDEA, STORY.name: STORY}
 
 
 def get_stage(name: str) -> Stage:

@@ -72,3 +72,127 @@ class IterateIdea(dspy.Signature):
     improved_reaction_1 = dspy.OutputField(desc="Pull-in emotion (LOL/WTF/WOW).")
     improved_reaction_2 = dspy.OutputField(desc="Resolution emotion (Aah/Oooh/Finally), different from reaction_1.")
     improved_viewer_action = dspy.OutputField(desc="Exactly ONE viewer action.")
+
+
+# ===========================================================================
+# STORY STRUCTURE stage  (downstream of idea)
+# ===========================================================================
+class GenerateStory(dspy.Signature):
+    """Turn the premise (an accepted idea) into a full 3-act outline driven by
+    the protagonist's internal change. The misbelief named in Act 1 MUST be the
+    thing overcome in Recovery. Hitting beats without an internal arc is plot,
+    not story. Bullet every beat: concrete and speakable."""
+
+    brief = dspy.InputField(desc="The accepted idea this outline is built from (the premise).")
+    standard = dspy.InputField(desc="The generator standard (rules/standards/story_generator.md).")
+    premise = dspy.OutputField(desc="The basic idea in one line.")
+    desire = dspy.OutputField(desc="What the protagonist wants + thinks will make them happy.")
+    fear = dspy.OutputField(desc="What stops them going after what would make them happy.")
+    misbelief = dspy.OutputField(desc="The false thing they believe about the world, which feeds off the fear.")
+    hook = dspy.OutputField(desc="Grab the reader with the protagonist's inner conflict.")
+    setup = dspy.OutputField(desc="Something is about to happen to the protagonist; the reader can feel it.")
+    inciting_incident = dspy.OutputField(desc="Something throws the protagonist outside their comfort zone.")
+    build_up = dspy.OutputField(desc="The protagonist will have to face this thing head on.")
+    plot_point_1 = dspy.OutputField(desc="A decision that determines what happens next.")
+    pinch_point_1 = dspy.OutputField(desc="The opposition / antagonistic force looms in the distance.")
+    pre_midpoint = dspy.OutputField(desc="In pursuit of the goal, but something stands in the way (reactionary hero).")
+    midpoint = dspy.OutputField(desc="Plot twist - everything changes.")
+    post_midpoint = dspy.OutputField(desc="The midpoint forces a change of gears toward the goal (action hero).")
+    pinch_point_2 = dspy.OutputField(desc="The antagonist gets closer to disrupting the protagonist's life.")
+    supposed_victory = dspy.OutputField(desc="The protagonist feels sure they'll win; disaster is on the way.")
+    disaster = dspy.OutputField(desc="Something goes wrong. The reader saw it coming; the protagonist did not.")
+    dark_moment = dspy.OutputField(desc="The protagonist feels lost; their specific fear challenges them again.")
+    recovery = dspy.OutputField(desc="The protagonist overcomes the misbelief to reach the climax (the change).")
+    climactic_confrontation = dspy.OutputField(desc="The protagonist faces their biggest challenge of all.")
+    victory = dspy.OutputField(desc="The protagonist overcomes.")
+    resolution = dspy.OutputField(desc="Loose ends wrapped; the reader is satisfied.")
+    topic = dspy.OutputField(desc="3-6 words naming what this story is about, for the filename. No generic words.")
+
+
+class GateStory(dspy.Signature):
+    """You are a strict, impartial gate for a story outline. A structure that hits
+    beats but has no internal arc is plot, not story - score it low. Grade each
+    check 0..its max by how strongly it is met. A check at 0 = absent = REJECT."""
+
+    premise = dspy.InputField()
+    desire = dspy.InputField()
+    fear = dspy.InputField()
+    misbelief = dspy.InputField()
+    hook = dspy.InputField()
+    setup = dspy.InputField()
+    inciting_incident = dspy.InputField()
+    build_up = dspy.InputField()
+    plot_point_1 = dspy.InputField()
+    pinch_point_1 = dspy.InputField()
+    pre_midpoint = dspy.InputField()
+    midpoint = dspy.InputField()
+    post_midpoint = dspy.InputField()
+    pinch_point_2 = dspy.InputField()
+    supposed_victory = dspy.InputField()
+    disaster = dspy.InputField()
+    dark_moment = dspy.InputField()
+    recovery = dspy.InputField()
+    climactic_confrontation = dspy.InputField()
+    victory = dspy.InputField()
+    resolution = dspy.InputField()
+    criteria = dspy.InputField(desc="The gate: the six checks, their weights, and the verdict rule.")
+    verdict = dspy.OutputField(desc="Exactly 'PASS' or 'REJECT'. REJECT if ANY check scores 0.")
+    score_1 = dspy.OutputField(desc="Check 1 character engine (desire/fear/misbelief linked): integer 0-25. 0 = absent.")
+    score_2 = dspy.OutputField(desc="Check 2 character arc closes (Act-1 misbelief overcome in Recovery): integer 0-20.")
+    score_3 = dspy.OutputField(desc="Check 3 midpoint is a true reversal: integer 0-15.")
+    score_4 = dspy.OutputField(desc="Check 4 disaster + dark moment land (foreshadowed/blindside; fear re-triggered): integer 0-15.")
+    score_5 = dspy.OutputField(desc="Check 5 structural completeness (all beats, right order, pinch points escalate): integer 0-15.")
+    score_6 = dspy.OutputField(desc="Check 6 hook + resolution: integer 0-10.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing check numbers + one line each. If PASS: 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IterateStory(dspy.Signature):
+    """Improve a PASSING outline using the gate's critique to raise the score.
+    Keep what works; deepen the internal arc, sharpen the midpoint reversal, make
+    the disaster blindside the protagonist while the reader dreads it."""
+
+    premise = dspy.InputField()
+    desire = dspy.InputField()
+    fear = dspy.InputField()
+    misbelief = dspy.InputField()
+    hook = dspy.InputField()
+    setup = dspy.InputField()
+    inciting_incident = dspy.InputField()
+    build_up = dspy.InputField()
+    plot_point_1 = dspy.InputField()
+    pinch_point_1 = dspy.InputField()
+    pre_midpoint = dspy.InputField()
+    midpoint = dspy.InputField()
+    post_midpoint = dspy.InputField()
+    pinch_point_2 = dspy.InputField()
+    supposed_victory = dspy.InputField()
+    disaster = dspy.InputField()
+    dark_moment = dspy.InputField()
+    recovery = dspy.InputField()
+    climactic_confrontation = dspy.InputField()
+    victory = dspy.InputField()
+    resolution = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_premise = dspy.OutputField()
+    improved_desire = dspy.OutputField()
+    improved_fear = dspy.OutputField()
+    improved_misbelief = dspy.OutputField()
+    improved_hook = dspy.OutputField()
+    improved_setup = dspy.OutputField()
+    improved_inciting_incident = dspy.OutputField()
+    improved_build_up = dspy.OutputField()
+    improved_plot_point_1 = dspy.OutputField()
+    improved_pinch_point_1 = dspy.OutputField()
+    improved_pre_midpoint = dspy.OutputField()
+    improved_midpoint = dspy.OutputField()
+    improved_post_midpoint = dspy.OutputField()
+    improved_pinch_point_2 = dspy.OutputField()
+    improved_supposed_victory = dspy.OutputField()
+    improved_disaster = dspy.OutputField()
+    improved_dark_moment = dspy.OutputField()
+    improved_recovery = dspy.OutputField()
+    improved_climactic_confrontation = dspy.OutputField()
+    improved_victory = dspy.OutputField()
+    improved_resolution = dspy.OutputField()
