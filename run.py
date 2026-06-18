@@ -28,10 +28,12 @@ def main():
     g.add_argument("--stage", default="idea")
     g.add_argument("--brief", default="A rough seed to turn into a story.")
     g.add_argument("--dry-run", action="store_true", help="offline stub LMs, no API keys")
+    g.add_argument("--channel", default=None, help="channel profile folder in channels/<name>/")
 
     m = sub.add_parser("manual", help="run hand-authored content + scores through the real pipeline")
     m.add_argument("--stage", default="idea")
     m.add_argument("--file", default="manual_input.json")
+    m.add_argument("--channel", default=None, help="channel profile folder in channels/<name>/")
 
     sub.add_parser("route", help="apply review/human_review.csv decisions")
 
@@ -45,7 +47,7 @@ def main():
     if command == "generate":
         from pipeline import orchestrator
         result = orchestrator.run(stage_name=args.stage, brief=args.brief,
-                                  dry_run=getattr(args, "dry_run", False))
+                                  dry_run=getattr(args, "dry_run", False), channel=args.channel)
         print("\nRESULT:", result)
     elif command == "manual":
         from pipeline import orchestrator
@@ -54,6 +56,7 @@ def main():
             stage_name=args.stage,
             brief=data.get("brief", "manual test"),
             scripted={"gen_answers": data["gen_answers"], "eval_answers": data["eval_answers"]},
+            channel=args.channel,
         )
         print("\nRESULT:", result)
     elif command == "route":

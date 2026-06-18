@@ -382,3 +382,64 @@ class IterateStakebake(dspy.Signature):
     improved_victory = dspy.OutputField()
     improved_resolution = dspy.OutputField()
     improved_stakes_added = dspy.OutputField()
+
+
+# ===========================================================================
+# SCRIPT stage  (downstream of stakebake; writes the short-form video script)
+# ===========================================================================
+class GenerateScript(dspy.Signature):
+    """Write the short-form video script from the assembled story. DELIVER the
+    stakes, the theme's belief-shift, the structure's arc, and the hook in the
+    words. Run the addiction loop (stakes -> big question -> head fake -> rehook),
+    open a loop in the first line, and write TIGHT, compact, punchy sentences.
+    No clinical/AI jargon."""
+
+    brief = dspy.InputField(desc="The assembled story (idea + theme + structure + raised-stakes beats) to script.")
+    standard = dspy.InputField(desc="The generator standard (rules/standards/script_generator.md).")
+    topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
+    hook = dspy.OutputField(desc="The opening line(s) - opens a loop in the first 1-3 seconds.")
+    body = dspy.OutputField(desc="The VO narration - the story told with the loop running (stakes/question/head-fake/rehook).")
+    payoff = dspy.OutputField(desc="The line that closes the main loop and lands the theme.")
+    cta = dspy.OutputField(desc="One clear viewer action.")
+    loop_notes = dspy.OutputField(desc="Where the open loops / head fakes / rehooks are.")
+
+
+class GateScript(dspy.Signature):
+    """You are a strict inspection engine for a short-form script. Score delivery,
+    the addiction loop, and voice. Binary where marked, graded otherwise. Flag jargon."""
+
+    hook = dspy.InputField()
+    body = dspy.InputField()
+    payoff = dspy.InputField()
+    cta = dspy.InputField()
+    loop_notes = dspy.InputField()
+    criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, and floor.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
+    score_1 = dspy.OutputField(desc="D1 delivery - carries stakes/theme/structure/hook from the package: integer 0-20.")
+    score_2 = dspy.OutputField(desc="L1 hook opens a loop in the first line: 0 or 12.")
+    score_3 = dspy.OutputField(desc="L2 head fake - earned reveal that breaks the prediction: 0 or 12.")
+    score_4 = dspy.OutputField(desc="L3 rehooks / no dead air: integer 0-13.")
+    score_5 = dspy.OutputField(desc="V1 tight & punchy - compact, hitting, no filler: integer 0-25.")
+    score_6 = dspy.OutputField(desc="V2 visceral & speakable - concrete, present tense, to one viewer: integer 0-18.")
+    jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IterateScript(dspy.Signature):
+    """Tighten and sharpen the short-form script using the gate's critique. Add the
+    missing loop element (a head fake, a rehook), cut filler, make every sentence
+    hit harder, and make sure the package still lands. No jargon."""
+
+    hook = dspy.InputField()
+    body = dspy.InputField()
+    payoff = dspy.InputField()
+    cta = dspy.InputField()
+    loop_notes = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_hook = dspy.OutputField()
+    improved_body = dspy.OutputField()
+    improved_payoff = dspy.OutputField()
+    improved_cta = dspy.OutputField()
+    improved_loop_notes = dspy.OutputField()

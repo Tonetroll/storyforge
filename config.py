@@ -46,6 +46,7 @@ MAX_GEN_ATTEMPTS = 5     # gate: regenerate a NEW idea up to this many times unt
 BASE_DIR        = Path(__file__).resolve().parent
 RULES_DIR       = BASE_DIR / "rules"
 STANDARDS_DIR   = RULES_DIR / "standards"
+CHANNELS_DIR    = BASE_DIR / "channels"   # one profile per channel (audience + character/voice)
 INSTRUCTIONS_DIR = BASE_DIR / "instructions"
 EXAMPLES_DIR    = BASE_DIR / "examples"
 OUTPUTS_DIR     = BASE_DIR / "outputs" / "ideas"

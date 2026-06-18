@@ -1,0 +1,128 @@
+{
+  "brief": "(downstream: stakebake pulled automatically)",
+  "gen_answers": [
+    {
+      "reasoning": "draft v1",
+      "topic": "messi ronaldo answer short",
+      "hook": "He just won the World Cup. The first question isn't about the cup.",
+      "improved_hook": "He just won the World Cup. The first question isn't about the cup.",
+      "body": "It's about Ronaldo - the man he's been compared to for twenty years. He could finally gloat. He won, didn't he? But what Messi says next surprises everyone in the room.",
+      "improved_body": "It's about Ronaldo - the man he's been compared to for twenty years. He could finally gloat. He won, didn't he? But what Messi says next surprises everyone in the room.",
+      "payoff": "'We carried each other for twenty years.' The rivalry was never a war.",
+      "improved_payoff": "'We carried each other for twenty years.' The rivalry was never a war.",
+      "cta": "Tag the rival who made you better.",
+      "improved_cta": "Tag the rival who made you better.",
+      "loop_notes": "hook opens the loop; head fake (gloat -> ?) is soft; needs a sharper reversal + a rehook.",
+      "improved_loop_notes": "hook opens the loop; head fake (gloat -> ?) is soft; needs a sharper reversal + a rehook."
+    },
+    {
+      "reasoning": "draft v2",
+      "topic": "messi ronaldo answer short",
+      "hook": "He just won the World Cup. The first question isn't about the cup.",
+      "improved_hook": "He just won the World Cup. The first question isn't about the cup.",
+      "body": "It's about Ronaldo - the man he's chased for twenty years. The room waits for the gloat. He finally beat him. But Messi doesn't smile. He goes still. And the answer he's about to give isn't the one anyone came for.",
+      "improved_body": "It's about Ronaldo - the man he's chased for twenty years. The room waits for the gloat. He finally beat him. But Messi doesn't smile. He goes still. And the answer he's about to give isn't the one anyone came for.",
+      "payoff": "'We carried each other for twenty years.' The rivalry was never a war.",
+      "improved_payoff": "'We carried each other for twenty years.' The rivalry was never a war.",
+      "cta": "Tag the rival who made you better.",
+      "improved_cta": "Tag the rival who made you better.",
+      "loop_notes": "head fake: expect gloat, get stillness. rehook: 'isn't the one anyone came for'.",
+      "improved_loop_notes": "head fake: expect gloat, get stillness. rehook: 'isn't the one anyone came for'."
+    },
+    {
+      "reasoning": "draft v3",
+      "topic": "messi ronaldo answer short",
+      "hook": "He just won the World Cup. They didn't ask about the cup.",
+      "improved_hook": "He just won the World Cup. They didn't ask about the cup.",
+      "body": "The first question isn't about the cup. It's about Ronaldo. Twenty years measured against one man. The room waits for the gloat - he won, didn't he? Messi doesn't smile. He goes still. What he says next ends the argument forever.",
+      "improved_body": "The first question isn't about the cup. It's about Ronaldo. Twenty years measured against one man. The room waits for the gloat - he won, didn't he? Messi doesn't smile. He goes still. What he says next ends the argument forever.",
+      "payoff": "'We carried each other for twenty years.' The rivalry was never a war.",
+      "improved_payoff": "'We carried each other for twenty years.' The rivalry was never a war.",
+      "cta": "Tag the rival who made you better.",
+      "improved_cta": "Tag the rival who made you better.",
+      "loop_notes": "head fake: expect gloat, get stillness. rehook: 'isn't the one anyone came for'.",
+      "improved_loop_notes": "head fake: expect gloat, get stillness. rehook: 'isn't the one anyone came for'."
+    },
+    {
+      "reasoning": "draft v4",
+      "topic": "messi ronaldo answer short",
+      "hook": "He won the World Cup. The first question was about Ronaldo.",
+      "improved_hook": "He won the World Cup. The first question was about Ronaldo.",
+      "body": "Twenty years measured against one man. The room waits for the gloat. He won, right? Messi doesn't smile. He goes still. Then ends the argument with five words no one saw coming.",
+      "improved_body": "Twenty years measured against one man. The room waits for the gloat. He won, right? Messi doesn't smile. He goes still. Then ends the argument with five words no one saw coming.",
+      "payoff": "'We carried each other for twenty years.' Not a rival. A reason.",
+      "improved_payoff": "'We carried each other for twenty years.' Not a rival. A reason.",
+      "cta": "Tag the one who made you better.",
+      "improved_cta": "Tag the one who made you better.",
+      "loop_notes": "hook: 'first question was about Ronaldo'. head fake: gloat -> stillness. rehook: 'five words no one saw coming' -> payoff.",
+      "improved_loop_notes": "hook: 'first question was about Ronaldo'. head fake: gloat -> stillness. rehook: 'five words no one saw coming' -> payoff."
+    }
+  ],
+  "eval_answers": [
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "3",
+      "why": "Delivers and hooks, but the head fake is soft and the body is loose.",
+      "score_1": "16",
+      "score_2": "12",
+      "score_3": "0",
+      "score_4": "8",
+      "score_5": "18",
+      "score_6": "14"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Head fake lands (gloat -> stillness); now tighten and add a harder rehook.",
+      "score_1": "16",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "8",
+      "score_5": "18",
+      "score_6": "14"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Tighter, the rehook chains; cut two more words and punch the hook.",
+      "score_1": "18",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "11",
+      "score_5": "20",
+      "score_6": "17"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Lean, every line hits, loop runs clean, package delivered - advance.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "jargon": "false",
+      "failed_checks": "none",
+      "why": "Confirmed: tight, hooks hard, delivers the stakes/theme/structure, no jargon.",
+      "score_1": "20",
+      "score_2": "12",
+      "score_3": "12",
+      "score_4": "13",
+      "score_5": "24",
+      "score_6": "15"
+    }
+  ]
+}

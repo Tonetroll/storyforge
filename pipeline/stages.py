@@ -29,6 +29,7 @@ class Stage:
     build_brief: Optional[Callable] = None  # (upstream_record) -> brief string
     penalty_points: int = 0         # subtracted from the score if the gate flags it (e.g. jargon); 0 = none
     verdict_floor: Optional[int] = None  # None = all-pass verdict; int = hybrid PASS if score >= floor
+    gate_reads_package: bool = False  # if True, the assembled package is given to the gate (delivery check)
 
 
 IDEA = Stage(
@@ -154,8 +155,40 @@ STAKEBAKE = Stage(
 )
 
 
-# Pipeline order: idea -> theme -> structure -> stakebake -> (script)
-STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY, STAKEBAKE.name: STAKEBAKE}
+SCRIPT = Stage(
+    name="script",
+    content_label="SCRIPT (short-form)",
+    gen_sig=S.GenerateScript,
+    gate_sig=S.GateScript,
+    iter_sig=S.IterateScript,
+    content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
+    topic_field="topic",
+    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},  # D1, L1, L2, L3, V1, V2; sums to 100
+    labels={
+        1: "delivery (stakes/theme/structure/hook)",
+        2: "hook opens a loop",
+        3: "head fake",
+        4: "rehooks / no dead air",
+        5: "tight & punchy",
+        6: "visceral & speakable",
+    },
+    gen_standard_file="script_generator.md",
+    eval_standard_file="script_evaluator.md",
+    upstream="stakebake",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nWrite the short-form video script that delivers all of this."
+    ),
+    penalty_points=15,
+    verdict_floor=60,
+    gate_reads_package=True,   # the script gate reads the whole package to check delivery
+)
+
+
+# Pipeline order: idea -> theme -> structure -> stakebake -> script
+STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY,
+          STAKEBAKE.name: STAKEBAKE, SCRIPT.name: SCRIPT}
 
 
 def get_stage(name: str) -> Stage:

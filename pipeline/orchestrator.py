@@ -102,6 +102,24 @@ def _read_standard(filename: str, fallback: str) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else fallback
 
 
+def _load_channel(channel: str) -> str:
+    """The per-channel profile (audience + character/voice), fed into every generator."""
+    if not channel:
+        return ""
+    path = config.CHANNELS_DIR / channel / "profile.md"
+    return path.read_text(encoding="utf-8") if path.exists() else ""
+
+
+def _assembly_text(assembly: dict) -> str:
+    """Render the accumulated package as plain text (for a gate's delivery check)."""
+    parts = []
+    for stage_name, content in (assembly or {}).items():
+        parts.append(f"[{stage_name}]")
+        for k, v in (content or {}).items():
+            parts.append(f"  {k}: {v}")
+    return "\n".join(parts)
+
+
 def _latest_accepted(stage_name: str):
     """Most recent promoted/accepted artifact for the given stage."""
     best = None
@@ -138,7 +156,7 @@ def _content(pred, stage) -> dict:
 
 
 def _save_artifact(*, stage, slug, number, version, status, brief, content, gate, story_id,
-                   gen_model, eval_model, dest_dir, assembly=None, parent_version=None):
+                   gen_model, eval_model, dest_dir, assembly=None, channel=None, parent_version=None):
     dest_dir.mkdir(parents=True, exist_ok=True)
     base = naming.format_name(slug, number, version, status)
     asset_id = f"{slug}_{number:04d}"
@@ -154,6 +172,7 @@ def _save_artifact(*, stage, slug, number, version, status, brief, content, gate
         "brief": brief,
         "content": content,
         "assembly": assembly or {},
+        "channel": channel,
         "verdict": getattr(gate, "verdict", None) if gate else None,
         "score": getattr(gate, "score", None) if gate else None,
         "breakdown": getattr(gate, "breakdown", None) if gate else None,
@@ -172,18 +191,29 @@ def _save_artifact(*, stage, slug, number, version, status, brief, content, gate
 # ---------------------------------------------------------------------------
 # The hybrid loop (generic over a stage)
 # ---------------------------------------------------------------------------
-def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scripted: dict = None) -> dict:
+def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scripted: dict = None,
+        channel: str = None) -> dict:
     stage = stages.get_stage(stage_name)
     run_id = logging_setup.next_run_id()
     log = logging_setup.get_run_logger(run_id)
     mode = "MANUAL (your content + scores)" if scripted else ("DRY-RUN (stub LMs)" if dry_run else "LIVE")
-    log.info("mode=%s | stage=%s", mode, stage.name)
+    log.info("mode=%s | stage=%s | channel=%s", mode, stage.name, channel or "(none)")
 
     gen_standard = _read_standard(stage.gen_standard_file,
                                   "PLACEHOLDER: produce a complete artifact per the standard.")
     eval_criteria = _read_standard(stage.eval_standard_file,
                                    "PLACEHOLDER: PASS only if every check is met; score each 0..its weight.")
+    # The channel profile (audience + character/voice) rides into every generator/iterator
+    # via the standard, so every stage stays on-audience and in-voice. Gates stay scoped.
+    channel_profile = _load_channel(channel)
+    if channel_profile:
+        gen_standard = ("CHANNEL (who this is for + the voice to write in):\n"
+                        f"{channel_profile}\n\n=== STAGE STANDARD ===\n{gen_standard}")
     brief, assembly = _resolve_upstream(stage, brief)
+    # The one cross-stage gate: give the script's gate the whole package to verify delivery.
+    if stage.gate_reads_package and assembly:
+        eval_criteria = ("THE STORY PACKAGE (the script MUST deliver all of this):\n"
+                         f"{_assembly_text(assembly)}\n\n=== GATE CRITERIA ===\n{eval_criteria}")
 
     generator, evaluator, iterator, reevaluator = build_modules(stage, dry_run=dry_run, scripted=scripted)
     gen_model = getattr(generator.get_lm(), "model", "?")
@@ -213,7 +243,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         gate = evaluator(content=content, criteria=eval_criteria)
         if gate.verdict == "PASS":
             story_id = f"ST-{number:04d}"
-            path, asset_id = _save_artifact(stage=stage, assembly=assembly, slug=slug, number=number, version=1,
+            path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=1,
                                             status="candidate", brief=brief, content=content, gate=gate,
                                             story_id=story_id, gen_model=gen_model, eval_model=eval_model,
                                             dest_dir=config.CANDIDATES_DIR)
@@ -222,7 +252,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
             passed = {"number": number, "slug": slug, "story_id": story_id, "content": content, "gate": gate}
             break
         else:
-            path, asset_id = _save_artifact(stage=stage, assembly=assembly, slug=slug, number=number, version=1,
+            path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=1,
                                             status="rejected", brief=brief, content=content, gate=gate,
                                             story_id=None, gen_model=gen_model, eval_model=eval_model,
                                             dest_dir=config.REJECTED_DIR)
@@ -251,7 +281,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         log.info("[v%02d] iteration %d/%d on %s to raise score...", version, iterations, config.MAX_ITER, story_id)
         content = iterator(content=content, critique=critique, standard=gen_standard)
         gate = reevaluator(content=content, criteria=eval_criteria)
-        path, asset_id = _save_artifact(stage=stage, assembly=assembly, slug=slug, number=number, version=version,
+        path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=version,
                                         status="revised", brief=brief, content=content, gate=gate,
                                         story_id=story_id, gen_model=gen_model, eval_model=eval_model,
                                         dest_dir=config.CANDIDATES_DIR, parent_version=parent)
@@ -269,7 +299,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         log.info("reached target (%d >= %d). Final reevaluation of best v%02d...",
                  best["score"], config.TARGET_SCORE, best["version"])
         final_gate = reevaluator(content=best["content"], criteria=eval_criteria)
-        path, asset_id = _save_artifact(stage=stage, assembly=assembly, slug=slug, number=number, version=final_version,
+        path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
                                         status="ready_for_review", brief=brief, content=best["content"],
                                         gate=final_gate, story_id=story_id, gen_model=gen_model,
                                         eval_model=eval_model, dest_dir=config.CANDIDATES_DIR,
@@ -278,7 +308,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         outcome, final_score = "ready_for_review", final_gate.score
         log.info("READY FOR REVIEW: %s (%s) | final score %d", path.name, story_id, final_gate.score)
     else:
-        path, asset_id = _save_artifact(stage=stage, assembly=assembly, slug=slug, number=number, version=final_version,
+        path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
                                         status="parked", brief=brief, content=best["content"],
                                         gate=best["gate"], story_id=story_id, gen_model=gen_model,
                                         eval_model=eval_model, dest_dir=config.PARKED_DIR,
