@@ -45,6 +45,10 @@ def main():
     nc = sub.add_parser("new-channel", help="scaffold a new channel workspace under channels/<name>/")
     nc.add_argument("name", help="the channel name, e.g. demo-sports")
 
+    pk = sub.add_parser("package", help="assemble a video's deliverables into one publish-ready doc")
+    pk.add_argument("--channel", default=None, help="the channel workspace to package")
+    pk.add_argument("--script", default="script", help="which script format to include (default: script)")
+
     r = sub.add_parser("route", help="apply a channel's review/human_review.csv decisions")
     r.add_argument("--channel", default=None, help="the channel workspace to route")
 
@@ -95,6 +99,11 @@ def main():
         print(f"  1. Fill the audience: {info['profile']}")
         print(f"  2. Add ideas:        {info['seeds']}")
         print(f"  3. Run it:           python run.py chain --channel {info['channel']}")
+    elif command == "package":
+        from pipeline import packager
+        out = packager.build_package(args.channel, script_stage=args.script)
+        if out:
+            print(f"Video package written -> {out}")
     elif command == "route":
         from pipeline import router
         print(f"Routing reviewed artifacts for channel '{args.channel or '_sandbox'}'...")
