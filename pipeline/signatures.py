@@ -496,3 +496,61 @@ class IterateScreenplay(dspy.Signature):
     improved_part_1 = dspy.OutputField()
     improved_part_2 = dspy.OutputField()
     improved_loop_notes = dspy.OutputField()
+
+
+# ===========================================================================
+# PACKAGING stage  (title + thumbnail; scored ONLY by the 12 thumbnail/title criteria)
+# ===========================================================================
+class GeneratePackaging(dspy.Signature):
+    """Produce the click for the video: a title and a thumbnail (as a plain concept
+    + a ready-to-use image-generation prompt), built from the story. The thumbnail
+    stops the scroll; the title opens a loop AND promises a specific outcome. Plain
+    language, no jargon. Follow the 12-criteria standard."""
+
+    brief = dspy.InputField(desc="The story this video is about (idea + theme + structure + stakes).")
+    standard = dspy.InputField(desc="The generator standard (rules/standards/packaging_generator.md).")
+    topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
+    title = dspy.OutputField(desc="The YouTube title: 5-7 words, opens a curiosity gap AND promises a specific outcome, plain language.")
+    thumbnail_concept = dspy.OutputField(desc="The visual idea in plain words: the anchor (face+expression OR bold graphic), the emotion, the result shown, the background.")
+    thumbnail_prompt = dspy.OutputField(desc="The ready-to-use image prompt (the Base Prompt filled in for this story).")
+
+
+class GatePackaging(dspy.Signature):
+    """You are a strict inspection engine. Score the title + thumbnail against the
+    12 binary thumbnail/title criteria - each YES = full points, NO = 0. Judge the
+    DESCRIBED thumbnail and the title only; do not consider the story package."""
+
+    title = dspy.InputField()
+    thumbnail_concept = dspy.InputField()
+    thumbnail_prompt = dspy.InputField()
+    criteria = dspy.InputField(desc="The 12 binary thumbnail/title criteria, weights, and the verdict rule.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
+    score_1 = dspy.OutputField(desc="Q1 visual anchor (face+expression AND/OR bold graphic): 0 or the weight.")
+    score_2 = dspy.OutputField(desc="Q2 emotion or intrigue: 0 or the weight.")
+    score_3 = dspy.OutputField(desc="Q3 directional cues: 0 or the weight.")
+    score_4 = dspy.OutputField(desc="Q4 text readability (bold, high-contrast, max 4 words): 0 or the weight.")
+    score_5 = dspy.OutputField(desc="Q5 background (tutorial: clean; story: transformed setting): 0 or the weight.")
+    score_6 = dspy.OutputField(desc="Q6 visual hierarchy: 0 or the weight.")
+    score_7 = dspy.OutputField(desc="Q7 shows result/transformation: 0 or the weight.")
+    score_8 = dspy.OutputField(desc="Q8 logos/icons/symbols: 0 or the weight.")
+    score_9 = dspy.OutputField(desc="Q9 title curiosity gap: 0 or the weight.")
+    score_10 = dspy.OutputField(desc="Q10 title specific outcome: 0 or the weight.")
+    score_11 = dspy.OutputField(desc="Q11 title payoff clarity: 0 or the weight.")
+    score_12 = dspy.OutputField(desc="Q12 title accessible language (no jargon): 0 or the weight.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing Q numbers + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IteratePackaging(dspy.Signature):
+    """Fix the title + thumbnail to pass the criteria it failed - add the missing
+    visual anchor / hierarchy / result, sharpen the title's outcome and curiosity.
+    Plain language, no jargon."""
+
+    title = dspy.InputField()
+    thumbnail_concept = dspy.InputField()
+    thumbnail_prompt = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + which criteria failed.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_title = dspy.OutputField()
+    improved_thumbnail_concept = dspy.OutputField()
+    improved_thumbnail_prompt = dspy.OutputField()

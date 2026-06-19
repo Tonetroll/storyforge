@@ -279,12 +279,43 @@ SCRIPT_PODCAST = Stage(
 )
 
 
+PACKAGING = Stage(
+    name="packaging",
+    content_label="TITLE + THUMBNAIL",
+    gen_sig=S.GeneratePackaging,
+    gate_sig=S.GatePackaging,
+    iter_sig=S.IteratePackaging,
+    content_fields=["title", "thumbnail_concept", "thumbnail_prompt"],
+    topic_field="topic",
+    # 12 binary criteria, equal-ish (integer-constrained), summing to 100. Score ~= YES count scaled.
+    weights={1: 9, 2: 9, 3: 9, 4: 9, 5: 8, 6: 8, 7: 8, 8: 8, 9: 8, 10: 8, 11: 8, 12: 8},
+    labels={
+        1: "Q1 visual anchor", 2: "Q2 emotion/intrigue", 3: "Q3 directional cues",
+        4: "Q4 text readability", 5: "Q5 background", 6: "Q6 visual hierarchy",
+        7: "Q7 shows result", 8: "Q8 logos/icons", 9: "Q9 title curiosity gap",
+        10: "Q10 title specific outcome", 11: "Q11 title payoff clarity", 12: "Q12 title accessible language",
+    },
+    gen_standard_file="packaging_generator.md",
+    eval_standard_file="packaging_evaluator.md",
+    upstream="stakebake",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nCreate the title + thumbnail that will make this video get clicked."
+    ),
+    penalty_points=0,
+    verdict_floor=60,
+    gate_reads_package=False,   # the gate scores ONLY the 12 title/thumbnail criteria, NOT the story package
+)
+
+
 # Pipeline order: idea -> theme -> structure -> stakebake -> script
-# Script alternates (all read the accepted stakebake):
-#   script | script_long | script_screenplay | script_podcast
+# Script alternates (read accepted stakebake): script | script_long | script_screenplay | script_podcast
+# Packaging (reads accepted stakebake): title + thumbnail, scored only by its own 12 criteria
 STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY, STAKEBAKE.name: STAKEBAKE,
           SCRIPT.name: SCRIPT, SCRIPT_LONG.name: SCRIPT_LONG,
-          SCRIPT_SCREENPLAY.name: SCRIPT_SCREENPLAY, SCRIPT_PODCAST.name: SCRIPT_PODCAST}
+          SCRIPT_SCREENPLAY.name: SCRIPT_SCREENPLAY, SCRIPT_PODCAST.name: SCRIPT_PODCAST,
+          PACKAGING.name: PACKAGING}
 
 
 def get_stage(name: str) -> Stage:

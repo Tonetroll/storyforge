@@ -1,0 +1,109 @@
+{
+  "brief": "(downstream: stakebake pulled automatically)",
+  "gen_answers": [
+    {
+      "reasoning": "draft v1",
+      "topic": "messi ronaldo answer thumbnail",
+      "title": "Messi's 5 Words Ended The Ronaldo Debate",
+      "improved_title": "Messi's 5 Words Ended The Ronaldo Debate",
+      "thumbnail_concept": "Tight close-up of Messi in the tunnel, the World Cup trophy under his arm, dark background with gold rim light. Bold gold text '5 WORDS'. His expression: quiet, heavy, the moment before he speaks.",
+      "improved_thumbnail_concept": "Tight close-up of Messi in the tunnel, the World Cup trophy under his arm, dark background with gold rim light. Bold gold text '5 WORDS'. His expression: quiet, heavy, the moment before he speaks.",
+      "thumbnail_prompt": "Create a YouTube thumbnail for: Messi's 5 Words Ended The Ronaldo Debate\n- Dark background (black with a subtle blue tint), gold rim light\n- Visual anchor: tight close-up of Messi's face in the tunnel, World Cup trophy under his arm, quiet/heavy expression\n- Clean composition, one focal point\n- Text: '5 WORDS' in bold gold (#FFD700 to #E8A800) Montserrat Black, max 2 words, high contrast\n- Aspect ratio 16:9 (1920x1080)",
+      "improved_thumbnail_prompt": "Create a YouTube thumbnail for: Messi's 5 Words Ended The Ronaldo Debate\n- Dark background (black with a subtle blue tint), gold rim light\n- Visual anchor: tight close-up of Messi's face in the tunnel, World Cup trophy under his arm, quiet/heavy expression\n- Clean composition, one focal point\n- Text: '5 WORDS' in bold gold (#FFD700 to #E8A800) Montserrat Black, max 2 words, high contrast\n- Aspect ratio 16:9 (1920x1080)"
+    },
+    {
+      "reasoning": "draft v2",
+      "topic": "messi ronaldo answer thumbnail",
+      "title": "Messi's 5 Words Ended The Ronaldo Debate",
+      "improved_title": "Messi's 5 Words Ended The Ronaldo Debate",
+      "thumbnail_concept": "Tight close-up of Messi in the tunnel, the World Cup trophy under his arm, dark background with gold rim light. Bold gold text '5 WORDS'. His expression: quiet, heavy, the moment before he speaks. His gaze is cast DOWN toward the trophy, pulling the viewer's eye to it (directional cue).",
+      "improved_thumbnail_concept": "Tight close-up of Messi in the tunnel, the World Cup trophy under his arm, dark background with gold rim light. Bold gold text '5 WORDS'. His expression: quiet, heavy, the moment before he speaks. His gaze is cast DOWN toward the trophy, pulling the viewer's eye to it (directional cue).",
+      "thumbnail_prompt": "Create a YouTube thumbnail for: Messi's 5 Words Ended The Ronaldo Debate\n- Dark background (black with a subtle blue tint), gold rim light\n- Visual anchor: tight close-up of Messi's face in the tunnel, World Cup trophy under his arm, quiet/heavy expression\n- Clean composition, one focal point\n- Text: '5 WORDS' in bold gold (#FFD700 to #E8A800) Montserrat Black, max 2 words, high contrast\n- Aspect ratio 16:9 (1920x1080)\n- Directional cue: his gaze leads the eye down to the trophy",
+      "improved_thumbnail_prompt": "Create a YouTube thumbnail for: Messi's 5 Words Ended The Ronaldo Debate\n- Dark background (black with a subtle blue tint), gold rim light\n- Visual anchor: tight close-up of Messi's face in the tunnel, World Cup trophy under his arm, quiet/heavy expression\n- Clean composition, one focal point\n- Text: '5 WORDS' in bold gold (#FFD700 to #E8A800) Montserrat Black, max 2 words, high contrast\n- Aspect ratio 16:9 (1920x1080)\n- Directional cue: his gaze leads the eye down to the trophy"
+    },
+    {
+      "reasoning": "draft v3",
+      "topic": "messi ronaldo answer thumbnail",
+      "title": "Messi's 5 Words Ended The Ronaldo Debate",
+      "improved_title": "Messi's 5 Words Ended The Ronaldo Debate",
+      "thumbnail_concept": "Tight close-up of Messi in the tunnel, the World Cup trophy under his arm, dark background with gold rim light. Bold gold text '5 WORDS'. His expression: quiet, heavy, the moment before he speaks. His gaze is cast DOWN toward the trophy, pulling the viewer's eye to it (directional cue). The FIFA World Cup trophy is clearly recognizable and a small Argentina crest sits on his shirt (recognizable icons).",
+      "improved_thumbnail_concept": "Tight close-up of Messi in the tunnel, the World Cup trophy under his arm, dark background with gold rim light. Bold gold text '5 WORDS'. His expression: quiet, heavy, the moment before he speaks. His gaze is cast DOWN toward the trophy, pulling the viewer's eye to it (directional cue). The FIFA World Cup trophy is clearly recognizable and a small Argentina crest sits on his shirt (recognizable icons).",
+      "thumbnail_prompt": "Create a YouTube thumbnail for: Messi's 5 Words Ended The Ronaldo Debate\n- Dark background (black with a subtle blue tint), gold rim light\n- Visual anchor: tight close-up of Messi's face in the tunnel, World Cup trophy under his arm, quiet/heavy expression\n- Clean composition, one focal point\n- Text: '5 WORDS' in bold gold (#FFD700 to #E8A800) Montserrat Black, max 2 words, high contrast\n- Aspect ratio 16:9 (1920x1080)\n- Directional cue: his gaze leads the eye down to the trophy\n- Include the recognizable FIFA World Cup trophy and a small Argentina crest",
+      "improved_thumbnail_prompt": "Create a YouTube thumbnail for: Messi's 5 Words Ended The Ronaldo Debate\n- Dark background (black with a subtle blue tint), gold rim light\n- Visual anchor: tight close-up of Messi's face in the tunnel, World Cup trophy under his arm, quiet/heavy expression\n- Clean composition, one focal point\n- Text: '5 WORDS' in bold gold (#FFD700 to #E8A800) Montserrat Black, max 2 words, high contrast\n- Aspect ratio 16:9 (1920x1080)\n- Directional cue: his gaze leads the eye down to the trophy\n- Include the recognizable FIFA World Cup trophy and a small Argentina crest"
+    }
+  ],
+  "eval_answers": [
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "3,8",
+      "why": "Strong anchor and title, but no directional cue and no recognizable logo.",
+      "score_1": "9",
+      "score_2": "9",
+      "score_3": "0",
+      "score_4": "9",
+      "score_5": "8",
+      "score_6": "8",
+      "score_7": "8",
+      "score_8": "0",
+      "score_9": "8",
+      "score_10": "8",
+      "score_11": "8",
+      "score_12": "8"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "8",
+      "why": "Directional cue added (gaze to trophy); still missing a recognizable icon.",
+      "score_1": "9",
+      "score_2": "9",
+      "score_3": "9",
+      "score_4": "9",
+      "score_5": "8",
+      "score_6": "8",
+      "score_7": "8",
+      "score_8": "0",
+      "score_9": "8",
+      "score_10": "8",
+      "score_11": "8",
+      "score_12": "8"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "All 12 criteria met - anchor, hierarchy, result, cue, logo, and the title delivers.",
+      "score_1": "9",
+      "score_2": "9",
+      "score_3": "9",
+      "score_4": "9",
+      "score_5": "8",
+      "score_6": "8",
+      "score_7": "8",
+      "score_8": "8",
+      "score_9": "8",
+      "score_10": "8",
+      "score_11": "8",
+      "score_12": "8"
+    },
+    {
+      "reasoning": "judging",
+      "verdict": "PASS",
+      "failed_checks": "none",
+      "why": "Confirmed: 12/12, strong package.",
+      "score_1": "9",
+      "score_2": "9",
+      "score_3": "9",
+      "score_4": "9",
+      "score_5": "8",
+      "score_6": "8",
+      "score_7": "8",
+      "score_8": "8",
+      "score_9": "8",
+      "score_10": "8",
+      "score_11": "8",
+      "score_12": "8"
+    }
+  ]
+}
