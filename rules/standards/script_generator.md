@@ -2,8 +2,9 @@
 
 Write the actual short-form video script from the assembled story (idea, theme,
 structure, raised-stakes beats). It must DELIVER everything built upstream, run
-the addiction loop, and hit in the channel's voice. Short-form = tight, compact,
-punchy. Every sentence earns its place.
+the addiction loop, and hit in the channel's voice. Short-form = a viral, fast-cut
+piece, rich and high-retention from the first frame to the last — built as its own
+short, never a compressed or excerpted long-form. Every sentence earns its place.
 
 ## The addiction loop (run it on repeat)
 
@@ -19,11 +20,13 @@ loops — that's exactly where the rehook goes.
 
 ## Short-form rules (this format)
 
+- **Built as a short, never a cutout.** Purpose-built short — not an excerpt, a teaser, or a "best parts" intro to a long-form. It stands fully on its own.
+- **Every beat earns its place — value or hook, or cut it.** Rich, very high retention throughout: each line either adds value or keeps the viewer hooked. No setup, no coasting, no low-value stretch — fast-cut start to finish.
 - **Tight, compact, punchy sentences.** Cut every word that isn't pulling weight.
 - Present tense. Speak to ONE viewer.
 - **Hook in the first line (1-3 seconds)** — open a loop immediately, no throat-clearing, no "in this video."
 - No filler, no hype words ("insane", "shocking").
-- End on a line that reframes (the payoff), then ONE clear viewer action.
+- **End on its OWN payoff** — a line that lands and completes the short. NEVER a cliffhanger or a "watch the full video" tease. Then ONE clear viewer action.
 
 ## What you output
 
