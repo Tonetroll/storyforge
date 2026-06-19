@@ -58,6 +58,24 @@ def _promote_to_trainset(record: dict, review: dict, paths) -> None:
         f.write(json.dumps(example) + "\n")
 
 
+def _promote_to_craft(record: dict, review: dict, channel: str) -> None:
+    """A craft-exemplary accept ALSO joins the shared, cross-genre craft trainset, so
+    every channel's generator can learn the craft (not the voice) from it. Triggered
+    when the review's next_action contains 'craft'."""
+    config.CRAFT_DIR.mkdir(parents=True, exist_ok=True)
+    example = {
+        "stage": record.get("stage"),
+        "brief": record.get("brief", ""),
+        "content": record.get("content", {}),
+        "channel": channel,
+        "craft_note": review.get("reason"),
+        "asset_id": review.get("asset_id"),
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+    with open(config.CRAFT_TRAINSET, "a", encoding="utf-8") as f:
+        f.write(json.dumps(example) + "\n")
+
+
 def route_all(channel: str = None, verbose: bool = True) -> list:
     paths = config.paths_for(channel)
     actions = []
@@ -76,6 +94,8 @@ def route_all(channel: str = None, verbose: bool = True) -> list:
         if status == "accepted":
             dest_dir, new_status = paths.accepted, "promoted"
             _promote_to_trainset(record, review, paths)
+            if "craft" in (review.get("next_action") or "").lower():
+                _promote_to_craft(record, review, paths.root.name)
         elif status == "rejected":
             dest_dir, new_status = paths.rejected, "archived"
         else:  # revise

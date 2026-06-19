@@ -54,6 +54,11 @@ CHANNELS_DIR    = BASE_DIR / "channels"   # one self-contained workspace per cha
 INSTRUCTIONS_DIR = BASE_DIR / "instructions"
 EXAMPLES_DIR    = BASE_DIR / "examples"
 
+# The CRAFT layer: genre-agnostic craft, shared by every channel and stage.
+CRAFT_DIR       = BASE_DIR / "craft"
+CRAFT_PRINCIPLES = CRAFT_DIR / "principles.md"   # doctrine, injected into every generator
+CRAFT_TRAINSET  = CRAFT_DIR / "trainset.jsonl"   # shared craft-exemplary examples (grows over time)
+
 
 # PER-CHANNEL: each channel is its own production line under channels/<name>/.
 # paths_for(name) resolves the whole workspace; the engine threads it through a run.

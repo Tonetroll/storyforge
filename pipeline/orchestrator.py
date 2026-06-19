@@ -110,6 +110,12 @@ def _extract_spine(text: str) -> str:
     return m.group(1) if m else text
 
 
+def _load_craft() -> str:
+    """The shared, genre-agnostic craft doctrine, injected into every generator."""
+    p = config.CRAFT_PRINCIPLES
+    return p.read_text(encoding="utf-8").strip() if p.exists() else ""
+
+
 def _load_channel(channel: str):
     """Returns (spine, full) for a channel profile. spine = the positioning block fed
     to every stage; full = the whole profile fed to the deep stages only. HTML
@@ -222,9 +228,14 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     # via the standard, so every stage stays on-audience and in-voice. Gates stay scoped.
     spine, full = _load_channel(channel)
     audience = full if stage.deep_channel else spine   # deep stages (idea/theme/story) get the whole doc
+    craft = _load_craft()                              # shared craft, every genre
+    layers = []
     if audience:
-        gen_standard = ("CHANNEL (who this is for + the voice to write in):\n"
-                        f"{audience}\n\n=== STAGE STANDARD ===\n{gen_standard}")
+        layers.append("CHANNEL (who this is for + the voice to write in):\n" + audience)
+    if craft:
+        layers.append("CRAFT (universal craft -- applies to every genre):\n" + craft)
+    layers.append("=== STAGE STANDARD ===\n" + gen_standard)
+    gen_standard = "\n\n".join(layers)
     brief, assembly = _resolve_upstream(stage, brief, paths)
     # The one cross-stage gate: give the script's gate the whole package to verify delivery.
     if stage.gate_reads_package and assembly:

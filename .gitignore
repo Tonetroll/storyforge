@@ -22,3 +22,6 @@ channels/*/review/**
 
 # Archived pre-channel demo artifacts
 archive/**
+
+# Craft trainset grows at runtime; the doctrine (craft/principles.md) is tracked
+craft/trainset.jsonl

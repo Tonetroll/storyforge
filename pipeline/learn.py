@@ -51,9 +51,13 @@ def compile_generator(stage_name: str = "idea", channel: str = None, dry_run: bo
     gen_standard = _read_standard(stage.gen_standard_file, "PLACEHOLDER generator standard.")
     eval_criteria = _read_standard(stage.eval_standard_file, "PLACEHOLDER gate criteria.")
 
-    trainset = load_trainset(stage, gen_standard, paths.trainset_file)
+    craft_examples = load_trainset(stage, gen_standard, config.CRAFT_TRAINSET)   # shared, genre-agnostic
+    channel_examples = load_trainset(stage, gen_standard, paths.trainset_file)   # this channel's voice
+    trainset = craft_examples + channel_examples
+    print(f"Trainset for '{stage.name}': {len(craft_examples)} craft (shared) + "
+          f"{len(channel_examples)} voice ({paths.root.name})")
     if not trainset:
-        print(f"No accepted '{stage.name}' examples for channel '{paths.root.name}' yet -- nothing to learn from.")
+        print(f"No '{stage.name}' examples yet (craft pool or channel '{paths.root.name}') -- nothing to learn from.")
         return None
 
     generator = Generator(stage.gen_sig)
