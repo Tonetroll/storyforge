@@ -554,3 +554,57 @@ class IteratePackaging(dspy.Signature):
     improved_title = dspy.OutputField()
     improved_thumbnail_concept = dspy.OutputField()
     improved_thumbnail_prompt = dspy.OutputField()
+
+
+# ===========================================================================
+# DESCRIPTION stage  (the YouTube description: hook -> mirror -> signal)
+# ===========================================================================
+class GenerateDescription(dspy.Signature):
+    """Write the YouTube description (a few lines, ~600 chars, 5000 max). NOT a
+    summary. Job in order: a first line that is a SECOND HOOK (above the fold,
+    <~120 chars, no spoiler), 1-2 lines that MIRROR the audience's wound so the
+    right viewer feels seen, and a line that SIGNALS who it's for + the language
+    they'd search. Follow the standard."""
+
+    brief = dspy.InputField(desc="The story this video is about (idea + theme + structure + stakes).")
+    standard = dspy.InputField(desc="The generator standard (rules/standards/description_generator.md).")
+    topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
+    hook_line = dspy.OutputField(desc="First line, above the fold (<~120 chars): a second hook, curiosity/tension, no spoiler.")
+    mirror_lines = dspy.OutputField(desc="1-2 lines mirroring the audience's wound so the right viewer thinks 'that's me'. Specific, not generic.")
+    audience_signal = dspy.OutputField(desc="Who it's for + the natural language they'd search; lets the right viewer self-identify and the anti-audience self-select out.")
+
+
+class GateDescription(dspy.Signature):
+    """You are a strict gate for a YouTube description. Score each check 0..its max.
+    Reward hook + mirror; penalize summary, spoiler, audience-labeling, keyword
+    stuffing, and length over 5000 chars. Use the package to verify it doesn't
+    spoil or overpromise."""
+
+    hook_line = dspy.InputField()
+    mirror_lines = dspy.InputField()
+    audience_signal = dspy.InputField()
+    criteria = dspy.InputField(desc="The 6 weighted checks + the verdict rule.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
+    score_1 = dspy.OutputField(desc="Above-the-fold hook: integer 0-25.")
+    score_2 = dspy.OutputField(desc="Mirrors the wound: integer 0-25.")
+    score_3 = dspy.OutputField(desc="No spoiler / no overpromise: integer 0-15.")
+    score_4 = dspy.OutputField(desc="Repels the anti-audience: integer 0-10.")
+    score_5 = dspy.OutputField(desc="Algorithm signal (searchable language): integer 0-15.")
+    score_6 = dspy.OutputField(desc="Tight, plain, ~600 chars (5000 max): integer 0-10.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing check numbers + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IterateDescription(dspy.Signature):
+    """Improve the description against the checks it lost points on — sharpen the
+    above-fold hook, deepen the wound-mirror, tighten to ~600 chars, strip any
+    spoiler/overpromise/jargon. Keep it hook -> mirror -> signal."""
+
+    hook_line = dspy.InputField()
+    mirror_lines = dspy.InputField()
+    audience_signal = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + which checks lost points.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_hook_line = dspy.OutputField()
+    improved_mirror_lines = dspy.OutputField()
+    improved_audience_signal = dspy.OutputField()

@@ -313,13 +313,41 @@ PACKAGING = Stage(
 )
 
 
+DESCRIPTION = Stage(
+    name="description",
+    content_label="YOUTUBE DESCRIPTION",
+    gen_sig=S.GenerateDescription,
+    gate_sig=S.GateDescription,
+    iter_sig=S.IterateDescription,
+    content_fields=["hook_line", "mirror_lines", "audience_signal"],
+    topic_field="topic",
+    weights={1: 25, 2: 25, 3: 15, 4: 10, 5: 15, 6: 10},   # hook + mirror lead (50); sums to 100
+    labels={
+        1: "above-the-fold hook", 2: "mirrors the wound", 3: "no spoiler/overpromise",
+        4: "repels anti-audience", 5: "algorithm signal", 6: "tight, plain, ~600 chars",
+    },
+    gen_standard_file="description_generator.md",
+    eval_standard_file="description_evaluator.md",
+    upstream="stakebake",
+    build_brief=lambda rec: (
+        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
+        + "\n\nWrite the YouTube description (hook -> mirror -> signal) for this video."
+    ),
+    penalty_points=0,
+    verdict_floor=60,
+    gate_reads_package=True,   # so the no-spoiler / no-overpromise check can verify against the story
+    deep_channel=True,         # mirroring the wound needs the full audience positioning, not just the spine
+)
+
+
 # Pipeline order: idea -> theme -> structure -> stakebake -> script
 # Script alternates (read accepted stakebake): script | script_long | script_screenplay | script_podcast
-# Packaging (reads accepted stakebake): title + thumbnail, scored only by its own 12 criteria
+# Off the accepted stakebake too: packaging (title+thumbnail) and description (the YouTube description)
 STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY, STAKEBAKE.name: STAKEBAKE,
           SCRIPT.name: SCRIPT, SCRIPT_LONG.name: SCRIPT_LONG,
           SCRIPT_SCREENPLAY.name: SCRIPT_SCREENPLAY, SCRIPT_PODCAST.name: SCRIPT_PODCAST,
-          PACKAGING.name: PACKAGING}
+          PACKAGING.name: PACKAGING, DESCRIPTION.name: DESCRIPTION}
 
 
 def get_stage(name: str) -> Stage:

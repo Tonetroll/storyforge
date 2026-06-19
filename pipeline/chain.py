@@ -21,7 +21,7 @@ from pipeline import orchestrator, naming, render, stages
 
 # The sequential spine: each feeds the next. Then the terminal deliverables off stakebake.
 SEQUENCE = ["idea", "theme", "story", "stakebake"]
-DELIVERABLES = ["script", "packaging"]
+DELIVERABLES = ["script", "packaging", "description"]
 
 
 def _promote(artifact_path: str) -> Path:
