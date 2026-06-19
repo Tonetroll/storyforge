@@ -23,6 +23,26 @@ def _content_lines(content, stage) -> str:
     return "\n".join(out).rstrip()
 
 
+# Stages whose deliverable should read as a finished piece, not a labeled form.
+_PROSE_STAGES = {"script", "script_long", "script_screenplay", "script_podcast", "description"}
+
+
+def _prose_lines(content, stage) -> str:
+    """Weave the content fields into one flowing piece (no 'Hook:'/'Body:' labels),
+    so the script/description reads as the finished thing. Meta '*_notes' fields are
+    set aside at the end, not woven into the script itself."""
+    body, notes = [], []
+    for f in stage.content_fields:
+        val = str(content.get(f, "") or "").strip()
+        if not val:
+            continue
+        (notes if f.endswith("_notes") else body).append(val)
+    out = "\n\n".join(f"  {p}" for p in body)
+    if notes:
+        out += "\n\n  --- notes ---\n  " + "\n  ".join(notes)
+    return out
+
+
 def _assembly_lines(assembly) -> str:
     """The accumulated package: every prior accepted stage's content."""
     if not assembly:
@@ -46,7 +66,7 @@ def to_text(record: dict, stage) -> str:
         f"BRIEF:  {record.get('brief', '')}",
         "",
         f"THE {stage.content_label}",
-        _content_lines(record.get("content", {}) or {}, stage),
+        (_prose_lines if stage.name in _PROSE_STAGES else _content_lines)(record.get("content", {}) or {}, stage),
         _assembly_lines(record.get("assembly")),
         "",
         "GATE",
