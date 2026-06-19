@@ -58,6 +58,22 @@ with no joke. Earn the laugh, the gasp, the "oh no" by making them wait for it.
 No jargon, no insider terms, no throat-clearing. If a smart outsider has to work to
 get it, rewrite it. Clarity is not the enemy of depth — vagueness is.
 
+## 11. Don't fabricate — get every claim exactly right
+Every count, stat, name, quote, and outcome you present as real must BE real and
+exact. If the hook says "7 words," it is seven words. If you cite a number or a fact,
+verify it. Inventing or miscounting a detail is the fastest way to look fake and lose
+trust. (Even invented stories never lie about their own claims.)
+
+## 12. The visual must match the moment
+A thumbnail or image must carry the SAME emotion as the beat it illustrates — triumph
+looks like triumph, dread looks like dread. A winner with his head down is a
+contradiction the eye catches in a fraction of a second, and it kills the click.
+
+## 13. Commit to one format
+Decide short-form (one tight punch) or long-form (developed, layered) and fully serve
+it. Falling between — too thin to be deep, too slow to be punchy — fails both. Know the
+format before the first line.
+
 ---
 
 **The test for any piece:** Is it specific? Does it open a loop and earn its
