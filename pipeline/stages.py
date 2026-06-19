@@ -30,6 +30,7 @@ class Stage:
     penalty_points: int = 0         # subtracted from the score if the gate flags it (e.g. jargon); 0 = none
     verdict_floor: Optional[int] = None  # None = all-pass verdict; int = hybrid PASS if score >= floor
     gate_reads_package: bool = False  # if True, the assembled package is given to the gate (delivery check)
+    deep_channel: bool = False        # if True, the FULL channel profile feeds this stage; else only the spine
 
 
 IDEA = Stage(
@@ -53,6 +54,7 @@ IDEA = Stage(
     eval_standard_file="evaluator.md",
     upstream=None,
     build_brief=None,
+    deep_channel=True,   # the audience's wound/belief feeds the idea directly
 )
 
 
@@ -88,6 +90,7 @@ STORY = Stage(
         f"Belief shift to dramatize: {rec['content']['belief_shift']}\n"
         "Build the 3-act outline so the protagonist's misbelief -> Recovery dramatizes this belief shift."
     ),
+    deep_channel=True,   # the audience's wound becomes the protagonist's misbelief
 )
 
 
@@ -117,6 +120,7 @@ THEME = Stage(
         f"  Resolution: {rec['content']['resolution']}\n"
         "Surface the theme this idea is really about."
     ),
+    deep_channel=True,   # the audience's stuck belief feeds the theme's belief-shift
 )
 
 

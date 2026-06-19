@@ -8,6 +8,7 @@
 """
 
 import json
+import re
 from datetime import datetime, timezone
 
 import dspy
@@ -102,12 +103,25 @@ def _read_standard(filename: str, fallback: str) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else fallback
 
 
-def _load_channel(channel: str) -> str:
-    """The per-channel profile (audience + character/voice), fed into every generator."""
+def _extract_spine(text: str) -> str:
+    """The tight positioning block between the SPINE markers (fed to EVERY stage).
+    Old profiles without markers -> the whole doc is the spine (back-compatible)."""
+    m = re.search(r"<!--\s*SPINE:START\s*-->(.*?)<!--\s*SPINE:END\s*-->", text, re.DOTALL | re.IGNORECASE)
+    return m.group(1) if m else text
+
+
+def _load_channel(channel: str):
+    """Returns (spine, full) for a channel profile. spine = the positioning block fed
+    to every stage; full = the whole profile fed to the deep stages only. HTML
+    comments (the meta note + markers) are stripped so they never reach a prompt."""
     if not channel:
-        return ""
+        return "", ""
     path = config.CHANNELS_DIR / channel / "profile.md"
-    return path.read_text(encoding="utf-8") if path.exists() else ""
+    if not path.exists():
+        return "", ""
+    raw = path.read_text(encoding="utf-8")
+    strip = lambda t: re.sub(r"<!--.*?-->", "", t, flags=re.DOTALL).strip()
+    return strip(_extract_spine(raw)), strip(raw)
 
 
 def _assembly_text(assembly: dict) -> str:
@@ -205,10 +219,11 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
                                    "PLACEHOLDER: PASS only if every check is met; score each 0..its weight.")
     # The channel profile (audience + character/voice) rides into every generator/iterator
     # via the standard, so every stage stays on-audience and in-voice. Gates stay scoped.
-    channel_profile = _load_channel(channel)
-    if channel_profile:
+    spine, full = _load_channel(channel)
+    audience = full if stage.deep_channel else spine   # deep stages (idea/theme/story) get the whole doc
+    if audience:
         gen_standard = ("CHANNEL (who this is for + the voice to write in):\n"
-                        f"{channel_profile}\n\n=== STAGE STANDARD ===\n{gen_standard}")
+                        f"{audience}\n\n=== STAGE STANDARD ===\n{gen_standard}")
     brief, assembly = _resolve_upstream(stage, brief)
     # The one cross-stage gate: give the script's gate the whole package to verify delivery.
     if stage.gate_reads_package and assembly:
