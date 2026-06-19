@@ -24,21 +24,21 @@ SEQUENCE = ["idea", "theme", "story", "stakebake"]
 DELIVERABLES = ["script", "packaging", "description"]
 
 
-def _promote(artifact_path: str) -> Path:
-    """Copy a ready_for_review artifact into accepted/ as 'promoted' so downstream
-    can pull it. NOT added to memory/trainset.jsonl - that is reserved for the
-    examples YOU accept by hand."""
+def _promote(artifact_path: str, paths) -> Path:
+    """Copy a ready_for_review artifact into THIS channel's accepted/ as 'promoted'
+    so downstream can pull it. NOT added to the channel's trainset.jsonl - that is
+    reserved for the examples YOU accept by hand."""
     src = Path(artifact_path)
     record = json.loads(src.read_text(encoding="utf-8"))
     parts = naming.parse_name(src.name)
     new_base = naming.format_name(parts["slug"], parts["number"], parts["version"], "promoted")
     record["status"] = "promoted"
     record["auto_promoted"] = True
-    config.ACCEPTED_DIR.mkdir(parents=True, exist_ok=True)
-    dest = config.ACCEPTED_DIR / f"{new_base}.json"
+    paths.accepted.mkdir(parents=True, exist_ok=True)
+    dest = paths.accepted / f"{new_base}.json"
     dest.write_text(json.dumps(record, indent=2), encoding="utf-8")
     stage = stages.get_stage(record.get("stage", "idea"))
-    (config.ACCEPTED_DIR / f"{new_base}.txt").write_text(render.to_text(record, stage), encoding="utf-8")
+    (paths.accepted / f"{new_base}.txt").write_text(render.to_text(record, stage), encoding="utf-8")
     src.unlink(missing_ok=True)
     src.with_suffix(".txt").unlink(missing_ok=True)
     return dest
@@ -73,9 +73,10 @@ def _scripted_for(stage) -> dict:
 
 
 def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverables=None) -> dict:
-    """Drive one brief through the whole pipeline. Returns where it stopped (if it
-    did) and the terminal deliverables left for review."""
+    """Drive one brief through the whole pipeline for ONE channel. Returns where it
+    stopped (if it did) and the terminal deliverables left for review."""
     deliverables = deliverables or DELIVERABLES
+    paths = config.paths_for(channel)
     trail = []
 
     # --- the sequential spine: promote each on target, stop at the first weak link ---
@@ -90,7 +91,7 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
         if res.get("outcome") != "ready_for_review":
             return {"brief": brief, "channel": channel, "stopped_at": name,
                     "reason": res.get("outcome"), "trail": trail, "deliverables": []}
-        _promote(res["artifact"])
+        _promote(res["artifact"], paths)
 
     # --- terminal deliverables off the accepted stakebake (left at ready_for_review) ---
     made = []
@@ -107,17 +108,20 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
             "trail": trail, "deliverables": made}
 
 
-def run_seeds(path: str = "seeds/briefs.jsonl", dry_run: bool = False) -> list:
-    """Run every seed in a .jsonl file (one {'brief':..., 'channel':...} per line)
-    through the full chain, one complete chain at a time."""
-    p = Path(path)
-    if not p.exists():
-        raise FileNotFoundError(f"No seed file at {path}. Copy seeds/briefs.example.jsonl to {path} and add your ideas.")
+def run_channel(channel: str, dry_run: bool = False) -> list:
+    """Run every seed in THIS channel's queue (channels/<channel>/seeds/briefs.jsonl)
+    through the full chain, one complete chain at a time. Each line is {'brief': ...}
+    (the channel is the workspace, so it no longer needs to be named per line)."""
+    paths = config.paths_for(channel)
+    if not paths.seeds.exists():
+        raise FileNotFoundError(
+            f"No seed file for channel '{paths.root.name}' at {paths.seeds}. "
+            f"Run `python run.py new-channel {channel}` first, then add ideas to its seeds/briefs.jsonl.")
     results = []
-    for line in p.read_text(encoding="utf-8").splitlines():
+    for line in paths.seeds.read_text(encoding="utf-8").splitlines():
         line = line.strip()
-        if not line:
+        if not line or line.startswith("#") or line.startswith("//"):
             continue
         obj = json.loads(line)
-        results.append(run_chain(obj["brief"], channel=obj.get("channel"), dry_run=dry_run))
+        results.append(run_chain(obj["brief"], channel=channel, dry_run=dry_run))
     return results

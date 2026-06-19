@@ -24,11 +24,11 @@ def _read_standard(filename: str, fallback: str) -> str:
     return path.read_text(encoding="utf-8") if path.exists() else fallback
 
 
-def load_trainset(stage, gen_standard: str):
-    if not config.TRAINSET_FILE.exists():
+def load_trainset(stage, gen_standard: str, trainset_file):
+    if not trainset_file.exists():
         return []
     examples = []
-    with open(config.TRAINSET_FILE, encoding="utf-8") as f:
+    with open(trainset_file, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -45,14 +45,15 @@ def load_trainset(stage, gen_standard: str):
     return examples
 
 
-def compile_generator(stage_name: str = "idea", dry_run: bool = False):
+def compile_generator(stage_name: str = "idea", channel: str = None, dry_run: bool = False):
     stage = stages.get_stage(stage_name)
+    paths = config.paths_for(channel)
     gen_standard = _read_standard(stage.gen_standard_file, "PLACEHOLDER generator standard.")
     eval_criteria = _read_standard(stage.eval_standard_file, "PLACEHOLDER gate criteria.")
 
-    trainset = load_trainset(stage, gen_standard)
+    trainset = load_trainset(stage, gen_standard, paths.trainset_file)
     if not trainset:
-        print(f"No accepted '{stage.name}' examples in memory/trainset.jsonl yet -- nothing to learn from.")
+        print(f"No accepted '{stage.name}' examples for channel '{paths.root.name}' yet -- nothing to learn from.")
         return None
 
     generator = Generator(stage.gen_sig)
@@ -83,8 +84,8 @@ def compile_generator(stage_name: str = "idea", dry_run: bool = False):
     print(f"Compiling '{stage.name}' generator on {len(trainset)} accepted example(s)...")
     compiled = optimizer.compile(student=generator, trainset=trainset)
 
-    config.COMPILED_DIR.mkdir(parents=True, exist_ok=True)
-    out = config.COMPILED_DIR / f"{stage.name}_generator.json"
+    paths.compiled.mkdir(parents=True, exist_ok=True)
+    out = paths.compiled / f"{stage.name}_generator.json"
     compiled.save(str(out), save_program=False)
     print(f"Saved compiled generator -> {out.relative_to(config.BASE_DIR)}")
     return out

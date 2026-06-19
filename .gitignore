@@ -4,7 +4,7 @@ __pycache__/
 *.pyc
 .tmp/
 
-# Generated runtime data (regenerated each run; folder structure kept via .gitkeep)
+# Legacy global runtime data (pre-channel; now archived)
 outputs/ideas/**/*.json
 outputs/ideas/**/*.txt
 logs/*.log
@@ -12,3 +12,13 @@ metrics/*.jsonl
 memory/run_index.jsonl
 memory/trainset.jsonl
 memory/compiled/*.json
+
+# Per-channel runtime data -- track only each channel's profile.md + seeds/
+channels/*/outputs/**
+channels/*/logs/**
+channels/*/metrics/**
+channels/*/memory/**
+channels/*/review/**
+
+# Archived pre-channel demo artifacts
+archive/**

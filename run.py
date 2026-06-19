@@ -1,13 +1,13 @@
-"""Entry point for the DSPy pipeline. Every command takes a --stage (default
-"idea"), so the same engine runs any stage in pipeline/stages.py.
+"""Entry point for the DSPy pipeline. Every run is scoped to a --channel (its own
+self-contained workspace under channels/<name>/); the same engine runs any stage.
 
-    python run.py generate --stage idea --brief "..."   # live (needs API keys)
-    python run.py generate --dry-run                     # offline idea-stage smoke test
-    python run.py manual --stage idea                    # hand-authored content (no keys)
-    python run.py chain --seeds seeds/briefs.jsonl       # whole pipeline, review at the end
-    python run.py chain --brief "..." --dry-run          # plumbing smoke test (no keys)
-    python run.py route                                  # apply human_review.csv decisions
-    python run.py learn --stage idea                     # retrain a stage's generator
+    python run.py new-channel demo-sports                # scaffold a channel workspace
+    python run.py chain --channel demo-sports            # whole pipeline over that channel's seeds
+    python run.py chain --channel demo-sports --brief "..." --dry-run  # plumbing smoke test (no keys)
+    python run.py generate --channel demo-sports --stage idea --brief "..."   # one stage, live
+    python run.py manual   --channel demo-sports --stage idea  # hand-authored content (no keys)
+    python run.py route    --channel demo-sports         # apply that channel's human_review.csv
+    python run.py learn    --channel demo-sports --stage idea  # retrain that channel's generator
 """
 
 import argparse
@@ -38,15 +38,19 @@ def main():
     m.add_argument("--channel", default=None, help="channel profile folder in channels/<name>/")
 
     c = sub.add_parser("chain", help="run the whole pipeline through to deliverables; stop at the weak link")
-    c.add_argument("--seeds", default="seeds/briefs.jsonl", help="JSONL of {brief, channel} seeds")
-    c.add_argument("--brief", default=None, help="run a single brief instead of the seeds file")
-    c.add_argument("--channel", default=None, help="channel profile folder in channels/<name>/")
+    c.add_argument("--channel", default=None, help="the channel workspace to run (channels/<name>/)")
+    c.add_argument("--brief", default=None, help="run a single brief instead of the channel's seed queue")
     c.add_argument("--dry-run", action="store_true", help="placeholder content, no keys (plumbing test)")
 
-    sub.add_parser("route", help="apply review/human_review.csv decisions")
+    nc = sub.add_parser("new-channel", help="scaffold a new channel workspace under channels/<name>/")
+    nc.add_argument("name", help="the channel name, e.g. demo-sports")
 
-    l = sub.add_parser("learn", help="retrain a stage's generator from accepted examples")
+    r = sub.add_parser("route", help="apply a channel's review/human_review.csv decisions")
+    r.add_argument("--channel", default=None, help="the channel workspace to route")
+
+    l = sub.add_parser("learn", help="retrain a channel's stage generator from its accepted examples")
     l.add_argument("--stage", default="idea")
+    l.add_argument("--channel", default=None, help="the channel workspace to learn from")
     l.add_argument("--dry-run", action="store_true")
 
     args = parser.parse_args()
@@ -72,8 +76,8 @@ def main():
         if args.brief:
             results = [chain.run_chain(args.brief, channel=args.channel, dry_run=args.dry_run)]
         else:
-            results = chain.run_seeds(args.seeds, dry_run=args.dry_run)
-        print("\n================ RUN-THROUGH SUMMARY ================")
+            results = chain.run_channel(args.channel, dry_run=args.dry_run)
+        print(f"\n================ RUN-THROUGH SUMMARY (channel: {args.channel or '_sandbox'}) ================")
         for r in results:
             print(f"\nseed: {r['brief'][:70]}")
             for s in r["trail"]:
@@ -83,9 +87,22 @@ def main():
                 print(f"  >> WEAK LINK: stopped at '{r['stopped_at']}' ({r['reason']}) - review/fix this stage.")
             else:
                 print(f"  >> reached deliverables: {', '.join(d['stage'] for d in r['deliverables'])} - ready for your review.")
+    elif command == "new-channel":
+        from pipeline import channel_setup
+        info = channel_setup.create_channel(args.name)
+        verb = "already exists" if info["already_existed"] else "created"
+        print(f"Channel '{info['channel']}' {verb} at {info['root']}")
+        print(f"  1. Fill the audience: {info['profile']}")
+        print(f"  2. Add ideas:        {info['seeds']}")
+        print(f"  3. Run it:           python run.py chain --channel {info['channel']}")
+    elif command == "route":
+        from pipeline import router
+        print(f"Routing reviewed artifacts for channel '{args.channel or '_sandbox'}'...")
+        router.route_all(channel=args.channel)
     elif command == "learn":
         from pipeline import learn
-        learn.compile_generator(stage_name=args.stage, dry_run=getattr(args, "dry_run", False))
+        learn.compile_generator(stage_name=args.stage, channel=args.channel,
+                                dry_run=getattr(args, "dry_run", False))
     else:
         parser.print_help()
         sys.exit(1)

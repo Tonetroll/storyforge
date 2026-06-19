@@ -134,12 +134,12 @@ def _assembly_text(assembly: dict) -> str:
     return "\n".join(parts)
 
 
-def _latest_accepted(stage_name: str):
-    """Most recent promoted/accepted artifact for the given stage."""
+def _latest_accepted(stage_name: str, accepted_dir):
+    """Most recent promoted/accepted artifact for the given stage, in THIS channel."""
     best = None
-    if not config.ACCEPTED_DIR.exists():
+    if not accepted_dir.exists():
         return None
-    for f in config.ACCEPTED_DIR.glob("*.json"):
+    for f in accepted_dir.glob("*.json"):
         try:
             rec = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
@@ -150,12 +150,12 @@ def _latest_accepted(stage_name: str):
     return best
 
 
-def _resolve_upstream(stage, brief):
+def _resolve_upstream(stage, brief, paths):
     """Returns (brief, assembly). assembly = the structured content of EVERY prior
     accepted stage, so each artifact carries the growing package (no gathering later)."""
     if not stage.upstream:
         return brief, {}
-    rec = _latest_accepted(stage.upstream)
+    rec = _latest_accepted(stage.upstream, paths.accepted)
     if rec is None:
         raise RuntimeError(f"No accepted '{stage.upstream}' artifact to feed stage '{stage.name}'.")
     assembly = {**(rec.get("assembly") or {}), stage.upstream: rec.get("content", {})}
@@ -208,8 +208,9 @@ def _save_artifact(*, stage, slug, number, version, status, brief, content, gate
 def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scripted: dict = None,
         channel: str = None) -> dict:
     stage = stages.get_stage(stage_name)
-    run_id = logging_setup.next_run_id()
-    log = logging_setup.get_run_logger(run_id)
+    paths = config.paths_for(channel)          # this channel's self-contained workspace
+    run_id = logging_setup.next_run_id(paths)
+    log = logging_setup.get_run_logger(run_id, paths)
     mode = "MANUAL (your content + scores)" if scripted else ("DRY-RUN (stub LMs)" if dry_run else "LIVE")
     log.info("mode=%s | stage=%s | channel=%s", mode, stage.name, channel or "(none)")
 
@@ -224,7 +225,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     if audience:
         gen_standard = ("CHANNEL (who this is for + the voice to write in):\n"
                         f"{audience}\n\n=== STAGE STANDARD ===\n{gen_standard}")
-    brief, assembly = _resolve_upstream(stage, brief)
+    brief, assembly = _resolve_upstream(stage, brief, paths)
     # The one cross-stage gate: give the script's gate the whole package to verify delivery.
     if stage.gate_reads_package and assembly:
         eval_criteria = ("THE STORY PACKAGE (the script MUST deliver all of this):\n"
@@ -237,14 +238,13 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     log.info("SEPARATION OK: evaluator LM is distinct from generator LM.")
 
     def _metric_row(asset_id, version, status, gate):
-        logging_setup.write_metric({
+        logging_setup.write_metric(paths, {
             "run_id": run_id, "stage": stage.name, "asset_id": asset_id, "version": version,
             "status": status, "verdict": getattr(gate, "verdict", None), "score": getattr(gate, "score", None),
             "generator_lm": gen_model, "evaluator_lm": eval_model,
         })
 
-    search_dirs = [config.CANDIDATES_DIR, config.ACCEPTED_DIR, config.REJECTED_DIR,
-                   config.ARCHIVED_DIR, config.PARKED_DIR]
+    search_dirs = paths.output_dirs()
 
     # --- GATE: generate until one PASSES (reject -> brand-new one) ---------
     passed = None
@@ -261,7 +261,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
             path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=1,
                                             status="candidate", brief=brief, content=content, gate=gate,
                                             story_id=story_id, gen_model=gen_model, eval_model=eval_model,
-                                            dest_dir=config.CANDIDATES_DIR)
+                                            dest_dir=paths.candidates)
             _metric_row(asset_id, 1, "candidate", gate)
             log.info("    PASS -> %s (%s) score %d", story_id, path.name, gate.score)
             passed = {"number": number, "slug": slug, "story_id": story_id, "content": content, "gate": gate}
@@ -270,14 +270,14 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
             path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=1,
                                             status="rejected", brief=brief, content=content, gate=gate,
                                             story_id=None, gen_model=gen_model, eval_model=eval_model,
-                                            dest_dir=config.REJECTED_DIR)
+                                            dest_dir=paths.rejected)
             _metric_row(asset_id, 1, "rejected", gate)
             log.info("    REJECT -> %s | failed: %s", path.name, gate.failed_checks)
 
     if passed is None:
         log.info("NO ARTIFACT PASSED THE GATE in %d attempts.", config.MAX_GEN_ATTEMPTS)
-        logging_setup.append_run_index({"run_id": run_id, "stage": stage.name, "mode": mode,
-                                        "result": "no_pass", "attempts": config.MAX_GEN_ATTEMPTS})
+        logging_setup.append_run_index(paths, {"run_id": run_id, "stage": stage.name, "mode": mode,
+                                               "result": "no_pass", "attempts": config.MAX_GEN_ATTEMPTS})
         log.info("=== run %04d complete (no pass) ===", run_id)
         return {"result": "no_pass", "stage": stage.name, "attempts": config.MAX_GEN_ATTEMPTS, "run_id": run_id}
 
@@ -299,7 +299,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=version,
                                         status="revised", brief=brief, content=content, gate=gate,
                                         story_id=story_id, gen_model=gen_model, eval_model=eval_model,
-                                        dest_dir=config.CANDIDATES_DIR, parent_version=parent)
+                                        dest_dir=paths.candidates, parent_version=parent)
         _metric_row(asset_id, version, "revised", gate)
         log.info("[v%02d] %s scored %d (verdict %s)", version, path.name, gate.score, gate.verdict)
         if gate.verdict != "PASS":
@@ -317,7 +317,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
                                         status="ready_for_review", brief=brief, content=best["content"],
                                         gate=final_gate, story_id=story_id, gen_model=gen_model,
-                                        eval_model=eval_model, dest_dir=config.CANDIDATES_DIR,
+                                        eval_model=eval_model, dest_dir=paths.candidates,
                                         parent_version=best["version"])
         _metric_row(asset_id, final_version, "ready_for_review", final_gate)
         outcome, final_score = "ready_for_review", final_gate.score
@@ -326,14 +326,14 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
                                         status="parked", brief=brief, content=best["content"],
                                         gate=best["gate"], story_id=story_id, gen_model=gen_model,
-                                        eval_model=eval_model, dest_dir=config.PARKED_DIR,
+                                        eval_model=eval_model, dest_dir=paths.parked,
                                         parent_version=best["version"])
         _metric_row(asset_id, final_version, "parked", best["gate"])
         outcome, final_score = "parked", best["score"]
         log.info("PARKED: %s (%s) | best %d < target %d after %d iterations",
                  path.name, story_id, best["score"], config.TARGET_SCORE, iterations)
 
-    logging_setup.append_run_index({
+    logging_setup.append_run_index(paths, {
         "run_id": run_id, "stage": stage.name, "asset_id": asset_id, "story_id": story_id, "mode": mode,
         "outcome": outcome, "versions": final_version, "best_score": best["score"],
         "final_score": final_score, "target": config.TARGET_SCORE, "artifact": path.name,

@@ -20,17 +20,17 @@ import config
 from pipeline import naming, render, stages
 
 
-def _load_reviews():
-    if not config.REVIEW_FILE.exists():
+def _load_reviews(paths):
+    if not paths.review_file.exists():
         return []
-    with open(config.REVIEW_FILE, newline="", encoding="utf-8") as f:
+    with open(paths.review_file, newline="", encoding="utf-8") as f:
         return [row for row in csv.DictReader(f)]
 
 
-def _find_artifact(asset_id: str, version: str):
+def _find_artifact(asset_id: str, version: str, candidates_dir):
     """Locate the artifact file for an asset_id + version in candidates/."""
     want_version = int(str(version).lstrip("vV"))
-    for f in config.CANDIDATES_DIR.glob("*.json"):
+    for f in candidates_dir.glob("*.json"):
         try:
             parts = naming.parse_name(f.name)
         except ValueError:
@@ -41,9 +41,9 @@ def _find_artifact(asset_id: str, version: str):
     return None, None
 
 
-def _promote_to_trainset(record: dict, review: dict) -> None:
-    """Accepted artifact becomes a training example for the generator."""
-    config.MEMORY_DIR.mkdir(parents=True, exist_ok=True)
+def _promote_to_trainset(record: dict, review: dict, paths) -> None:
+    """Accepted artifact becomes a training example for THIS channel's generator."""
+    paths.trainset_file.parent.mkdir(parents=True, exist_ok=True)
     example = {
         "stage": record.get("stage"),
         "brief": record.get("brief", ""),
@@ -54,29 +54,30 @@ def _promote_to_trainset(record: dict, review: dict) -> None:
         "asset_id": review.get("asset_id"),
         "ts": datetime.now(timezone.utc).isoformat(),
     }
-    with open(config.TRAINSET_FILE, "a", encoding="utf-8") as f:
+    with open(paths.trainset_file, "a", encoding="utf-8") as f:
         f.write(json.dumps(example) + "\n")
 
 
-def route_all(verbose: bool = True) -> list:
+def route_all(channel: str = None, verbose: bool = True) -> list:
+    paths = config.paths_for(channel)
     actions = []
-    for review in _load_reviews():
+    for review in _load_reviews(paths):
         status = (review.get("status") or "").strip().lower()
         asset_id = (review.get("asset_id") or "").strip()
         version = (review.get("version") or "").strip()
         if status not in naming.REVIEW_STATUSES:
             continue
-        src, parts = _find_artifact(asset_id, version)
+        src, parts = _find_artifact(asset_id, version, paths.candidates)
         if src is None:
             actions.append({"asset_id": asset_id, "version": version, "result": "artifact_not_found"})
             continue
         record = json.loads(src.read_text(encoding="utf-8"))
 
         if status == "accepted":
-            dest_dir, new_status = config.ACCEPTED_DIR, "promoted"
-            _promote_to_trainset(record, review)
+            dest_dir, new_status = paths.accepted, "promoted"
+            _promote_to_trainset(record, review, paths)
         elif status == "rejected":
-            dest_dir, new_status = config.REJECTED_DIR, "archived"
+            dest_dir, new_status = paths.rejected, "archived"
         else:  # revise
             actions.append({"asset_id": asset_id, "version": version, "result": "left_for_revision",
                             "next_action": review.get("next_action")})

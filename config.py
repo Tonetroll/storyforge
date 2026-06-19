@@ -5,6 +5,7 @@ stage, the scoring thresholds, and all filesystem paths. Nothing in this folder
 reaches outside it.
 """
 
+from dataclasses import dataclass
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -43,24 +44,61 @@ MAX_GEN_ATTEMPTS = 5     # gate: regenerate a NEW idea up to this many times unt
 # ---------------------------------------------------------------------------
 # Paths (all relative to this folder -- never outside it)
 # ---------------------------------------------------------------------------
+# SHARED across every channel: the engine reads these once. The craft standards
+# are the same bar for all channels; only the audience (a channel's profile) and
+# its data differ.
 BASE_DIR        = Path(__file__).resolve().parent
 RULES_DIR       = BASE_DIR / "rules"
 STANDARDS_DIR   = RULES_DIR / "standards"
-CHANNELS_DIR    = BASE_DIR / "channels"   # one profile per channel (audience + character/voice)
+CHANNELS_DIR    = BASE_DIR / "channels"   # one self-contained workspace per channel
 INSTRUCTIONS_DIR = BASE_DIR / "instructions"
 EXAMPLES_DIR    = BASE_DIR / "examples"
-OUTPUTS_DIR     = BASE_DIR / "outputs" / "ideas"
-CANDIDATES_DIR  = OUTPUTS_DIR / "candidates"
-ACCEPTED_DIR    = OUTPUTS_DIR / "accepted"
-REJECTED_DIR    = OUTPUTS_DIR / "rejected"
-ARCHIVED_DIR    = OUTPUTS_DIR / "archived"
-PARKED_DIR      = OUTPUTS_DIR / "parked"
-LOGS_DIR        = BASE_DIR / "logs"
-METRICS_DIR     = BASE_DIR / "metrics"
-METRICS_FILE    = METRICS_DIR / "scores.jsonl"
-REVIEW_DIR      = BASE_DIR / "review"
-REVIEW_FILE     = REVIEW_DIR / "human_review.csv"
-MEMORY_DIR      = BASE_DIR / "memory"
-TRAINSET_FILE   = MEMORY_DIR / "trainset.jsonl"
-COMPILED_DIR    = MEMORY_DIR / "compiled"
-RUN_INDEX_FILE  = MEMORY_DIR / "run_index.jsonl"
+
+
+# PER-CHANNEL: each channel is its own production line under channels/<name>/.
+# paths_for(name) resolves the whole workspace; the engine threads it through a run.
+@dataclass
+class ChannelPaths:
+    root: Path
+    profile: Path
+    seeds: Path
+    candidates: Path
+    accepted: Path
+    rejected: Path
+    archived: Path
+    parked: Path
+    logs: Path
+    metrics_file: Path
+    review_file: Path
+    memory: Path
+    trainset_file: Path
+    compiled: Path
+    run_index_file: Path
+
+    def output_dirs(self):
+        return [self.candidates, self.accepted, self.rejected, self.archived, self.parked]
+
+
+def paths_for(channel: str) -> ChannelPaths:
+    """A channel name -> its self-contained workspace. No channel -> a shared
+    '_sandbox' workspace (dry/smoke runs land there, not in a real channel)."""
+    root = CHANNELS_DIR / (channel or "_sandbox")
+    out = root / "outputs"
+    mem = root / "memory"
+    return ChannelPaths(
+        root=root,
+        profile=root / "profile.md",
+        seeds=root / "seeds" / "briefs.jsonl",
+        candidates=out / "candidates",
+        accepted=out / "accepted",
+        rejected=out / "rejected",
+        archived=out / "archived",
+        parked=out / "parked",
+        logs=root / "logs",
+        metrics_file=root / "metrics" / "scores.jsonl",
+        review_file=root / "review" / "human_review.csv",
+        memory=mem,
+        trainset_file=mem / "trainset.jsonl",
+        compiled=mem / "compiled",
+        run_index_file=mem / "run_index.jsonl",
+    )
