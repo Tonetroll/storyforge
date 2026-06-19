@@ -4,6 +4,8 @@
     python run.py generate --stage idea --brief "..."   # live (needs API keys)
     python run.py generate --dry-run                     # offline idea-stage smoke test
     python run.py manual --stage idea                    # hand-authored content (no keys)
+    python run.py chain --seeds seeds/briefs.jsonl       # whole pipeline, review at the end
+    python run.py chain --brief "..." --dry-run          # plumbing smoke test (no keys)
     python run.py route                                  # apply human_review.csv decisions
     python run.py learn --stage idea                     # retrain a stage's generator
 """
@@ -35,6 +37,12 @@ def main():
     m.add_argument("--file", default="manual_input.json")
     m.add_argument("--channel", default=None, help="channel profile folder in channels/<name>/")
 
+    c = sub.add_parser("chain", help="run the whole pipeline through to deliverables; stop at the weak link")
+    c.add_argument("--seeds", default="seeds/briefs.jsonl", help="JSONL of {brief, channel} seeds")
+    c.add_argument("--brief", default=None, help="run a single brief instead of the seeds file")
+    c.add_argument("--channel", default=None, help="channel profile folder in channels/<name>/")
+    c.add_argument("--dry-run", action="store_true", help="placeholder content, no keys (plumbing test)")
+
     sub.add_parser("route", help="apply review/human_review.csv decisions")
 
     l = sub.add_parser("learn", help="retrain a stage's generator from accepted examples")
@@ -59,10 +67,22 @@ def main():
             channel=args.channel,
         )
         print("\nRESULT:", result)
-    elif command == "route":
-        from pipeline import router
-        print("Routing reviewed artifacts...")
-        router.route_all()
+    elif command == "chain":
+        from pipeline import chain
+        if args.brief:
+            results = [chain.run_chain(args.brief, channel=args.channel, dry_run=args.dry_run)]
+        else:
+            results = chain.run_seeds(args.seeds, dry_run=args.dry_run)
+        print("\n================ RUN-THROUGH SUMMARY ================")
+        for r in results:
+            print(f"\nseed: {r['brief'][:70]}")
+            for s in r["trail"]:
+                mark = "OK " if s["outcome"] == "ready_for_review" else "STOP"
+                print(f"  [{mark}] {s['stage']:<10} {s['outcome']:<16} score={s['score']}")
+            if r["stopped_at"]:
+                print(f"  >> WEAK LINK: stopped at '{r['stopped_at']}' ({r['reason']}) - review/fix this stage.")
+            else:
+                print(f"  >> reached deliverables: {', '.join(d['stage'] for d in r['deliverables'])} - ready for your review.")
     elif command == "learn":
         from pipeline import learn
         learn.compile_generator(stage_name=args.stage, dry_run=getattr(args, "dry_run", False))
