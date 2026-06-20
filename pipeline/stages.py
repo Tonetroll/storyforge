@@ -301,9 +301,9 @@ PACKAGING = Stage(
     },
     gen_standard_file="packaging_generator.md",
     eval_standard_file="packaging_evaluator.md",
-    upstream="stakebake",
+    upstream="script_long",   # built off the FINISHED long-form script (it holds the whole story), not the stakebake
     build_brief=lambda rec: (
-        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        f"{rec.get('brief', '')}\n\nLONG-FORM SCRIPT:\n"
         + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
         + "\n\nCreate the title + thumbnail that will make this video get clicked."
     ),
@@ -328,9 +328,9 @@ DESCRIPTION = Stage(
     },
     gen_standard_file="description_generator.md",
     eval_standard_file="description_evaluator.md",
-    upstream="stakebake",
+    upstream="script_long",   # built off the FINISHED long-form script (it holds the whole story), not the stakebake
     build_brief=lambda rec: (
-        f"{rec.get('brief', '')}\n\nRAISED-STAKES BEATS:\n"
+        f"{rec.get('brief', '')}\n\nLONG-FORM SCRIPT:\n"
         + "\n".join(f"- {k}: {v}" for k, v in (rec.get("content") or {}).items())
         + "\n\nWrite the YouTube description (hook -> mirror -> signal) for this video."
     ),
@@ -341,9 +341,10 @@ DESCRIPTION = Stage(
 )
 
 
-# Pipeline order: idea -> theme -> structure -> stakebake -> script
-# Script alternates (read accepted stakebake): script | script_long | script_screenplay | script_podcast
-# Off the accepted stakebake too: packaging (title+thumbnail) and description (the YouTube description)
+# Pipeline order: idea -> theme -> structure -> stakebake -> script formats
+# Script formats (read accepted stakebake): script | script_long | script_screenplay | script_podcast
+# Off the PROMOTED long-form script (it holds the whole story): packaging (title+thumbnail)
+# and description (the YouTube description). They run AFTER the scripts, not off the stakebake.
 STAGES = {IDEA.name: IDEA, THEME.name: THEME, STORY.name: STORY, STAKEBAKE.name: STAKEBAKE,
           SCRIPT.name: SCRIPT, SCRIPT_LONG.name: SCRIPT_LONG,
           SCRIPT_SCREENPLAY.name: SCRIPT_SCREENPLAY, SCRIPT_PODCAST.name: SCRIPT_PODCAST,

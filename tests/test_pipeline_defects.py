@@ -121,18 +121,26 @@ def _orchestrator_stub(parked_stage=None):
     return _run
 
 
+# The full set of deliverables the chain now attempts: the four script formats
+# (off the accepted stakebake) plus packaging + description (off the promoted
+# script_long). When script_long itself reaches ready_for_review, all are attempted.
+ALL_DELIVERABLES = chain.SCRIPT_FORMATS + chain.OFF_SCRIPT
+
+
 def test_run_chain_reports_parked_deliverable(channel_ws, monkeypatch):
     from pipeline import orchestrator
 
+    # Park packaging (an off-script deliverable). script_long still passes, so
+    # packaging is still ATTEMPTED -- and parks -- so it lands in incomplete.
     monkeypatch.setattr(orchestrator, "run", _orchestrator_stub(parked_stage="packaging"))
     # _promote reads/writes real artifacts for the spine; stub it out.
     monkeypatch.setattr(chain, "_promote", lambda artifact_path, paths: None)
 
     result = chain.run_chain(brief="x", channel=channel_ws["channel"])
 
-    # All three deliverables attempted (none aborted).
+    # All deliverables attempted (none aborted): four scripts + packaging + description.
     attempted = [s["stage"] for s in result["deliverables"]]
-    assert attempted == chain.DELIVERABLES, attempted
+    assert attempted == ALL_DELIVERABLES, attempted
     # The parked one is honestly reported.
     assert result["incomplete_deliverables"] == ["packaging"], result.get("incomplete_deliverables")
     # The spine still finished cleanly.
@@ -149,4 +157,4 @@ def test_run_chain_clean_run_has_empty_incomplete(channel_ws, monkeypatch):
 
     assert result["incomplete_deliverables"] == [], result.get("incomplete_deliverables")
     attempted = [s["stage"] for s in result["deliverables"]]
-    assert attempted == chain.DELIVERABLES, attempted
+    assert attempted == ALL_DELIVERABLES, attempted

@@ -19,9 +19,16 @@ from pathlib import Path
 import config
 from pipeline import orchestrator, naming, render, stages
 
-# The sequential spine: each feeds the next. Then the terminal deliverables off stakebake.
+# The sequential spine: each feeds the next.
 SEQUENCE = ["idea", "theme", "story", "stakebake"]
-DELIVERABLES = ["script", "packaging", "description"]
+# The four script formats, each generated off the accepted stakebake (owner is
+# evaluating which format fits -- keep all four). These are terminal outputs.
+SCRIPT_FORMATS = ["script", "script_long", "script_screenplay", "script_podcast"]
+# Built off the PROMOTED long-form script (it holds the whole story), AFTER the
+# scripts -- NOT off the stakebake. A short doesn't even need a thumbnail.
+OFF_SCRIPT = ["packaging", "description"]
+# The long-form script packaging/description depend on; only a ready artifact is promotable.
+OFF_SCRIPT_SOURCE = "script_long"
 
 
 def _promote(artifact_path: str, paths) -> Path:
@@ -73,9 +80,29 @@ def _scripted_for(stage) -> dict:
 
 
 def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverables=None) -> dict:
-    """Drive one brief through the whole pipeline for ONE channel. Returns where it
-    stopped (if it did) and the terminal deliverables left for review."""
-    deliverables = deliverables or DELIVERABLES
+    """Drive one brief through the whole pipeline for ONE channel.
+
+    Flow:
+      idea -> theme -> story -> stakebake   (the spine: promote each on target, stop
+                                             at the first weak link)
+      -> script, script_long, script_screenplay, script_podcast
+                                            (all four script formats, each off the
+                                             accepted stakebake -- terminal outputs)
+      -> [promote script_long]              (only if it reached ready_for_review)
+      -> packaging, description             (both built off the PROMOTED long-form
+                                             script, which holds the whole story)
+
+    The four scripts are INDEPENDENT siblings: attempt all even if one fails. Then,
+    because packaging/description build off the long-form script, the chain promotes
+    script_long (a ready artifact is required to promote) and runs them off it.
+
+    EDGE CASE: if script_long did NOT reach ready_for_review it cannot be promoted,
+    so packaging/description cannot be built -- they are SKIPPED (not run), recorded
+    in incomplete_deliverables with a skipped_reason, and the chain does not raise
+    (it never lets the orchestrator hit its "No accepted 'script_long'" error).
+
+    Returns where it stopped (if the spine stalled) and the terminal deliverables
+    left for review, plus incomplete_deliverables (anything not ready_for_review)."""
     paths = config.paths_for(channel)
     trail = []
 
@@ -93,12 +120,14 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
                     "reason": res.get("outcome"), "trail": trail, "deliverables": []}
         _promote(res["artifact"], paths)
 
-    # --- terminal deliverables off the accepted stakebake (left at ready_for_review) ---
-    # These are INDEPENDENT siblings: attempt ALL of them even if one fails, but
-    # honestly report any that did not reach ready_for_review.
     made = []
     incomplete = []
-    for name in deliverables:
+
+    # --- the four script formats, each off the accepted stakebake (terminal) -------
+    # INDEPENDENT siblings: attempt ALL even if one fails; honestly report any that
+    # did not reach ready_for_review. Track script_long: packaging/description need it.
+    script_long_res = None
+    for name in SCRIPT_FORMATS:
         stage = stages.get_stage(name)
         scripted = _scripted_for(stage) if dry_run else None
         res = orchestrator.run(stage_name=name, brief=None, channel=channel, scripted=scripted)
@@ -108,10 +137,43 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
         made.append(step)
         if res.get("outcome") != "ready_for_review":
             incomplete.append(name)
+        if name == OFF_SCRIPT_SOURCE:
+            script_long_res = res
 
-    return {"brief": brief, "channel": channel, "stopped_at": None,
-            "trail": trail, "deliverables": made,
-            "incomplete_deliverables": incomplete}
+    # --- packaging + description, built off the PROMOTED long-form script ----------
+    # Only a ready artifact is promotable. If script_long did not reach
+    # ready_for_review, it cannot be promoted -> packaging/description cannot be built.
+    # Detect that BEFORE calling run for them (so the orchestrator never raises its
+    # "No accepted 'script_long'" error), skip them, and report them honestly.
+    skipped_reason = None
+    long_form_ready = (script_long_res is not None
+                       and script_long_res.get("outcome") == "ready_for_review")
+    if long_form_ready:
+        _promote(script_long_res["artifact"], paths)
+        for name in OFF_SCRIPT:
+            stage = stages.get_stage(name)
+            scripted = _scripted_for(stage) if dry_run else None
+            res = orchestrator.run(stage_name=name, brief=None, channel=channel, scripted=scripted)
+            step = {"stage": name, "outcome": res.get("outcome"),
+                    "score": res.get("final_score"), "artifact": res.get("artifact")}
+            trail.append(step)
+            made.append(step)
+            if res.get("outcome") != "ready_for_review":
+                incomplete.append(name)
+    else:
+        skipped_reason = ("long-form script did not reach ready_for_review -- "
+                          "packaging and description cannot be built off it.")
+        for name in OFF_SCRIPT:
+            trail.append({"stage": name, "outcome": "skipped",
+                          "score": None, "artifact": None, "skipped_reason": skipped_reason})
+            incomplete.append(name)
+
+    result = {"brief": brief, "channel": channel, "stopped_at": None,
+              "trail": trail, "deliverables": made,
+              "incomplete_deliverables": incomplete}
+    if skipped_reason:
+        result["skipped_reason"] = skipped_reason
+    return result
 
 
 def _brief_from_line(line: str) -> str:
