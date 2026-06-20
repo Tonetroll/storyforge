@@ -72,7 +72,7 @@ def _idea_dummy_lms():
     return lm_a, lm_b
 
 
-def build_modules(stage, dry_run: bool = False, scripted: dict = None):
+def build_modules(stage, dry_run: bool = False, scripted: dict = None, paths=None):
     generator = Generator(stage.gen_sig)
     iterator = Iterator(stage.iter_sig, stage.content_fields)
     evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
@@ -87,12 +87,26 @@ def build_modules(stage, dry_run: bool = False, scripted: dict = None):
     else:
         lm_a = dspy.LM(**config.GENERATOR_LM)
         lm_b = dspy.LM(**config.EVALUATOR_LM)
+    # LIVE only (real paid run): if a compiled (optimized) generator exists for this
+    # stage, load its bootstrapped demos into the FRESH student so learning actually
+    # reaches production. dspy load can wipe the per-predictor .lm (learn.py's
+    # reset_copy() note), so we load BEFORE set_lm and then re-affirm the LM below --
+    # leaving the loaded generator callable. Never load in dry_run/scripted (DummyLM
+    # demos would be meaningless/harmful). The loaded path (or None) is returned to
+    # the caller (run()) so it can log it.
+    loaded_compiled = None
+    live = (scripted is None) and (dry_run is False)
+    if live and paths is not None:
+        compiled_path = paths.compiled / f"{stage.name}_generator.json"
+        if compiled_path.exists():
+            generator.load(str(compiled_path))
+            loaded_compiled = compiled_path
     generator.set_lm(lm_a)
     iterator.set_lm(lm_a)
     evaluator.set_lm(lm_b)
     reevaluator.set_lm(lm_b)
     assert_separation(generator.get_lm(), evaluator.get_lm())
-    return generator, evaluator, iterator, reevaluator
+    return generator, evaluator, iterator, reevaluator, loaded_compiled
 
 
 # ---------------------------------------------------------------------------
@@ -280,7 +294,10 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         eval_criteria = ("THE STORY PACKAGE (the script MUST deliver all of this):\n"
                          f"{_assembly_text(assembly)}\n\n=== GATE CRITERIA ===\n{eval_criteria}")
 
-    generator, evaluator, iterator, reevaluator = build_modules(stage, dry_run=dry_run, scripted=scripted)
+    generator, evaluator, iterator, reevaluator, loaded_compiled = build_modules(
+        stage, dry_run=dry_run, scripted=scripted, paths=paths)
+    if loaded_compiled is not None:
+        log.info("LOADED compiled generator (learned demos) <- %s", loaded_compiled)
     gen_model = getattr(generator.get_lm(), "model", "?")
     eval_model = getattr(evaluator.get_lm(), "model", "?")
     log.info("generator/iterator LM = %s | evaluator/reevaluator LM = %s", gen_model, eval_model)

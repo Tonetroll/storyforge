@@ -87,7 +87,7 @@ def test_no_channel_live_does_not_raise_on_profile(channel_ws, monkeypatch):
     is the profile guard does not raise for a falsy channel.)"""
     sentinel = {}
 
-    def _fake_build(stage, dry_run=False, scripted=None):
+    def _fake_build(stage, dry_run=False, scripted=None, paths=None):
         sentinel["built"] = True
         raise RuntimeError("STOP-AFTER-GUARD")  # prove we got PAST the profile guard
 

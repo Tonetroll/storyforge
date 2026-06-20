@@ -61,14 +61,20 @@ def compile_generator(stage_name: str = "idea", channel: str = None, dry_run: bo
         return None
 
     generator = Generator(stage.gen_sig)
-    evaluator = Evaluator(stage.gate_sig, stage.weights)
+    # Grade demos with the SAME hybrid gate runtime uses (penalty_points + verdict_floor),
+    # identical to orchestrator.build_modules -- so optimization selects demos under the
+    # exact production rules, not the all-pass/no-penalty branch.
+    evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
     if dry_run:
         from dspy.utils.dummies import DummyLM
         gen_a = {"reasoning": "r", stage.topic_field: "t"}
         for fld in stage.content_fields:
             gen_a[fld] = "x"
             gen_a[f"improved_{fld}"] = "x"
-        eval_a = {"reasoning": "r", "verdict": "PASS", "failed_checks": "none", "why": "good"}
+        # "jargon"="false" -> no penalty on hybrid stages; full weights -> total == SCORE_SCALE,
+        # which clears any verdict_floor, so dry_run optimization still yields PASS at/above target.
+        eval_a = {"reasoning": "r", "verdict": "PASS", "failed_checks": "none", "why": "good",
+                  "jargon": "false"}
         for k, w in stage.weights.items():
             eval_a[f"score_{k}"] = str(w)
         gen_lm = DummyLM([gen_a] * 50)
@@ -91,5 +97,9 @@ def compile_generator(stage_name: str = "idea", channel: str = None, dry_run: bo
     paths.compiled.mkdir(parents=True, exist_ok=True)
     out = paths.compiled / f"{stage.name}_generator.json"
     compiled.save(str(out), save_program=False)
-    print(f"Saved compiled generator -> {out.relative_to(config.BASE_DIR)}")
+    try:
+        shown = out.relative_to(config.BASE_DIR)
+    except ValueError:
+        shown = out  # compiled under an isolated/external root (e.g. tests) -> show absolute
+    print(f"Saved compiled generator -> {shown}")
     return out
