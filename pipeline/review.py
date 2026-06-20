@@ -64,6 +64,38 @@ def review_queue(channel: str = None) -> dict:
     return {"channel": channel, "pending": pending, "reviewed": reviewed}
 
 
+def all_channels_pending() -> list:
+    """Per real channel, the items awaiting Tone's verdict. Skips scratch dirs
+    (_sandbox / _TEMPLATE). Used by the SessionStart hook to surface the queue."""
+    base = config.CHANNELS_DIR
+    rows = []
+    if not base.exists():
+        return rows
+    for d in sorted(base.iterdir()):
+        if not d.is_dir() or d.name.startswith("_"):
+            continue
+        q = review_queue(d.name)
+        if q["pending"]:
+            rows.append({"channel": d.name, "pending": q["pending"]})
+    return rows
+
+
+def print_all_pending() -> list:
+    """One-line-per-channel summary of what's awaiting review (for the hook)."""
+    rows = all_channels_pending()
+    if not rows:
+        print("Review queue: nothing awaiting Tone's verdict.")
+        return rows
+    total = sum(len(r["pending"]) for r in rows)
+    print(f"REVIEW QUEUE: {total} artifact(s) awaiting Tone's verdict --")
+    for r in rows:
+        passed = sum(1 for e in r["pending"] if e["machine_outcome"] == "passed")
+        parked = sum(1 for e in r["pending"] if e["machine_outcome"] == "parked")
+        print(f"  {r['channel']}: {len(r['pending'])} pending "
+              f"({passed} passed, {parked} parked)  ->  python run.py review --channel {r['channel']}")
+    return rows
+
+
 def _fmt(e: dict) -> str:
     tag = "PASS" if e["machine_outcome"] == "passed" else "PARK"
     score = e["score"] if e["score"] is not None else "?"

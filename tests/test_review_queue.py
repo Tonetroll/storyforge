@@ -47,3 +47,13 @@ def test_logged_items_leave_pending(channel_ws):
     q = review.review_queue(channel_ws["channel"])
     assert q["pending"] == []
     assert [e["asset_id"] for e in q["reviewed"]] == ["a_0001"]
+
+
+def test_all_channels_pending_lists_channel_with_pending(channel_ws):
+    paths = channel_ws["paths"]
+    _write(paths.candidates, "a_0001_v03_ready_for_review.json",
+           {"asset_id": "a_0001", "story_id": "ST-0001", "stage": "idea",
+            "score": 96, "verdict": "PASS", "status": "ready_for_review"})
+    rows = review.all_channels_pending()
+    assert any(r["channel"] == channel_ws["channel"] and len(r["pending"]) == 1
+               for r in rows)

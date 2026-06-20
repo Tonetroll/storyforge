@@ -54,6 +54,7 @@ def main():
 
     rv = sub.add_parser("review", help="show what's awaiting your review (passes + parked), with the machine verdict per item")
     rv.add_argument("--channel", default=None, help="the channel workspace to review")
+    rv.add_argument("--all", action="store_true", help="summarize pending reviews across all channels")
 
     l = sub.add_parser("learn", help="retrain a channel's stage generator from its accepted examples")
     l.add_argument("--stage", default="idea")
@@ -113,7 +114,10 @@ def main():
         router.route_all(channel=args.channel)
     elif command == "review":
         from pipeline import review
-        review.print_queue(args.channel)
+        if getattr(args, "all", False):
+            review.print_all_pending()
+        else:
+            review.print_queue(args.channel)
     elif command == "learn":
         from pipeline import learn
         learn.compile_generator(stage_name=args.stage, channel=args.channel,
