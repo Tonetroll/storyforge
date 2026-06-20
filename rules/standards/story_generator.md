@@ -49,3 +49,21 @@ The link is non-negotiable: the misbelief feeds the fear; the fear blocks the de
 The **misbelief named in Act 1 is exactly the thing overcome in Recovery.** The
 dark moment re-triggers the **specific** fear from Phase 2. If the internal arc
 doesn't close, the beats don't matter. The pull of the whole story is the tension between the Desire and the Misbelief -- that's the source of attention and emotion, not the surface events. When a beat (above all the resolution) feels flat, it's showing the WHAT without the desire/belief beneath it.
+
+**Build the arc as belief moving, not desire dying.** The desire from Phase 2 is
+constant — write it as present the whole way through, even at the dark moment.
+What you actually move up and down across the beats is the protagonist's *belief*
+that the desire is reachable and his clarity to act on it; what clouds that belief
+is emotional resistance (a reaction, or just not feeling it), and that resistance
+is part of the arc — let it test and reshape the belief, even make him stop or give
+up, but never let the desire leave. So in Recovery, do NOT write the desire
+"coming back" or being rediscovered; write the emotion settling and the desire
+*resurfacing* — he realises it was there all along. Keep the motive self-oriented
+(to be valued, to be the best, to win) and place him on the axis from ego-driven
+(needing the world's verdict to prove it) toward authentic (expressing it because
+it's his) — Recovery usually moves him along that axis, it doesn't add a duty to
+others. If a team turns the corner with him, make it MIRRORING: his fire and
+theirs catching each other and pulling the same way (others drawn to where the
+success is, able to lift or drag the fire) — he keeps his eye on the prize; he does
+not carry them. Belief sits on a spectrum across the cast — never write everyone
+believing the same thing at the same time.

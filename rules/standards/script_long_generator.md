@@ -18,6 +18,15 @@ act opens and partly closes a loop while a larger one stays open to the end.
 ## Long-form rules (this format)
 
 - **Immersive, flowing narration.** Let sentences breathe; vary the rhythm. Build.
+  Use the room to run the engine slowly: hold one DESIRE steady underneath and let
+  the BELIEF that it's reachable rise and fall as emotional resistance clouds him —
+  he can stall, doubt, even quit, yet keep the want; when the emotion settles, write
+  it resurfacing as something that was there all along, not a comeback switched back
+  on. Place people at different points on that belief spectrum, not one shared
+  conviction. Keep his pull AUTHENTIC — he expresses the want, he isn't proving it
+  for the crowd's verdict, and he isn't carrying or rescuing the others. Let the team
+  move only when they MIRROR each other's desire and lean the same way; show others
+  drawn toward the value, lifting the fire or dragging it, while he stays on the prize.
 - Paint the scene; slow down on the turns. Use silence and detail.
 - Still no filler and no hype words — long does not mean padded.
 - Carry one spine question from the first line to the payoff.

@@ -7,7 +7,7 @@ addiction loop, voice — judged for the LONG-FORM format. Jargon is a penalty.
 
 | Type | Check | Points |
 |---|---|---|
-| graded | **D1 Delivery** — carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE above); the payoff lands the WHY beneath the event — the desire and the belief driving it — not just the surface event (a payoff that shows only WHAT happened scores low) | 0–20 |
+| graded | **D1 Delivery** — carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE above); the payoff lands the WHY beneath the event — the desire and the belief driving it — not just the surface event (a payoff that shows only WHAT happened scores low). Use the long-form room as evidence: dock if the desire doesn't hold constant while belief visibly wavers under emotional resistance and later resurfaces (as if always there, not switched back on); dock if everyone sits at one belief level instead of a spectrum; dock if the drive reads as ego/proving-for-the-crowd or as him carrying/rescuing others rather than authentically expressing his own want; dock if the team shifts by anything other than mutual mirroring of desire | 0–20 |
 | binary | **L1 Hook opens a loop** — a spine question opens early | 0 or 12 |
 | binary | **L2 Head fake** — at least one earned reveal that breaks a prediction | 0 or 12 |
 | graded | **L3 Loops chain / no dead air** — nested loops keep the piece moving across its length | 0–13 |

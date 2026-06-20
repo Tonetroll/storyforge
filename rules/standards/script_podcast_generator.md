@@ -23,7 +23,7 @@ natural, spoken, back-and-forth dialogue.
 
 - **hook** — the cold open: the teaser line that opens the loop.
 - **body** — the conversation (HOST A / HOST B), the story told through the back-and-forth with the loop running.
-- **payoff** — the line that lands the theme in the talk: not just WHAT happened, but the desire and the belief underneath it — what they wanted and what they believed (e.g. not "his country caught him" but "they still believed he was the one who could win, so they held that space for him").
+- **payoff** — the line that lands the theme in the talk: not just WHAT happened, but the desire and the belief underneath it — what they wanted and what they believed (e.g. not "his country caught him" but "they still believed he was the one who could win, so they held that space for him"). Build it through the talk: let the hosts circle the one desire that never leaves him while they track the BELIEF moving — one host voicing the doubt or the emotion that clouds it, the other catching where it lifts again; when the feeling settles, write it as the desire resurfacing ("it was there the whole time"), not a comeback. Keep voices on a belief SPECTRUM — they don't land in the same place. Let them name his want as authentic self-expression, not proving himself for the world's verdict, and let the room move because people MIRROR that fire and pull the same way — never because he's carrying or caring for them.
 - **cta** — the outro / one clear listener action.
 - **loop_notes** — where the loop opens, the head fake, and the rehooks sit.
 

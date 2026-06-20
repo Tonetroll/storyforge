@@ -17,6 +17,13 @@ then signal who it's for (to the human AND to YouTube).
   beneath the feeling (what they want, and the belief that fights it), not just
   the surface state. "You did everything right and still believe it'll never be
   enough" lands the desire + belief; "you feel stuck" only names the WHAT.
+  Mirror the desire as it genuinely is — a want they'd own quietly (to be valued,
+  to be the best, to make it), the AUTHENTIC version they'd admit to themselves —
+  not a chest-out "prove the world wrong" pitch staged for an audience. The
+  variable you're touching is the BELIEF, not the desire (the desire never left);
+  and readers sit at different points on that belief — write the mirror so it
+  catches the one mid-doubt without shaming the one further along. Let the line
+  carry the real value the video offers; never manufacture an ache to bait the click.
 - **audience_signal** — a line that says who this is for + uses the natural
   language the audience would actually search or recognize. This makes the right
   person self-identify, helps YouTube place the video, and naturally signals who

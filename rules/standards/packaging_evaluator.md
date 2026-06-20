@@ -8,7 +8,7 @@ worth an equal share of 100; the total is the YES count scaled to 100.
 
 ### Visual
 - **Q1 — Visual Anchor:** a clear anchor — a face with strong emotional expression, AND/OR a bold graphic/icon/product that immediately draws the eye?
-- **Q2 — Emotion or Intrigue:** strong emotion (shock, excitement, curiosity) OR visual intrigue through contrast, mystery, or unexpected elements — and does that emotion read as the WHY beneath the event (the desire being chased / the belief driving it, the pull of wanting/believing), not just the surface event shown?
+- **Q2 — Emotion or Intrigue:** strong emotion (shock, excitement, curiosity) OR visual intrigue through contrast, mystery, or unexpected elements — and does that emotion read as the WHY beneath the event (the desire being chased / the belief driving it, the pull of wanting/believing), not just the surface event shown? Dock it when the emotion is manufactured hype or ego-bait rather than the genuine value: a face/title performing for the world's verdict ("look how impressive"), shock the video does not pay off, or intensity with no real desire under it. Don't dock honest intensity — a real want dialed up is fine; only flag pull that is faked or detached from the value delivered.
 - **Q3 — Directional Cues:** the subject looking at the object, gaze direction, pointing, arrows, layout flow — guiding the eye toward the title or key element?
 - **Q4 — Text Readability:** any text legible at thumbnail size (bold font, high contrast, max 4 words)?
 - **Q5 — Background:** if tutorial — clean/uncluttered (dark, simple, blurred) so the subject pops; if a story — the transformed setting.

@@ -13,7 +13,7 @@ binary rules (R1–R5) are pass/fail — full points or zero. The graded checks
 | binary | **R3 Tough choice / no-win** — a moral dilemma between two unfavorable options | 12 (0 or 12) |
 | binary | **R4 Personal consequences** — affects the character's life, safety, or relationships, not just external events | 12 (0 or 12) |
 | binary | **R5 No safety nets** — no plot armor; mistakes carry consequences | 12 (0 or 12) |
-| graded | **G1 Emotional stakes land** — the external goal is tied to a deeper psychological/emotional need (Surface Want vs. Deeper Need); the stakes land the DESIRE-vs-BELIEF tension that's actually at risk (the WHY beneath the event, not just the event); how strongly | 0–25 |
+| graded | **G1 Emotional stakes land** — the external goal is tied to a deeper psychological/emotional need (Surface Want vs. Deeper Need); the stakes land the DESIRE-vs-BELIEF tension that's actually at risk (the WHY beneath the event, not just the event); how strongly. Dock when the threat is aimed at the desire itself (desire "dies" or "comes back") instead of at the belief/clarity that it's reachable; dock when everyone's belief moves in lockstep instead of sitting at different points on the spectrum; dock when the stakes ride on PROVING the want for the crowd's verdict rather than losing the chance to EXPRESS it authentically; dock when team stakes make him responsible for carrying others rather than the mutual mirror lifting or breaking. | 0–25 |
 | graded | **G2 Specific & relatable** — the stakes are specific to the audience avatar, not generic | 0–15 |
 | **penalty** | **P1 Jargon** — clinical/AI jargon present (Somatic, Metabolic, etc.) | **−15** |
 

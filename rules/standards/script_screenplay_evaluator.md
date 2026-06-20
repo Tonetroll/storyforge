@@ -9,7 +9,7 @@ judged for the TWO-PART SCREENPLAY format. Jargon is a penalty.
 |---|---|---|
 | graded | **D1 Delivery** — the stakes, theme's belief-shift, structure's arc, and hook are dramatized across the two parts, and the payoff lands the desire/belief WHY beneath the event (not just the surface turn) — verify against THE STORY PACKAGE above | 0–20 |
 | binary | **L1 Part 1 opens a loop** — a visual question we need answered | 0 or 12 |
-| binary | **L2 Head fake** — part 2 pays off with an earned reversal that lands the desire/belief WHY beneath the turn, not just the surface event | 0 or 12 |
+| binary | **L2 Head fake** — part 2 pays off with an earned reversal that lands the desire/belief WHY beneath the turn, not just the surface event. Award only if the WHY is READABLE ON SCREEN: a constant desire-image carries across both parts, and what visibly shifts is belief — clouded by emotional resistance in part 1, resurfacing in part 2. Withhold the points (0) if the turn is only a plot event with no visible desire/belief, if belief flips absolute (doubt→certainty) instead of moving along a spectrum, if the desire is narrated as "returning" rather than shown resurfacing, if he performs the want for a crowd's verdict instead of expressing it, or if a team's turn is asserted in dialogue rather than shown as mirroring (others catching the same fire in frame) | 0 or 12 |
 | graded | **L3 The two parts chain** — part 1 makes us need part 2; no dead beat between | 0–13 |
 | graded | **V1 Visual & image-generatable** — each part is a clear, shootable image in proper screenplay form (slugline / action / dialogue) | 0–25 |
 | graded | **V2 Concrete & dramatic** — real action and dialogue, not narration or interiority | 0–18 |

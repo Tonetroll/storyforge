@@ -8,7 +8,7 @@ screenplay form (slugline, visual action, dialogue), built for the camera.
 ## The two parts
 
 - **Part 1** — opens the loop and plants the head fake. One clear scene, one strong image.
-- **Part 2** — pays off: the earned reversal / the turn. One clear scene, one strong image. The turn must land the WHY beneath the event — the desire and the belief driving it — not just the surface reversal (not "his country caught him" but "they still believed he was the one who could win, so they held that space for him").
+- **Part 2** — pays off: the earned reversal / the turn. One clear scene, one strong image. The turn must land the WHY beneath the event — the desire and the belief driving it — not just the surface reversal (not "his country caught him" but "they still believed he was the one who could win, so they held that space for him"). Build that WHY VISUALLY: the desire is constant, so stage it as one image that holds across both parts (a look, an object, a place he keeps returning to); what moves on screen is BELIEF — let the part-1 image show it clouded by emotional resistance (a flinch, a turning-away, a stalled body) and the part-2 image show it resurfacing, never narrated as "coming back." Keep him expressing the want, not performing it for a crowd's verdict, and shade where he sits on the belief spectrum rather than flipping him from doubt to certainty. If a team turns with him, show it as MIRRORING — others catching the same fire in frame (eyes lifting, a step falling in) drawn toward the value, not him stopping to carry them.
 
 Each part must stand as a single shootable image: a place, a subject, an action, a charged moment.
 

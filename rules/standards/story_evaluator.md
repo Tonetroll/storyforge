@@ -13,7 +13,7 @@ beat exists to serve the internal change.
 | Check | What | Max |
 |---|---|---|
 | 1 | **Character engine** — Desire, Fear, Misbelief all defined, concrete, and causally linked (misbelief feeds fear; fear blocks desire) | 25 |
-| 2 | **Character arc closes** — the misbelief named in Act 1 is exactly what's overcome in Recovery; the protagonist visibly changes | 20 |
+| 2 | **Character arc closes** — the misbelief named in Act 1 is exactly what's overcome in Recovery; the protagonist visibly changes. Dock if the arc runs on the desire *leaving and returning* (it should stay constant — only belief/clarity rises and falls, clouded by emotional resistance, so Recovery is the desire *resurfacing* as the emotion settles, not a rediscovered want). Dock if the change is the protagonist learning to carry/care-for others, or earning the world's verdict, rather than moving from ego-driven toward authentically expressing his own desire; if a team turns with him, it must be mutual mirroring, not him shouldering them | 20 |
 | 3 | **Midpoint is a true reversal** — everything changes; reactionary-hero flips to action-hero. Not a minor bump | 15 |
 | 4 | **Disaster + dark moment land** — disaster is foreshadowed for the reader but blindsides the protagonist; the dark moment re-triggers the SPECIFIC fear from check 1 | 15 |
 | 5 | **Structural completeness** — every beat present and in order across the 3 acts/loops; pinch points escalate the opposition | 15 |
@@ -51,4 +51,4 @@ reverses, a disaster the reader dreads while the protagonist strides in blind, a
 dark moment that throws the original fear back in their face, and a recovery
 where they drop the misbelief and change. A REJECT: the beats are filled but the
 "misbelief" is vague, the dark moment is just sad (not the fear returning), or the
-recovery is the protagonist trying harder instead of believing differently, or the resolution states only the event (the WHAT) without the desire and belief beneath it (the WHY).
+recovery is the protagonist trying harder instead of believing differently, or the resolution states only the event (the WHAT) without the desire and belief beneath it (the WHY). Also reject-flavoured: the recovery has the desire vanish and then "come back" (the desire should never have left — only the belief in reaching it dipped under emotional resistance), the change is the protagonist deciding to care for or carry others or to win the crowd's approval (instead of shifting from ego toward authentically owning his own desire), or a team rallies because he saves them rather than because their fire and his mirror and pull together. Watch too for everyone in the cast believing the same thing at once — belief should read as a spectrum.
