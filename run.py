@@ -61,6 +61,9 @@ def main():
     l.add_argument("--channel", default=None, help="the channel workspace to learn from")
     l.add_argument("--dry-run", action="store_true")
 
+    cl = sub.add_parser("cleanup", help="archive superseded draft revisions so the folders don't overpopulate")
+    cl.add_argument("--channel", default=None, help="the channel workspace to clean")
+
     args = parser.parse_args()
     command = args.command or "generate"
 
@@ -95,6 +98,12 @@ def main():
                 print(f"  >> WEAK LINK: stopped at '{r['stopped_at']}' ({r['reason']}) - review/fix this stage.")
             else:
                 print(f"  >> reached deliverables: {', '.join(d['stage'] for d in r['deliverables'])} - ready for your review.")
+        # Auto-cleanup: archive superseded draft revisions so the folders stay lean.
+        import config
+        from pipeline import cleanup
+        cl_res = cleanup.cleanup_channel(config.paths_for(args.channel))
+        if cl_res["archived"]:
+            print(f"\n  [auto-cleanup] archived {cl_res['archived']} superseded draft file(s) -> outputs/archived/")
     elif command == "new-channel":
         from pipeline import channel_setup
         info = channel_setup.create_channel(args.name)
@@ -122,6 +131,11 @@ def main():
         from pipeline import learn
         learn.compile_generator(stage_name=args.stage, channel=args.channel,
                                 dry_run=getattr(args, "dry_run", False))
+    elif command == "cleanup":
+        import config
+        from pipeline import cleanup
+        res = cleanup.cleanup_channel(config.paths_for(args.channel))
+        print(f"Cleanup: archived {res['archived']} superseded draft file(s); kept {res['kept']} live draft(s).")
     else:
         parser.print_help()
         sys.exit(1)
