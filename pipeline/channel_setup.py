@@ -29,7 +29,12 @@ def create_channel(name: str) -> dict:
             "# The channel is the workspace, so you don't name it per line.\n",
             encoding="utf-8")
     if not P.review_file.exists():
-        P.review_file.write_text("asset_id,module,version,score,status,reason,next_action\n", encoding="utf-8")
+        P.review_file.write_text(
+            "# Review journal\n\n"
+            "Reviews happen in conversation with Claude, not here. This file is the\n"
+            "permanent, append-only record of each verdict + the reasoning behind it.\n"
+            "Don't hand-edit it -- Claude writes an entry every time you review.\n",
+            encoding="utf-8")
 
     return {"channel": name, "root": str(P.root), "already_existed": existed,
             "profile": str(P.profile), "seeds": str(P.seeds)}

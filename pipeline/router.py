@@ -1,14 +1,16 @@
-"""Router: turns human review decisions into system actions.
+"""Router (LEGACY batch path): applies decisions from a review file.
 
-Reads review/human_review.csv (columns: asset_id | module | version | score |
-status | reason | next_action) and routes each reviewed artifact:
+Reviews now happen in conversation via the `review-logging` skill, which writes
+the append-only journal review/human_review.md and routes lessons + promotes or
+rejects artifacts directly. This batch router is kept for back-compat only and
+no-ops on the markdown journal (it only acts on old CSV-shaped rows, if present).
+
+Legacy behavior, per CSV row (asset_id | module | version | score | status |
+reason | next_action):
 
     status=accepted -> move to outputs/accepted/, promote to memory/trainset.jsonl
     status=rejected -> move to outputs/rejected/  (then archived)
     status=revise   -> leave in candidates for another orchestrator pass
-
-The next_action column is free-form routing intent you can extend (e.g.
-"promote", "archive", "rerun"); it is logged so the system records the why.
 """
 
 import csv

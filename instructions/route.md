@@ -1,6 +1,8 @@
-# SOP — Route
+# SOP — Route (LEGACY)
 
-**Goal:** apply the decisions in `review/human_review.csv`.
+**Goal:** the legacy batch path that applied decisions from a review file.
+Reviews now happen in conversation (see the `review-logging` skill); this command
+is kept for back-compat only and no-ops on the markdown journal.
 
 **Run:** `python run.py route`
 

@@ -1,18 +1,19 @@
 # SOP — Human Review
 
-**Goal:** turn your judgement into structured data the pipeline reads back.
+**Goal:** turn your judgement into changes the pipeline actually learns from.
 
-**How:** open `review/human_review.csv` and add a row per artifact you judge:
+**How:** review happens in conversation with Claude — you give the verdict and
+your reasoning; Claude records it and routes the lesson into the system. Pass/
+fail isn't enough; the reasoning is the point. The most valuable case is when you
+REJECT something the gate APPROVED — that means the gate's standard is wrong, and
+the lesson is routed to fix it, so the next run catches what you caught.
 
-```
-asset_id,module,version,score,status,reason,next_action
-elevator-mirror-practiced-fine_0001,IDEA,v03,88,accepted,funny + clear payoff,promote
-generic-monday-motivation_0002,IDEA,v02,72,rejected,too generic,archive
-slow-open-strong-finish_0003,IDEA,v04,80,revise,strong but slow open,rerun
-```
+Every verdict is written to `review/human_review.md` — an append-only journal of
+what you decided and why. Claude writes it; don't hand-edit it.
 
-- **status** must be one of: `accepted`, `rejected`, `revise`.
-- **reason** is the most valuable field — it is why the decision was made.
-- **next_action** is free-form routing intent (`promote` / `archive` / `rerun`).
+Before any lesson changes a standard / profile / craft file, Claude first plays
+back its understanding and the amplification (what it changes, and for which
+scope — this stage / this channel / all channels) and waits for your yes.
 
-Then run the router (`route.md`). Accepted rows feed the learning loop.
+**Legacy:** the old CSV + `route` batch path still exists for back-compat but is
+not how you review. See the `review-logging` skill.

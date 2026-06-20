@@ -64,7 +64,7 @@ python run.py chain --channel demo-sports --brief "..."     # run one brief
 python run.py chain --channel demo-sports --brief "..." --dry-run   # offline plumbing test, no keys
 python run.py generate --channel demo-sports --stage idea --brief "..."   # one stage, live
 python run.py manual   --channel demo-sports --stage idea --file manual_input.json  # hand-authored, no keys
-python run.py route    --channel demo-sports               # apply review/human_review.csv decisions
+python run.py route    --channel demo-sports               # (legacy) batch path; reviews now happen in chat
 python run.py learn    --channel demo-sports --stage idea  # retrain that stage's generator from accepted examples
 python run.py package  --channel demo-sports               # assemble a video's deliverables into one doc
 ```
@@ -80,7 +80,7 @@ Per channel, under `channels/<name>/`:
 - `outputs/{candidates,accepted,rejected,parked,archived}/` — versioned `.json` + readable `.txt`
 - `logs/` — one narrative log per run · `metrics/scores.jsonl` — one row per scored version
 - `memory/` — `trainset.jsonl` (accepted examples), `compiled/<stage>_generator.json` (learned), `run_index.jsonl`
-- `review/human_review.csv` — your accept/reject/revise decisions for `route`
+- `review/human_review.md` — append-only journal of your verdicts + reasoning (Claude writes it from your chat reviews)
 
 ## Tests
 

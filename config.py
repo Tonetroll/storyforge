@@ -132,7 +132,7 @@ def paths_for(channel: str) -> ChannelPaths:
         parked=out / "parked",
         logs=root / "logs",
         metrics_file=root / "metrics" / "scores.jsonl",
-        review_file=root / "review" / "human_review.csv",
+        review_file=root / "review" / "human_review.md",
         memory=mem,
         trainset_file=mem / "trainset.jsonl",
         compiled=mem / "compiled",
