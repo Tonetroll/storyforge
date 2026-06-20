@@ -35,8 +35,8 @@ DEFAULT_MODULE = "IDEA"
 # Different providers -> the judge can't grade its own work (the #1 rule, enforced in orchestrator.py).
 ZAI_CODING_BASE = "https://api.z.ai/api/coding/paas/v4"   # GLM Coding Plan, OpenAI-compatible
 ZAI_API_KEY     = os.getenv("ZAI_API_KEY")
-GENERATOR_LM   = {"model": "openai/glm-5.2", "api_base": ZAI_CODING_BASE, "api_key": ZAI_API_KEY, "temperature": 0.9, "max_tokens": 4000}
-ITERATOR_LM    = {"model": "openai/glm-5.2", "api_base": ZAI_CODING_BASE, "api_key": ZAI_API_KEY, "temperature": 0.7, "max_tokens": 4000}
+GENERATOR_LM   = {"model": "openai/glm-5.2", "api_base": ZAI_CODING_BASE, "api_key": ZAI_API_KEY, "temperature": 0.9, "max_tokens": 8000}
+ITERATOR_LM    = {"model": "openai/glm-5.2", "api_base": ZAI_CODING_BASE, "api_key": ZAI_API_KEY, "temperature": 0.7, "max_tokens": 8000}
 EVALUATOR_LM   = {"model": "openrouter/google/gemma-3-27b-it", "temperature": 0.0, "max_tokens": 1500}
 REEVALUATOR_LM = {"model": "openrouter/google/gemma-3-27b-it", "temperature": 0.0, "max_tokens": 1500}
 
