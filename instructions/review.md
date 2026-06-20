@@ -6,9 +6,9 @@
 
 ```
 asset_id,module,version,score,status,reason,next_action
-CORE_IDEA_0001,IDEA,v03,88,accepted,funny + clear payoff,promote
-CORE_IDEA_0002,IDEA,v02,72,rejected,too generic,archive
-CORE_IDEA_0003,IDEA,v04,80,revise,strong but slow open,rerun
+elevator-mirror-practiced-fine_0001,IDEA,v03,88,accepted,funny + clear payoff,promote
+generic-monday-motivation_0002,IDEA,v02,72,rejected,too generic,archive
+slow-open-strong-finish_0003,IDEA,v04,80,revise,strong but slow open,rerun
 ```
 
 - **status** must be one of: `accepted`, `rejected`, `revise`.

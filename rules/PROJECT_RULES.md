@@ -31,9 +31,8 @@ Every iteration writes a new file. Nothing is destroyed. Status lives in the
 filename.
 
 ## 4. Naming protocol
-`PROJECTNAME_MODULE_NUMBER_VERSION_STATUS.json` — e.g. `CORE_IDEA_0001_v02_revised.json`
-- PROJECTNAME = the core-idea token (`config.PROJECT_NAME`)
-- MODULE = artifact type (`IDEA`, extensible)
+`<slug>_<NUMBER>_v<VERSION>_<STATUS>.json` — e.g. `elevator-mirror-practiced-fine_0002_v02_revised.json`
+- slug = kebab-case of what the idea is ABOUT (`naming.slugify`)
 - NUMBER = `0001` per asset, VERSION = `v01` per iteration
 
 ## 5. Status state machine
@@ -45,15 +44,14 @@ accepted -> promoted     rejected -> archived      revise -> back to iterator
 Terminal: promoted, archived, killed.
 
 ## 6. Stop criteria (config-tunable)
-Iterate until score ≥ `TARGET_SCORE` (90), OR `MAX_ITER` (5) reached, OR plateau
-(no `MIN_IMPROVEMENT`=2 pt gain over `PLATEAU_ROUNDS`=2 rounds). Then a final
+Iterate until score ≥ `TARGET_SCORE` (95), OR `MAX_ITER` (3) reached. Then a final
 independent reevaluation marks the best version `ready_for_review`.
 
 ## 7. Routing table (`pipeline/router.py`)
 | review status | action | destination | side effect |
 |---|---|---|---|
-| accepted | promote | `outputs/ideas/accepted/` | append to `memory/trainset.jsonl` |
-| rejected | archive | `outputs/ideas/rejected/` | — |
+| accepted | promote | `outputs/accepted/` | append to `memory/trainset.jsonl` |
+| rejected | archive | `outputs/rejected/` | — |
 | revise | rerun | stays in `candidates/` | re-enters the loop |
 
 ## 8. The learning loop

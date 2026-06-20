@@ -25,7 +25,8 @@ def create_channel(name: str) -> dict:
         P.profile.write_text(template, encoding="utf-8")
     if not P.seeds.exists():
         P.seeds.write_text(
-            "# One idea per line as JSON: {\"brief\": \"your story seed\"}\n"
+            "# One idea per line as plain text: your story seed.\n"
+            "# Legacy JSON ({\"brief\": \"your story seed\"}) still works too.\n"
             "# The channel is the workspace, so you don't name it per line.\n",
             encoding="utf-8")
     if not P.review_file.exists():

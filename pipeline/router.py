@@ -3,8 +3,8 @@
 Reads review/human_review.csv (columns: asset_id | module | version | score |
 status | reason | next_action) and routes each reviewed artifact:
 
-    status=accepted -> move to outputs/ideas/accepted/, promote to memory/trainset.jsonl
-    status=rejected -> move to outputs/ideas/rejected/  (then archived)
+    status=accepted -> move to outputs/accepted/, promote to memory/trainset.jsonl
+    status=rejected -> move to outputs/rejected/  (then archived)
     status=revise   -> leave in candidates for another orchestrator pass
 
 The next_action column is free-form routing intent you can extend (e.g.

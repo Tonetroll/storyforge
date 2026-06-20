@@ -12,9 +12,9 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 # Identity
 # ---------------------------------------------------------------------------
-# PROJECT_NAME is the token that prefixes every artifact filename
-# (PROJECTNAME_MODULE_NNNN_vVV_status.json). Named from the CORE of the idea:
-# this pipeline gates STORIES (information is not a story). The gate assigns a
+# PROJECT_NAME prefixes each run's LOG file (e.g. STORY_run_0001.log). Artifact
+# filenames are slug-based (<slug>_<NNNN>_v<VV>_<status>.json), not project-prefixed.
+# This pipeline gates STORIES (information is not a story); the gate assigns a
 # story id "ST-####" on PASS, derived from the asset number.
 PROJECT_NAME = "STORY"
 
