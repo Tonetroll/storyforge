@@ -1,8 +1,33 @@
 """Render an artifact record as human-readable plain text, generic over a stage.
 
 Every artifact is saved twice: <name>.json (for the pipeline) and <name>.txt
-(for you, at the review step). This builds the .txt.
+(for you, at the review step). This builds the .txt -- wrapped to a readable
+width so long fields don't run off the right edge.
 """
+
+import textwrap
+
+WIDTH = 88   # wrap column for long free-text values
+
+
+def _wrap(text, indent: str = "    ") -> str:
+    """Wrap free text to WIDTH with a hanging indent, preserving paragraph breaks.
+    Empty text -> empty string (the label above it still prints)."""
+    text = str(text if text is not None else "").strip()
+    if not text:
+        return ""
+    out = []
+    for para in text.split("\n"):
+        para = para.strip()
+        if not para:
+            out.append("")
+            continue
+        out.append(textwrap.fill(
+            para, width=WIDTH,
+            initial_indent=indent, subsequent_indent=indent,
+            break_long_words=False, break_on_hyphens=False,
+        ))
+    return "\n".join(out)
 
 
 def _breakdown_lines(breakdown, stage) -> str:
@@ -19,7 +44,7 @@ def _content_lines(content, stage) -> str:
     out = []
     for f in stage.content_fields:
         label = f.replace("_", " ").capitalize()
-        out += [f"  {label}:", f"    {content.get(f, '')}", ""]
+        out += [f"  {label}:", _wrap(content.get(f, ""), "    "), ""]
     return "\n".join(out).rstrip()
 
 
@@ -37,9 +62,9 @@ def _prose_lines(content, stage) -> str:
         if not val:
             continue
         (notes if f.endswith("_notes") else body).append(val)
-    out = "\n\n".join(f"  {p}" for p in body)
+    out = "\n\n".join(_wrap(p, "  ") for p in body)
     if notes:
-        out += "\n\n  --- notes ---\n  " + "\n  ".join(notes)
+        out += "\n\n  --- notes ---\n" + "\n".join(_wrap(n, "  ") for n in notes)
     return out
 
 
@@ -51,7 +76,8 @@ def _assembly_lines(assembly) -> str:
     for stage_name, content in assembly.items():
         out.append(f"  [{stage_name}]")
         for k, v in (content or {}).items():
-            out.append(f"    {k.replace('_', ' ').capitalize()}: {v}")
+            out.append(f"    {k.replace('_', ' ').capitalize()}:")
+            out.append(_wrap(v, "      "))
     return "\n".join(out)
 
 
@@ -63,7 +89,8 @@ def to_text(record: dict, stage) -> str:
         f"v{record.get('version', 0):02d}   |   {str(record.get('status', '')).upper()}",
         bar,
         "",
-        f"BRIEF:  {record.get('brief', '')}",
+        "BRIEF:",
+        _wrap(record.get("brief", ""), "    "),
         "",
         f"THE {stage.content_label}",
         (_prose_lines if stage.name in _PROSE_STAGES else _content_lines)(record.get("content", {}) or {}, stage),
@@ -76,8 +103,10 @@ def to_text(record: dict, stage) -> str:
         "  Breakdown:",
         _breakdown_lines(record.get("breakdown"), stage),
         "",
-        f"  Why:  {record.get('why', '')}",
-        f"  Failed checks:  {record.get('failed_checks', '')}",
+        "  Why:",
+        _wrap(record.get("why", ""), "    "),
+        "  Failed checks:",
+        _wrap(record.get("failed_checks", ""), "    "),
         "",
         "LINEAGE",
         f"  parent version:  {record.get('parent_version')}",
