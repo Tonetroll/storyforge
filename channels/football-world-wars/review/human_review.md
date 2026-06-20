@@ -24,3 +24,11 @@ Don't hand-edit it -- Claude writes an entry every time you review.
 **Reasoning:** "It hasn't changed and didn't pick up the distinctions we put in — same as before. The resolution is still OUTSIDE-IN: proving, permission, 'who got to stop proving they were enough,' winning as 'being let back into the family' — worth granted by the external outcome. That's not it. The real point is inside-out: they didn't make it this time, but they still BELIEVED, and were willing to carry on — the felt belief that carries regardless of the result, not the trophy deciding worth."
 **Lesson:** The IDEA's resolution must run inside-out/felt like the theme now does: even in loss the felt belief persists and carries on; worth is felt, not granted by winning/permission/external proof. The idea stage (generator + evaluator) never got this distinction — only the theme did — which is why the idea reproduces the old framing and the gate passes it at 97.
 **Routed to:** (proposed, pending approval) rules/standards/generator.md (idea) + rules/standards/evaluator.md (idea) — extend with the inside-out/felt/carry distinction, matched + worded distinctly.
+
+## 2026-06-20 — idea — messi-ronaldo-world-cup-goat_0007 (ST-0007)
+**Machine:** PASS 95
+**Tone:** reject
+**Reasoning:** The express-not-prove fix landed on Messi's OWN motive ("he didn't chase it to prove anything — he chased it to express what he'd carried" — right). But the teammates line — "his teammates, boys who'd grown up watching him, refused to let him leave without it" — still frames others as acting FOR him (loyalty/sacrifice). Wrong: others join because his pursuit serves THEIR OWN desires — they believe he's part of accomplishing what they themselves want, carrying it WITH him. Never for him; never won by ego or an unfelt/false promise (a promise that isn't felt is fake and can't carry).
+**Lesson -> routed (commit db5f31f):** idea generator + evaluator now require others to join for their own desire, and dock the for-him / loyalty / ego / false-promise framing.
+
+(Theme validation_0008 was cut off mid-iteration at 91 — never finalized, no verdict.)
