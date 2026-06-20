@@ -13,12 +13,15 @@ memory/run_index.jsonl
 memory/trainset.jsonl
 memory/compiled/*.json
 
-# Per-channel runtime data -- track only each channel's profile.md + seeds/
+# Per-channel runtime data -- track each channel's profile.md, seeds/, and the
+# review journal (review/human_review.md = the durable source of truth). The rest
+# is disposable runtime data.
 channels/*/outputs/**
 channels/*/logs/**
 channels/*/metrics/**
 channels/*/memory/**
-channels/*/review/**
+channels/*/review/*
+!channels/*/review/human_review.md
 
 # Archived pre-channel demo artifacts
 archive/**
