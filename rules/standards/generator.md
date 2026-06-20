@@ -18,7 +18,7 @@ idea — it does not pass the gate.
 ## WHAT YOU OUTPUT (every idea, no exceptions)
 
 - **One-liner (the open loop):** concrete, speakable in under 4 seconds. No abstraction.
-- **Resolution (the payoff):** what closes the loop toward the end. Defined, not blank. It must land the WHY beneath the event — the DESIRE and the BELIEF driving it — not just the surface thing that happened. Not "his country caught him" (the event) but "they still believed he was the one who could win, so they held that space for him" (the desire + belief underneath). A resolution that names only the WHAT lands flat.
+- **Resolution (the payoff):** what closes the loop toward the end. Defined, not blank. It must land the WHY beneath the event — the DESIRE and the BELIEF driving it — not just the surface thing that happened. A resolution that names only the WHAT lands flat. And it runs INSIDE-OUT, not outside-in: the belief is FELT and EXPRESSED, never *proven* or granted from outside. You don't act to PROVE you're enough (chasing the world's verdict) — you act to EXPRESS what you already believe and feel, and expressing it is how the desire actually gets realized. The felt belief carries on even when the outcome doesn't come. Never frame the payoff around proving, permission, or worth handed down by winning — that's the trap, not the truth.
 - **Reaction #1 (pull-in):** LOL / WTF / WOW — named and real.
 - **Reaction #2 (resolution):** Aah / Oooh / Finally — named, real, and DIFFERENT from #1.
 - **Viewer action:** exactly ONE (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect).
