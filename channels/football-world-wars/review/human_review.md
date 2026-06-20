@@ -32,3 +32,14 @@ Don't hand-edit it -- Claude writes an entry every time you review.
 **Lesson -> routed (commit db5f31f):** idea generator + evaluator now require others to join for their own desire, and dock the for-him / loyalty / ego / false-promise framing.
 
 (Theme validation_0008 was cut off mid-iteration at 91 — never finalized, no verdict.)
+
+## 2026-06-20 — story/engine corrections — messi-cup-gift-not-verdict_0003 (idea 98, theme 100, story 93)
+**Tone:** scores are high but the ENGINE is still wrong, and the FORMAT is wrong.
+
+**Engine corrections (route into idea + story gen/eval):**
+1. DESIRE leads — not shared belief. NOT "others believed the same thing." HIS desire is so strong and NONNEGOTIABLE that it's contagious: others catch it, share the DESIRE, haven't given up hope, and follow him. He leads; they follow because the desire spreads — they do not independently "believe the same thing."
+2. SELFISH, not selfless. He doesn't chase it to "give Argentina the cup" or to keep a promise. He wants it for HIMSELF — his vision of succeeding, accomplishing, being SEEN as valuable. KILL the "the cup was his to give to Argentina" framing and the "failing the people he promised" fear — both wrong.
+3. Identity is SELF-MADE, not world-imposed. NOT "the impossible version the world demanded." Their OWN belief becomes their identity and how they express themselves. Inside-out.
+4. "DESIRED," not "expressed what he felt as a boy." He DESIRED that experience — "expressing a childhood feeling" is weak.
+
+**FORMAT (the headline):** the outputs read like REPORTS / analytical transcripts — verbose, boring, "going on and on" — NOT a story/script. "It says 100 but it's no story." Renderings AND content must read like STORY, not analysis.
