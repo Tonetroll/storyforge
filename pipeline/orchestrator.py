@@ -231,15 +231,19 @@ def _latest_accepted(stage_name: str, accepted_dir):
 
 
 def _resolve_upstream(stage, brief, paths):
-    """Returns (brief, assembly). assembly = the structured content of EVERY prior
-    accepted stage, so each artifact carries the growing package (no gathering later)."""
+    """Returns (brief, assembly, story_id). assembly = the structured content of EVERY
+    prior accepted stage, so each artifact carries the growing package (no gathering
+    later). story_id = the upstream artifact's story id, threaded forward so every
+    stage of ONE video shares a single ST-#### (None when there is no upstream -> the
+    first stage mints a fresh id). The format stays separable because each script
+    format is its own stage/artifact -- they share the id but differ by `stage`."""
     if not stage.upstream:
-        return brief, {}
+        return brief, {}, None
     rec = _latest_accepted(stage.upstream, paths.accepted)
     if rec is None:
         raise RuntimeError(f"No accepted '{stage.upstream}' artifact to feed stage '{stage.name}'.")
     assembly = {**(rec.get("assembly") or {}), stage.upstream: rec.get("content", {})}
-    return stage.build_brief(rec), assembly
+    return stage.build_brief(rec), assembly, rec.get("story_id")
 
 
 # ---------------------------------------------------------------------------
@@ -328,7 +332,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         layers.append("CRAFT (universal craft -- applies to every genre):\n" + craft)
     layers.append("=== STAGE STANDARD ===\n" + gen_standard)
     gen_standard = "\n\n".join(layers)
-    brief, assembly = _resolve_upstream(stage, brief, paths)
+    brief, assembly, inherited_story_id = _resolve_upstream(stage, brief, paths)
     # The one cross-stage gate: give the script's gate the whole package to verify delivery.
     if stage.gate_reads_package and assembly:
         eval_criteria = ("THE STORY PACKAGE (the script MUST deliver all of this):\n"
@@ -363,7 +367,10 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         log.info("[attempt %d] generating '%s' (%s_%04d)...", attempt, first_field, slug, number)
         gate = _llm_call(log, "gate / evaluation (the OpenRouter judge)", evaluator, content=content, criteria=eval_criteria)
         if gate.verdict == "PASS":
-            story_id = f"ST-{number:04d}"
+            # Inherit the video's id from upstream; only the first stage (no
+            # upstream) mints a new one. So idea/theme/story/stakebake + all four
+            # script formats + packaging + description of one video share one id.
+            story_id = inherited_story_id or f"ST-{number:04d}"
             path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=1,
                                             status="candidate", brief=brief, content=content, gate=gate,
                                             story_id=story_id, gen_model=gen_model, eval_model=eval_model,
