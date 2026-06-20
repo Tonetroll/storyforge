@@ -192,14 +192,14 @@ def _brief_from_line(line: str) -> str:
 
 
 def run_channel(channel: str, dry_run: bool = False) -> list:
-    """Run every seed in THIS channel's queue (channels/<channel>/seeds/briefs.jsonl)
+    """Run every seed in THIS channel's queue (channels/<channel>/seeds/seeds.txt)
     through the full chain, one complete chain at a time. Each line is a plain-text
     idea (legacy JSON {'brief': ...} still works); the channel is the workspace."""
     paths = config.paths_for(channel)
     if not paths.seeds.exists():
         raise FileNotFoundError(
             f"No seed file for channel '{paths.root.name}' at {paths.seeds}. "
-            f"Run `python run.py new-channel {channel}` first, then add ideas to its seeds/briefs.jsonl.")
+            f"Run `python run.py new-channel {channel}` first, then add ideas to its seeds/seeds.txt.")
     results = []
     for line in paths.seeds.read_text(encoding="utf-8").splitlines():
         line = line.strip()

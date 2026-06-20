@@ -44,7 +44,7 @@ def channel_ws(tmp_path, monkeypatch):
         "Full profile body for the deep stages.\n",
         encoding="utf-8",
     )
-    (root / "seeds" / "briefs.jsonl").write_text("a test brief\n", encoding="utf-8")
+    (root / "seeds" / "seeds.txt").write_text("a test brief\n", encoding="utf-8")
 
     paths = config.paths_for(channel)
     # The isolation guarantee: everything resolves under tmp_path, not the repo.

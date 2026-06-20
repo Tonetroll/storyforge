@@ -1,2 +1,2 @@
-# One idea per line as JSON: {"brief": "your story seed"}
+# Write your ideas here -- one idea per line, in plain words.
 # The channel is the workspace, so you don't name it per line.

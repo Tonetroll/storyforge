@@ -58,7 +58,7 @@ python -m venv .venv
 
 ```bash
 python run.py new-channel demo-sports                       # scaffold channels/demo-sports/
-# add ideas (one plain-text idea per line) to channels/demo-sports/seeds/briefs.jsonl
+# add ideas (one plain-text idea per line) to channels/demo-sports/seeds/seeds.txt
 python run.py chain --channel demo-sports                   # run the whole pipeline over the seed queue
 python run.py chain --channel demo-sports --brief "..."     # run one brief
 python run.py chain --channel demo-sports --brief "..." --dry-run   # offline plumbing test, no keys

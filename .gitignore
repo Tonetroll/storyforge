@@ -25,3 +25,6 @@ archive/**
 
 # Craft trainset grows at runtime; the doctrine (craft/principles.md) is tracked
 craft/trainset.jsonl
+
+# local safety backups (auto-copied before risky edits)
+backups/
