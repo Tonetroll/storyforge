@@ -25,7 +25,7 @@ front half does not pass ideation.
 ## CRITERIA FOR A STORY
 
 1. Reaction #1 / pull-in named and real? (LOL / WTF / WOW) → ____
-2. Reaction #2 / resolution named and real? (Aah / Oooh / Finally) → ____
+2. Reaction #2 / resolution named and real, landing the WHY (the desire + belief beneath the event, not just the WHAT)? (Aah / Oooh / Finally) → ____
 3. Are #1 and #2 TWO DIFFERENT emotions? (same emotion twice = FAIL) → ____
 4. Exactly ONE clear viewer action? (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect) → ____
 5. Open loop — the premise does NOT already give away the answer? → ____
@@ -41,7 +41,7 @@ REJECT.
 | Check | What | Max points |
 |---|---|---|
 | 1 | pull-in emotion (LOL/WTF/WOW) | 25 |
-| 2 | resolution emotion (Aah/Oooh/Finally) | 25 |
+| 2 | resolution emotion (Aah/Oooh/Finally) — lands the desire/belief WHY, not just the event | 25 |
 | 3 | two DIFFERENT emotions | 20 |
 | 4 | exactly one viewer action | 10 |
 | 5 | open loop (premise doesn't give the answer) | 10 |

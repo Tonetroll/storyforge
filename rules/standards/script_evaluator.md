@@ -8,7 +8,7 @@ where marked, graded otherwise. Jargon is a penalty.
 
 | Type | Check | Points |
 |---|---|---|
-| graded | **D1 Delivery** — the script carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE above the criteria) | 0–20 |
+| graded | **D1 Delivery** — the script carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE above the criteria); the payoff must land the desire/belief WHY beneath the event, not just narrate the event — dock it if the payoff delivers only the surface WHAT | 0–20 |
 | binary | **L1 Hook opens a loop** in the first line | 0 or 12 |
 | binary | **L2 Head fake** — a reveal that breaks the prediction but is earned | 0 or 12 |
 | graded | **L3 Rehooks / no dead air** — loops chain, every beat adds value or sustains the hook; no flat, filler, or compressed-long-form stretch | 0–13 |

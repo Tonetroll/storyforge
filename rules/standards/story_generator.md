@@ -42,10 +42,10 @@ The link is non-negotiable: the misbelief feeds the fear; the fear blocks the de
 - **Recovery:** the protagonist must overcome their false belief (the misbelief) to reach the climax — this is the character development.
 - **Climactic confrontation:** the protagonist faces their biggest challenge of all.
 - **Victory:** the protagonist overcomes.
-- **Resolution / end:** loose ends wrapped; the reader is satisfied.
+- **Resolution / end:** loose ends wrapped; the reader is satisfied. Land the WHY beneath the event, not just the event: the desire and the belief that drove it (e.g. not "his country caught him" but "they still believed he was the one who could win, so they held that space for him"). A resolution that states only WHAT happened is flat.
 
 ## THE SPINE (what makes it a story, not a plot)
 
 The **misbelief named in Act 1 is exactly the thing overcome in Recovery.** The
 dark moment re-triggers the **specific** fear from Phase 2. If the internal arc
-doesn't close, the beats don't matter.
+doesn't close, the beats don't matter. The pull of the whole story is the tension between the Desire and the Misbelief -- that's the source of attention and emotion, not the surface events. When a beat (above all the resolution) feels flat, it's showing the WHAT without the desire/belief beneath it.

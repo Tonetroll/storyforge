@@ -9,13 +9,13 @@ and plot, character, and arc all start to click.
 
 - **topic** — the arena/subject (love, war, rivalry, identity…). Broad and neutral. This is NOT the theme.
 - **theme_statement** — the stance: *"This story shows that ____."* A value judgment or emotional truth ABOUT the topic. A statement or argument — never a single word.
-- **central_question** — the tension: a hard, non-yes/no question the story wrestles with (e.g. "Can love survive betrayal?", "Is freedom worth the price of safety?"). Messy, nuanced, often unresolved.
-- **belief_shift** — what the protagonist believes at the START → what they believe at the END, and what breaks the old belief. (This becomes the structure stage's misbelief → Recovery.)
+- **central_question** — the tension: a hard, non-yes/no question the story wrestles with (e.g. "Can love survive betrayal?", "Is freedom worth the price of safety?"). Messy, nuanced, often unresolved. The tension that matters is the pull between what someone DESIRES and what they BELIEVE — that pull is the engine of the question.
+- **belief_shift** — what the protagonist believes at the START → what they believe at the END, and what breaks the old belief. Land the WHY beneath it: name the DESIRE that holds steady while the belief changes — the story moves on the tension between that desire and the belief in its way, not on the event that breaks the belief. (This becomes the structure stage's misbelief → Recovery.)
 
 ## RULES (what makes it a theme, not a topic)
 
 1. **A stance, not a topic.** "Love" is a topic; "love demands vulnerability" is a theme. A single word fails.
-2. **Live in tension.** Explore a contradiction; pose a question with no yes/no answer.
+2. **Live in tension.** Explore a contradiction; pose a question with no yes/no answer. The deepest tension — the engine of attention and emotion — is between what someone DESIRES and what they BELIEVE. When the theme feels flat, it is showing the WHAT (the event) without the desire/belief beneath it.
 3. **Not a moral.** No soapbox, no "always be kind." Invite reflection; never instruct.
 4. **Universal through the specific.** A human truth grounded in THIS idea — not abstract.
 5. **One center of gravity.** Threads can coexist, but there is a single core idea.

@@ -19,7 +19,7 @@ Before anything, establish:
 4. **Force Tough Choices:** Present situations where the character must choose between two unfavorable options (moral no-win situations).
 5. **Add Personal Consequences:** Ensure the outcome affects the character's life, safety, or relationships, rather than just external events.
 6. **Remove Safety Nets:** Avoid plot armor; let the character suffer consequences for their mistakes.
-7. **Raise Emotional Stakes:** Connect the physical, external goal to a deeper psychological or emotional need (the "Surface Want vs. Deeper Need").
+7. **Raise Emotional Stakes:** Connect the physical, external goal to a deeper psychological or emotional need (the "Surface Want vs. Deeper Need"). Stakes are the TENSION between what the character DESIRES and what they BELIEVE -- that pull is what's actually on the line. Land the WHY beneath the event, not just the event: not "his country caught him" but "they still BELIEVED he was the one who could win, so they held that space for him." When stakes feel flat, you're showing the WHAT without the desire and belief under it.
 
 ## Optional high-retention tactic
 
@@ -32,7 +32,7 @@ Take the structure's beats and rewrite them so the stakes live INSIDE them:
 - **build-up** carries the ticking clock,
 - a **plot point** forces the no-win choice,
 - the **disaster** lands the personal consequence with no safety net,
-- the **recovery** pays off the deeper emotional need,
+- the **recovery** pays off the deeper emotional need -- landing the desire and belief that were truly at risk, the WHY beneath the event, not just the event resolving,
 - the **victory** is agency, not just relief.
 
 Output every beat, enhanced. Then add one short **stakes_added** line naming which

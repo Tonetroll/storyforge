@@ -8,7 +8,7 @@ worth an equal share of 100; the total is the YES count scaled to 100.
 
 ### Visual
 - **Q1 — Visual Anchor:** a clear anchor — a face with strong emotional expression, AND/OR a bold graphic/icon/product that immediately draws the eye?
-- **Q2 — Emotion or Intrigue:** strong emotion (shock, excitement, curiosity) OR visual intrigue through contrast, mystery, or unexpected elements?
+- **Q2 — Emotion or Intrigue:** strong emotion (shock, excitement, curiosity) OR visual intrigue through contrast, mystery, or unexpected elements — and does that emotion read as the WHY beneath the event (the desire being chased / the belief driving it, the pull of wanting/believing), not just the surface event shown?
 - **Q3 — Directional Cues:** the subject looking at the object, gaze direction, pointing, arrows, layout flow — guiding the eye toward the title or key element?
 - **Q4 — Text Readability:** any text legible at thumbnail size (bold font, high contrast, max 4 words)?
 - **Q5 — Background:** if tutorial — clean/uncluttered (dark, simple, blurred) so the subject pops; if a story — the transformed setting.
@@ -17,7 +17,7 @@ worth an equal share of 100; the total is the YES count scaled to 100.
 - **Q8 — Logos or Icons:** recognizable platform logos, brand icons, tools, symbols that signal what the transformation is about?
 
 ### Title
-- **Q9 — Curiosity Gap:** an open loop — implies something surprising, counterintuitive, or hidden the viewer needs to see?
+- **Q9 — Curiosity Gap:** an open loop — implies something surprising, counterintuitive, or hidden the viewer needs to see — and does the loop turn on the WHY beneath the event (the desire/belief tension), so the viewer feels the pull of wanting/believing rather than just being told what happened?
 - **Q10 — Specific Outcome:** promises a specific outcome/transformation/result — not just a topic?
 - **Q11 — Payoff Clarity:** even if intriguing, is the payoff clear enough that viewers know what they're getting?
 - **Q12 — Accessible Language:** plain language a non-expert understands, no jargon or insider terms?

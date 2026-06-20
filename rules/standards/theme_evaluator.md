@@ -10,8 +10,8 @@ it is met. A check scoring 0 = absent = REJECT.
 | Check | What | Max |
 |---|---|---|
 | 1 | **Stance, not a topic** — the theme is a statement/argument ABOUT the topic, not a single word or broad subject | 25 |
-| 2 | **Genuine tension** — a hard, non-yes/no question or real contradiction; not resolvable with a simple "yes" | 20 |
-| 3 | **Implies a belief-shift** — a clear start-belief → end-belief the protagonist can traverse (arc-ready; feeds the structure's misbelief → Recovery) | 20 |
+| 2 | **Genuine tension** — a hard, non-yes/no question or real contradiction; not resolvable with a simple "yes". The tension must be the pull between what someone DESIRES and what they BELIEVE — not just a surface event or plot puzzle | 20 |
+| 3 | **Implies a belief-shift** — a clear start-belief → end-belief the protagonist can traverse (arc-ready; feeds the structure's misbelief → Recovery), and it names the DESIRE driving the shift — the WHY beneath it, not just two swapped beliefs | 20 |
 | 4 | **Not a moral** — invites reflection; no slogan, no instruction, no soapbox | 15 |
 | 5 | **Universal through the specific** — a human truth grounded in this idea, not an abstraction | 10 |
 | 6 | **One center of gravity** — a single coherent core idea (multiple threads ok, but centered) | 10 |
@@ -43,5 +43,5 @@ If REJECT — failed checks: <numbers + one line each>
 ## WORKED NOTE
 
 PASS: *"Love sometimes demands sacrifice, and survival isn't the same as living"*
-— a stance, in tension, with a clear belief-shift. REJECT: *"love"* (a topic),
-*"always forgive"* (a moral), *"war and betrayal"* (topics, no stance).
+— a stance, in tension (the desire to keep the beloved vs. the belief that survival is enough), with a clear belief-shift. REJECT: *"love"* (a topic),
+*"always forgive"* (a moral), *"war and betrayal"* (topics, no stance), and a flat theme that names the event but not the desire/belief beneath it.

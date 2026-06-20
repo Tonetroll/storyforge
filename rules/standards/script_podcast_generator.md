@@ -23,11 +23,12 @@ natural, spoken, back-and-forth dialogue.
 
 - **hook** — the cold open: the teaser line that opens the loop.
 - **body** — the conversation (HOST A / HOST B), the story told through the back-and-forth with the loop running.
-- **payoff** — the line that lands the theme in the talk.
+- **payoff** — the line that lands the theme in the talk: not just WHAT happened, but the desire and the belief underneath it — what they wanted and what they believed (e.g. not "his country caught him" but "they still believed he was the one who could win, so they held that space for him").
 - **cta** — the outro / one clear listener action.
 - **loop_notes** — where the loop opens, the head fake, and the rehooks sit.
 
 ## Deliver the package
 
 The stakes, the theme's belief-shift, the structure's arc, and the hook MUST come
-through in the conversation. No clinical/AI jargon.
+through in the conversation. When the payoff lands, it lands the WHY beneath the
+event — the desire and the belief driving it, not just the surface event. No clinical/AI jargon.

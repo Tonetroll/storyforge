@@ -9,7 +9,7 @@ them scores low. Grade each check 0..its max by HOW STRONGLY it is met.
 | Check | What | Max |
 |---|---|---|
 | 1 | **Above-the-fold hook** — the first line (under ~120 chars) stands alone as a second hook: curiosity/tension that reinforces the title's promise. Does NOT summarize or spoil. | 25 |
-| 2 | **Mirrors the wound** — names the audience's emotional state/wound (from the channel positioning) so the right viewer thinks "that's me." Specific, not generic; mirrors rather than labels. | 25 |
+| 2 | **Mirrors the wound** — names the audience's emotional state/wound (from the channel positioning) so the right viewer thinks "that's me." Specific, not generic; mirrors rather than labels. Score highest when it lands the WHY beneath the feeling — the tension between what they DESIRE and what they BELIEVE — not just the surface state; a line that only names a feeling without the desire/belief driving it caps low. | 25 |
 | 3 | **No spoiler / no overpromise** — doesn't reveal the resolution; leaves the loop open; promises only what the story actually delivers (check against the package). | 15 |
 | 4 | **Repels the anti-audience** — the framing signals who it is NOT for, so the wrong viewer self-selects out. | 10 |
 | 5 | **Algorithm signal** — uses the natural terms the target audience would search/recognize, so YouTube can place it. No keyword-stuffing. | 15 |

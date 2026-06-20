@@ -8,7 +8,7 @@ screenplay form (slugline, visual action, dialogue), built for the camera.
 ## The two parts
 
 - **Part 1** — opens the loop and plants the head fake. One clear scene, one strong image.
-- **Part 2** — pays off: the earned reversal / the turn. One clear scene, one strong image.
+- **Part 2** — pays off: the earned reversal / the turn. One clear scene, one strong image. The turn must land the WHY beneath the event — the desire and the belief driving it — not just the surface reversal (not "his country caught him" but "they still believed he was the one who could win, so they held that space for him").
 
 Each part must stand as a single shootable image: a place, a subject, an action, a charged moment.
 
@@ -28,10 +28,12 @@ Each part must stand as a single shootable image: a place, a subject, an action,
 ## Deliver the package
 
 The stakes, the theme's belief-shift, the structure's arc, and the hook MUST be
-dramatized across the two scenes. No clinical/AI jargon.
+dramatized across the two scenes. The payoff must land the desire/belief WHY beneath
+the event — the pull between what someone wants and what they believe — not just the
+surface turn. No clinical/AI jargon.
 
 ## What you output
 
 - **part_1** — scene 1 (slugline, action, dialogue).
 - **part_2** — scene 2 (slugline, action, dialogue).
-- **loop_notes** — where the loop opens, the head fake, and the payoff sit.
+- **loop_notes** — where the loop opens, the head fake, and the payoff sit, and the desire/belief WHY the payoff lands.

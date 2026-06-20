@@ -13,7 +13,7 @@ binary rules (R1–R5) are pass/fail — full points or zero. The graded checks
 | binary | **R3 Tough choice / no-win** — a moral dilemma between two unfavorable options | 12 (0 or 12) |
 | binary | **R4 Personal consequences** — affects the character's life, safety, or relationships, not just external events | 12 (0 or 12) |
 | binary | **R5 No safety nets** — no plot armor; mistakes carry consequences | 12 (0 or 12) |
-| graded | **G1 Emotional stakes land** — the external goal is tied to a deeper psychological/emotional need (Surface Want vs. Deeper Need); how strongly | 0–25 |
+| graded | **G1 Emotional stakes land** — the external goal is tied to a deeper psychological/emotional need (Surface Want vs. Deeper Need); the stakes land the DESIRE-vs-BELIEF tension that's actually at risk (the WHY beneath the event, not just the event); how strongly | 0–25 |
 | graded | **G2 Specific & relatable** — the stakes are specific to the audience avatar, not generic | 0–15 |
 | **penalty** | **P1 Jargon** — clinical/AI jargon present (Somatic, Metabolic, etc.) | **−15** |
 

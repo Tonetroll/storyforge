@@ -18,7 +18,7 @@ idea — it does not pass the gate.
 ## WHAT YOU OUTPUT (every idea, no exceptions)
 
 - **One-liner (the open loop):** concrete, speakable in under 4 seconds. No abstraction.
-- **Resolution (the payoff):** what closes the loop toward the end. Defined, not blank.
+- **Resolution (the payoff):** what closes the loop toward the end. Defined, not blank. It must land the WHY beneath the event — the DESIRE and the BELIEF driving it — not just the surface thing that happened. Not "his country caught him" (the event) but "they still believed he was the one who could win, so they held that space for him" (the desire + belief underneath). A resolution that names only the WHAT lands flat.
 - **Reaction #1 (pull-in):** LOL / WTF / WOW — named and real.
 - **Reaction #2 (resolution):** Aah / Oooh / Finally — named, real, and DIFFERENT from #1.
 - **Viewer action:** exactly ONE (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect).
@@ -30,7 +30,7 @@ SIX before you output. Any NO and your idea dies at the gate — so build to pas
 every one.
 
 1. Reaction #1 / pull-in named and real? (LOL / WTF / WOW) → ____
-2. Reaction #2 / resolution named and real? (Aah / Oooh / Finally) → ____
+2. Reaction #2 / resolution named and real, landing the WHY (the desire + belief), not just the event? (Aah / Oooh / Finally) → ____
 3. Are #1 and #2 TWO DIFFERENT emotions? (same emotion twice = FAIL) → ____
 4. Exactly ONE clear viewer action? (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect) → ____
 5. Open loop — the premise does NOT already give away the answer? → ____

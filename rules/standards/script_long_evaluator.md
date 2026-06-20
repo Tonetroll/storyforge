@@ -7,7 +7,7 @@ addiction loop, voice — judged for the LONG-FORM format. Jargon is a penalty.
 
 | Type | Check | Points |
 |---|---|---|
-| graded | **D1 Delivery** — carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE above) | 0–20 |
+| graded | **D1 Delivery** — carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE above); the payoff lands the WHY beneath the event — the desire and the belief driving it — not just the surface event (a payoff that shows only WHAT happened scores low) | 0–20 |
 | binary | **L1 Hook opens a loop** — a spine question opens early | 0 or 12 |
 | binary | **L2 Head fake** — at least one earned reveal that breaks a prediction | 0 or 12 |
 | graded | **L3 Loops chain / no dead air** — nested loops keep the piece moving across its length | 0–13 |

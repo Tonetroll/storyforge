@@ -12,7 +12,11 @@ then signal who it's for (to the human AND to YouTube).
   promise. Do NOT summarize the video or reveal the resolution.
 - **mirror_lines** — 1-2 lines that mirror the audience's wound (from the channel
   positioning) so the right viewer thinks "that's me / how do they know exactly
-  what I feel." Specific to THIS audience, never generic.
+  what I feel." Specific to THIS audience, never generic. The wound IS the
+  tension between what they DESIRE and what they BELIEVE — speak to the WHY
+  beneath the feeling (what they want, and the belief that fights it), not just
+  the surface state. "You did everything right and still believe it'll never be
+  enough" lands the desire + belief; "you feel stuck" only names the WHAT.
 - **audience_signal** — a line that says who this is for + uses the natural
   language the audience would actually search or recognize. This makes the right
   person self-identify, helps YouTube place the video, and naturally signals who

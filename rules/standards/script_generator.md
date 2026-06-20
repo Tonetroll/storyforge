@@ -26,13 +26,13 @@ loops — that's exactly where the rehook goes.
 - Present tense. Speak to ONE viewer.
 - **Hook in the first line (1-3 seconds)** — open a loop immediately, no throat-clearing, no "in this video."
 - No filler, no hype words ("insane", "shocking").
-- **End on its OWN payoff** — a line that lands and completes the short. NEVER a cliffhanger or a "watch the full video" tease. Then ONE clear viewer action.
+- **End on its OWN payoff** — a line that lands and completes the short, and DELIVERS the WHY beneath the event: the desire and the belief driving it, not just the surface event (not "his country caught him" but "they still believed he was the one who could win"). If the payoff narrates only WHAT happened, it will fall flat — land the desire/belief underneath. NEVER a cliffhanger or a "watch the full video" tease. Then ONE clear viewer action.
 
 ## What you output
 
 - **hook** — the opening line(s); opens a loop in the first 1-3 seconds.
 - **body** — the VO narration; the story told with the loop running (stakes → question → head fake → rehook).
-- **payoff** — the line that closes the main loop and lands the theme.
+- **payoff** — the line that closes the main loop and lands the theme by delivering the desire/belief WHY beneath the event, not just the event itself.
 - **cta** — one clear viewer action.
 - **loop_notes** — where the open loops / head fakes / rehooks are (for transparency).
 

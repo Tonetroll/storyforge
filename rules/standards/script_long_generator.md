@@ -21,13 +21,13 @@ act opens and partly closes a loop while a larger one stays open to the end.
 - Paint the scene; slow down on the turns. Use silence and detail.
 - Still no filler and no hype words — long does not mean padded.
 - Carry one spine question from the first line to the payoff.
-- End on the reframe (payoff), then one clear viewer action.
+- End on the reframe (payoff), then one clear viewer action. The payoff must land the WHY beneath the event — the DESIRE and the BELIEF driving it — not just what happened. Stories run on the tension between what someone desires and what they believe; that pull is the source of the emotion, not the surface event. Not "his country caught him," but "they still BELIEVED he was the one who could win, so they held that space for him."
 
 ## What you output
 
 - **hook** — the opening that opens the spine loop.
 - **body** — the full narration: the story across its arc, loops nested and chained.
-- **payoff** — the line/passage that closes the spine loop and lands the theme.
+- **payoff** — the line/passage that closes the spine loop and lands the theme by naming the WHY beneath the event: the desire and the belief that drove it (not just the surface event).
 - **cta** — one clear viewer action.
 - **loop_notes** — the loops, head fakes, and rehooks across the piece.
 

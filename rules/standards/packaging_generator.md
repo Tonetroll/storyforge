@@ -46,3 +46,4 @@ Aspect ratio: 16:9 (1920x1080)
 - Dark/clean backgrounds (or, for a story, the transformed setting) outperform busy ones.
 - Title: outcome > curiosity (have both; if you must choose, outcome wins). Short wins (5-7 words).
 - Show a RESULT/transformation, not the process.
+- The emotion AND the curiosity must come from the WHY beneath the event — the desire someone is chasing and the belief driving it — not from the surface event alone. The thumbnail's expression should read as wanting/believing (the pull), and the title's open loop should make the viewer feel that tension, not just name what happened. A flat title/thumbnail is showing the WHAT without the desire/belief underneath it.

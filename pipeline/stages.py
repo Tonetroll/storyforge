@@ -44,7 +44,7 @@ IDEA = Stage(
     weights={1: 25, 2: 25, 3: 20, 4: 10, 5: 10, 6: 10},
     labels={
         1: "pull-in emotion (LOL/WTF/WOW)",
-        2: "resolution emotion (Aah/Oooh/Finally)",
+        2: "resolution emotion (Aah/Oooh/Finally) — lands the desire/belief WHY, not just the event",
         3: "two DIFFERENT emotions",
         4: "exactly one viewer action",
         5: "open loop (premise doesn't give away the answer)",
@@ -78,7 +78,7 @@ STORY = Stage(
         3: "midpoint is a true reversal",
         4: "disaster + dark moment land",
         5: "structural completeness (all beats, right order)",
-        6: "hook + resolution",
+        6: "hook + resolution (resolution lands the desire/belief WHY)",
     },
     gen_standard_file="story_generator.md",
     eval_standard_file="story_evaluator.md",
@@ -105,7 +105,7 @@ THEME = Stage(
     weights={1: 25, 2: 20, 3: 20, 4: 15, 5: 10, 6: 10},
     labels={
         1: "stance, not a topic",
-        2: "genuine tension (non-yes/no)",
+        2: "genuine tension (desire vs belief, non-yes/no)",
         3: "implies a belief-shift",
         4: "not a moral",
         5: "universal through the specific",
@@ -169,7 +169,7 @@ SCRIPT = Stage(
     topic_field="topic",
     weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},  # D1, L1, L2, L3, V1, V2; sums to 100
     labels={
-        1: "delivery (stakes/theme/structure/hook)",
+        1: "delivery (stakes/theme/structure/hook; payoff lands desire/belief WHY)",
         2: "hook opens a loop",
         3: "head fake",
         4: "rehooks / no dead air",
@@ -200,7 +200,7 @@ SCRIPT_LONG = Stage(
     topic_field="topic",
     weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
     labels={
-        1: "delivery (stakes/theme/structure/hook)",
+        1: "delivery (stakes/theme/structure/hook; payoff lands desire/belief WHY)",
         2: "hook opens a loop",
         3: "head fake",
         4: "loops chain / no dead air",
@@ -233,7 +233,7 @@ SCRIPT_SCREENPLAY = Stage(
     labels={
         1: "delivery (stakes/theme/structure/hook)",
         2: "part 1 opens a loop",
-        3: "head fake in part 2",
+        3: "head fake in part 2 (lands desire/belief WHY)",
         4: "parts chain",
         5: "visual & image-generatable",
         6: "concrete & dramatic",
@@ -262,7 +262,7 @@ SCRIPT_PODCAST = Stage(
     topic_field="topic",
     weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
     labels={
-        1: "delivery (stakes/theme/structure/hook)",
+        1: "delivery (stakes/theme/structure/hook; payoff lands the desire/belief WHY)",
         2: "cold open opens a loop",
         3: "head fake",
         4: "rehooks / volley",
@@ -323,7 +323,7 @@ DESCRIPTION = Stage(
     topic_field="topic",
     weights={1: 25, 2: 25, 3: 15, 4: 10, 5: 15, 6: 10},   # hook + mirror lead (50); sums to 100
     labels={
-        1: "above-the-fold hook", 2: "mirrors the wound", 3: "no spoiler/overpromise",
+        1: "above-the-fold hook", 2: "mirrors the wound (the desire/belief beneath it)", 3: "no spoiler/overpromise",
         4: "repels anti-audience", 5: "algorithm signal", 6: "tight, plain, ~600 chars",
     },
     gen_standard_file="description_generator.md",

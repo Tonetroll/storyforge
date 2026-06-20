@@ -17,7 +17,7 @@ beat exists to serve the internal change.
 | 3 | **Midpoint is a true reversal** — everything changes; reactionary-hero flips to action-hero. Not a minor bump | 15 |
 | 4 | **Disaster + dark moment land** — disaster is foreshadowed for the reader but blindsides the protagonist; the dark moment re-triggers the SPECIFIC fear from check 1 | 15 |
 | 5 | **Structural completeness** — every beat present and in order across the 3 acts/loops; pinch points escalate the opposition | 15 |
-| 6 | **Hook + resolution** — the hook grabs on the inner conflict; the resolution wraps loose ends and satisfies | 10 |
+| 6 | **Hook + resolution** — the hook grabs on the inner conflict; the resolution wraps loose ends and satisfies AND lands the WHY beneath the event (the desire + belief that drove it), not just the WHAT that happened | 10 |
 | | **TOTAL** | **100** |
 
 Character (checks 1–2) = 45 of 100. A complete-but-hollow structure scores low.
@@ -51,4 +51,4 @@ reverses, a disaster the reader dreads while the protagonist strides in blind, a
 dark moment that throws the original fear back in their face, and a recovery
 where they drop the misbelief and change. A REJECT: the beats are filled but the
 "misbelief" is vague, the dark moment is just sad (not the fear returning), or the
-recovery is the protagonist trying harder instead of believing differently.
+recovery is the protagonist trying harder instead of believing differently, or the resolution states only the event (the WHAT) without the desire and belief beneath it (the WHY).

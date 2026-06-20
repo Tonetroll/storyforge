@@ -7,7 +7,7 @@ judged for the PODCAST format. Jargon is a penalty.
 
 | Type | Check | Points |
 |---|---|---|
-| graded | **D1 Delivery** — the stakes, theme's belief-shift, structure's arc, and hook all come through in the talk (verify against THE STORY PACKAGE above) | 0–20 |
+| graded | **D1 Delivery** — the stakes, theme's belief-shift, structure's arc, and hook all come through in the talk (verify against THE STORY PACKAGE above); the payoff lands the WHY beneath the event — the desire and the belief driving it, not just the surface event | 0–20 |
 | binary | **L1 Cold open opens a loop** — the teaser plants a question | 0 or 12 |
 | binary | **L2 Head fake** — an earned reveal breaks a prediction in the conversation | 0 or 12 |
 | graded | **L3 Rehooks / volley keeps going** — "wait, but then..." momentum, no flat stretch | 0–13 |
