@@ -125,7 +125,7 @@ def paths_for(channel: str) -> ChannelPaths:
         root=root,
         profile=root / "profile.md",
         seeds=root / "seeds" / "seeds.txt",
-        candidates=out / "candidates",
+        candidates=out / "drafts",
         accepted=out / "accepted",
         rejected=out / "rejected",
         archived=out / "archived",

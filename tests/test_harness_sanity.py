@@ -7,7 +7,7 @@ import config
 def test_config_imports_and_paths_for_works():
     paths = config.paths_for("some-channel")
     assert paths.root.name == "some-channel"
-    assert paths.candidates.name == "candidates"
+    assert paths.candidates.name == "drafts"   # the working tray (renamed from "candidates")
     # paths_for(None) -> the shared _sandbox workspace (the legitimate "no channel" case)
     sandbox = config.paths_for(None)
     assert sandbox.root.name == "_sandbox"
