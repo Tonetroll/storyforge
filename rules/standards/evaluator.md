@@ -41,7 +41,7 @@ REJECT.
 | Check | What | Max points |
 |---|---|---|
 | 1 | pull-in emotion (LOL/WTF/WOW) | 25 |
-| 2 | resolution emotion (Aah/Oooh/Finally) — lands the desire/belief WHY, not just the event, and runs INSIDE-OUT (felt/expressed). Reward a resolution where the felt belief is EXPRESSED and that expression is what realizes the desire (it carries even when the outcome doesn't); dock one framed around *proving*, permission, or worth granted by the external outcome (validation-seeking) | 25 |
+| 2 | resolution emotion (Aah/Oooh/Finally) — lands the desire/belief WHY, not just the event, and runs INSIDE-OUT (felt/expressed). Reward a resolution where the felt belief is EXPRESSED and that expression is what realizes the desire (it carries even when the outcome doesn't); dock one framed around *proving*, permission, or worth granted by the external outcome (validation-seeking); also dock a resolution where others act FOR the protagonist (loyalty, sacrifice) or are won by ego or an unfelt/false promise, instead of joining because his pursuit genuinely advances THEIR OWN desires — they carry it WITH him because they're part of it | 25 |
 | 3 | two DIFFERENT emotions | 20 |
 | 4 | exactly one viewer action | 10 |
 | 5 | open loop (premise doesn't give the answer) | 10 |
