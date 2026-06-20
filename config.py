@@ -96,8 +96,29 @@ class ChannelPaths:
 
 def paths_for(channel: str) -> ChannelPaths:
     """A channel name -> its self-contained workspace. No channel -> a shared
-    '_sandbox' workspace (dry/smoke runs land there, not in a real channel)."""
-    root = CHANNELS_DIR / (channel or "_sandbox")
+    '_sandbox' workspace (dry/smoke runs land there, not in a real channel).
+
+    Guards against path traversal: a truthy channel may not contain a path
+    separator or a '..' component, nor be an absolute path -- otherwise the
+    workspace could escape channels/. CHANNELS_DIR is read dynamically (tests
+    monkeypatch it), and we confirm the resolved root stays inside it."""
+    if channel:
+        if ("/" in channel or "\\" in channel
+                or ".." in Path(channel).parts
+                or Path(channel).is_absolute()):
+            raise ValueError(
+                f"Invalid channel name '{channel}': must not contain a path "
+                f"separator, a '..' component, or be an absolute path."
+            )
+    channels_dir = CHANNELS_DIR  # read at call time; tests monkeypatch this
+    root = channels_dir / (channel or "_sandbox")
+    # Defense in depth: the resolved root must stay inside channels_dir.
+    resolved_root, resolved_base = root.resolve(), channels_dir.resolve()
+    if resolved_root != resolved_base and resolved_base not in resolved_root.parents:
+        raise ValueError(
+            f"Invalid channel name '{channel}': resolves outside the channels "
+            f"directory ({resolved_root})."
+        )
     out = root / "outputs"
     mem = root / "memory"
     return ChannelPaths(
