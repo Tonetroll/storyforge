@@ -37,36 +37,67 @@ def assert_separation(gen_lm, eval_lm) -> None:
         )
 
 
-def _idea_dummy_lms():
-    """Two independent stub LMs for an offline idea-stage smoke run (--dry-run)."""
+def _stage_dummy_answers(stage):
+    """Generic offline (--dry-run) dummy answers for ANY stage, built by
+    introspecting the stage's OWN signatures (the same approach as
+    chain._scripted_for) so a non-idea stage's --dry-run is fed answers shaped to
+    its signature, not idea's. Returns (gen_answers, eval_answers).
+
+    The gate sequence is REJECT-then-PASS so the dry run still exercises the
+    reject path; the REJECT zeros the stage's first criterion, and every PASS
+    fills each criterion with its full weight (a clean pass) and any extra gate
+    fields (verdict/failed_checks/why/jargon)."""
+    def _gen_answer():
+        # The gen-side DummyLM is SHARED by the generator (gen_sig) AND the
+        # iterator (iter_sig) in dry-run, so one answer must satisfy BOTH
+        # signatures: the generator's output fields plus the iterator's
+        # improved_<field> fields (else the iteration step parse-fails).
+        gen = {"reasoning": "drafting"}
+        for name in list(stage.gen_sig.output_fields) + list(stage.iter_sig.output_fields):
+            if name == "reasoning" or name in gen:
+                continue
+            if name == stage.topic_field:
+                gen[name] = f"DRY-RUN {stage.name}"
+            else:
+                gen[name] = f"DRY-RUN {stage.name}:{name}"
+        return gen
+
+    def _eval_answer(verdict, zero_first=False):
+        ev = {"reasoning": "judging"}
+        for name in stage.gate_sig.output_fields:
+            if name == "reasoning":
+                continue
+            if name == "verdict":
+                ev[name] = verdict
+            elif name == "failed_checks":
+                ev[name] = ("1: dry reject" if zero_first else "none")
+            elif name == "why":
+                ev[name] = "gate decision"
+            elif name == "jargon":
+                ev[name] = "false"            # not in (true/yes/1) -> no penalty
+            elif name.startswith("score_"):
+                k = int(name.split("_")[1])
+                # REJECT zeros the first criterion (forces the all-pass reject);
+                # everything else gets its full weight (a clean pass).
+                ev[name] = "0" if (zero_first and k == min(stage.weights)) else str(stage.weights.get(k, 0))
+            else:
+                ev[name] = "dry"
+        return ev
+
+    gen_answers = [_gen_answer() for _ in range(config.MAX_GEN_ATTEMPTS)]
+    # First gate REJECTs (exercise the reject path), then enough PASSes for the
+    # remaining generate attempt + every iteration + the final re-eval.
+    eval_answers = [_eval_answer("REJECT", zero_first=True)]
+    eval_answers += [_eval_answer("PASS") for _ in range(config.MAX_ITER + 3)]
+    return gen_answers, eval_answers
+
+
+def _stage_dummy_lms(stage):
+    """Two independent stub LMs for an offline single-stage smoke run (--dry-run),
+    generic over the given stage (see _stage_dummy_answers)."""
     from dspy.utils.dummies import DummyLM
 
-    topics = ["dogs tilt heads to hear", "elevator mirror practiced fine",
-              "midnight train last ticket", "barista remembers every order",
-              "lighthouse keeper final night", "old map hidden room",
-              "silent phone rings once", "last bus driver secret"]
-    gen_answers = [
-        {"reasoning": "drafting", "topic": topics[i - 1], "one_liner": f"DRY-RUN open loop {i}",
-         "resolution": f"DRY-RUN payoff {i}", "reaction_1": "WTF", "reaction_2": "Aah",
-         "viewer_action": "Reflect", "improved_one_liner": f"DRY-RUN sharper open loop {i}",
-         "improved_resolution": f"DRY-RUN stronger payoff {i}", "improved_reaction_1": "WTF",
-         "improved_reaction_2": "Aah", "improved_viewer_action": "Reflect"}
-        for i in range(1, 9)
-    ]
-    eval_specs = [
-        ("REJECT", [25, 0, 0, 10, 10, 10], "2,3: resolution missing; emotions not distinct"),
-        ("PASS", [20, 18, 14, 8, 6, 6], "none"),
-        ("PASS", [22, 20, 16, 8, 7, 7], "none"),
-        ("PASS", [23, 22, 17, 8, 8, 8], "none"),
-        ("PASS", [24, 22, 18, 8, 8, 8], "none"),
-        ("PASS", [25, 24, 19, 9, 9, 9], "none"),
-    ]
-    eval_answers = []
-    for (v, scores, fc) in eval_specs:
-        d = {"reasoning": "judging", "verdict": v, "failed_checks": fc, "why": "gate decision"}
-        for i, s in enumerate(scores, start=1):
-            d[f"score_{i}"] = str(s)
-        eval_answers.append(d)
+    gen_answers, eval_answers = _stage_dummy_answers(stage)
     lm_a, lm_b = DummyLM(gen_answers), DummyLM(eval_answers)
     lm_a.model, lm_b.model = "dummy/generator-A", "dummy/evaluator-B"
     return lm_a, lm_b
@@ -77,16 +108,25 @@ def build_modules(stage, dry_run: bool = False, scripted: dict = None, paths=Non
     iterator = Iterator(stage.iter_sig, stage.content_fields)
     evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
     reevaluator = Reevaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
+    # lm_iter/lm_reeval default to SHARING the gen-side/eval-side LM. That is the
+    # correct behavior for dry_run/scripted (the dummy/scripted answers are built
+    # for the gen/eval pair; building separate dummies there would be wrong). Only
+    # the LIVE branch overrides them so the iterator/reevaluator run on their OWN
+    # configs (C5: ITERATOR_LM temp 0.7, REEVALUATOR_LM -- previously dead config).
     if scripted is not None:
         from dspy.utils.dummies import DummyLM
         lm_a = DummyLM(scripted["gen_answers"])
         lm_b = DummyLM(scripted["eval_answers"])
         lm_a.model, lm_b.model = "manual/generator", "manual/evaluator"
+        lm_iter, lm_reeval = lm_a, lm_b
     elif dry_run:
-        lm_a, lm_b = _idea_dummy_lms()
+        lm_a, lm_b = _stage_dummy_lms(stage)
+        lm_iter, lm_reeval = lm_a, lm_b
     else:
         lm_a = dspy.LM(**config.GENERATOR_LM)
+        lm_iter = dspy.LM(**config.ITERATOR_LM)
         lm_b = dspy.LM(**config.EVALUATOR_LM)
+        lm_reeval = dspy.LM(**config.REEVALUATOR_LM)
     # LIVE only (real paid run): if a compiled (optimized) generator exists for this
     # stage, load its bootstrapped demos into the FRESH student so learning actually
     # reaches production. dspy load can wipe the per-predictor .lm (learn.py's
@@ -102,9 +142,9 @@ def build_modules(stage, dry_run: bool = False, scripted: dict = None, paths=Non
             generator.load(str(compiled_path))
             loaded_compiled = compiled_path
     generator.set_lm(lm_a)
-    iterator.set_lm(lm_a)
+    iterator.set_lm(lm_iter)
     evaluator.set_lm(lm_b)
-    reevaluator.set_lm(lm_b)
+    reevaluator.set_lm(lm_reeval)
     assert_separation(generator.get_lm(), evaluator.get_lm())
     return generator, evaluator, iterator, reevaluator, loaded_compiled
 
