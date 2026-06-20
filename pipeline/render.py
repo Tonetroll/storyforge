@@ -83,18 +83,24 @@ def _assembly_lines(assembly) -> str:
 
 def to_text(record: dict, stage) -> str:
     bar = "=" * 70
-    return "\n".join([
+    assembly = record.get("assembly")
+    head = [
         bar,
         f"  {record.get('slug', '?')}   |   {record.get('story_id') or '(no id)'}   |   "
         f"v{record.get('version', 0):02d}   |   {str(record.get('status', '')).upper()}",
         bar,
         "",
-        "BRIEF:",
-        _wrap(record.get("brief", ""), "    "),
+    ]
+    # Upstream context shown ONCE -- never double-printed. Downstream stages show the
+    # BUILT-ON package; the idea (no upstream) shows its raw seed BRIEF.
+    if assembly:
+        context = [_assembly_lines(assembly).lstrip("\n")]
+    else:
+        context = ["BRIEF:", _wrap(record.get("brief", ""), "    ")]
+    tail = [
         "",
         f"THE {stage.content_label}",
         (_prose_lines if stage.name in _PROSE_STAGES else _content_lines)(record.get("content", {}) or {}, stage),
-        _assembly_lines(record.get("assembly")),
         "",
         "GATE",
         f"  Verdict:  {record.get('verdict', '')}",
@@ -114,4 +120,5 @@ def to_text(record: dict, stage) -> str:
         f"  created:   {record.get('ts', '')}",
         bar,
         "",
-    ])
+    ]
+    return "\n".join(head + context + tail)
