@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".venv/Scripts/python run.py review --all",
+            "timeout": 30,
+            "statusMessage": "Checking review queue..."
+          }
+        ]
+      }
+    ]
+  }
+}
