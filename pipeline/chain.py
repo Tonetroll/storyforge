@@ -94,7 +94,10 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
         _promote(res["artifact"], paths)
 
     # --- terminal deliverables off the accepted stakebake (left at ready_for_review) ---
+    # These are INDEPENDENT siblings: attempt ALL of them even if one fails, but
+    # honestly report any that did not reach ready_for_review.
     made = []
+    incomplete = []
     for name in deliverables:
         stage = stages.get_stage(name)
         scripted = _scripted_for(stage) if dry_run else None
@@ -103,19 +106,26 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
                 "score": res.get("final_score"), "artifact": res.get("artifact")}
         trail.append(step)
         made.append(step)
+        if res.get("outcome") != "ready_for_review":
+            incomplete.append(name)
 
     return {"brief": brief, "channel": channel, "stopped_at": None,
-            "trail": trail, "deliverables": made}
+            "trail": trail, "deliverables": made,
+            "incomplete_deliverables": incomplete}
 
 
 def _brief_from_line(line: str) -> str:
     """A seed line is a plain-text idea (the norm). Legacy JSON ({"brief": "..."})
-    is still accepted so older seed files keep working."""
+    is still accepted so older seed files keep working.
+
+    A line that starts with "{" is treated as JSON: a null/missing/empty/whitespace
+    "brief" yields "" (the caller skips it -- never the literal string "None"), and
+    a line that fails to parse as JSON raises ValueError so the caller can warn and
+    skip it rather than feeding broken JSON to the generator as raw text."""
     if line.startswith("{"):
-        try:
-            return str(json.loads(line).get("brief", "")).strip()
-        except ValueError:
-            pass
+        obj = json.loads(line)  # malformed JSON raises ValueError -> caller warns + skips
+        value = obj.get("brief")
+        return str(value).strip() if value is not None else ""
     return line
 
 
@@ -133,7 +143,12 @@ def run_channel(channel: str, dry_run: bool = False) -> list:
         line = line.strip()
         if not line or line.startswith("#") or line.startswith("//"):
             continue
-        brief = _brief_from_line(line)
+        try:
+            brief = _brief_from_line(line)
+        except ValueError as e:
+            snippet = line if len(line) <= 120 else line[:117] + "..."
+            print(f"[run_channel] SKIPPING malformed JSON seed line: {snippet!r} ({e})")
+            continue
         if brief:
             results.append(run_chain(brief, channel=channel, dry_run=dry_run))
     return results
