@@ -5,6 +5,7 @@ stage, the scoring thresholds, and all filesystem paths. Nothing in this folder
 reaches outside it.
 """
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -25,10 +26,19 @@ DEFAULT_MODULE = "IDEA"
 # the generator/iterator, so it cannot inflate its own work. Two API keys.
 # (model string, temperature, max_tokens)
 # ---------------------------------------------------------------------------
-GENERATOR_LM   = {"model": "anthropic/claude-opus-4-8", "temperature": 0.9, "max_tokens": 4000}
-ITERATOR_LM    = {"model": "anthropic/claude-opus-4-8", "temperature": 0.7, "max_tokens": 4000}
-EVALUATOR_LM   = {"model": "openai/gpt-4o",             "temperature": 0.0, "max_tokens": 1500}
-REEVALUATOR_LM = {"model": "openai/gpt-4o",             "temperature": 0.0, "max_tokens": 1500}
+# Provider A (generator/iterator) = Z.ai GLM via the GLM Coding Plan (OpenAI-compatible
+#   endpoint). The model name (glm-5.2) and key are yours; we point at the coding endpoint
+#   so the connector reaches the model your plan actually serves.
+# Provider B (evaluator/reevaluator) = OpenRouter, concrete model. (The connector can't use
+#   OpenRouter @preset/ references -- known LiteLLM limitation -- so we name the model directly.)
+#   Reads OPENROUTER_API_KEY from .env.
+# Different providers -> the judge can't grade its own work (the #1 rule, enforced in orchestrator.py).
+ZAI_CODING_BASE = "https://api.z.ai/api/coding/paas/v4"   # GLM Coding Plan, OpenAI-compatible
+ZAI_API_KEY     = os.getenv("ZAI_API_KEY")
+GENERATOR_LM   = {"model": "openai/glm-5.2", "api_base": ZAI_CODING_BASE, "api_key": ZAI_API_KEY, "temperature": 0.9, "max_tokens": 4000}
+ITERATOR_LM    = {"model": "openai/glm-5.2", "api_base": ZAI_CODING_BASE, "api_key": ZAI_API_KEY, "temperature": 0.7, "max_tokens": 4000}
+EVALUATOR_LM   = {"model": "openrouter/google/gemma-3-27b-it", "temperature": 0.0, "max_tokens": 1500}
+REEVALUATOR_LM = {"model": "openrouter/google/gemma-3-27b-it", "temperature": 0.0, "max_tokens": 1500}
 
 # ---------------------------------------------------------------------------
 # Loop / scoring policy

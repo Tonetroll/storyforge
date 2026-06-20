@@ -108,10 +108,21 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
             "trail": trail, "deliverables": made}
 
 
+def _brief_from_line(line: str) -> str:
+    """A seed line is a plain-text idea (the norm). Legacy JSON ({"brief": "..."})
+    is still accepted so older seed files keep working."""
+    if line.startswith("{"):
+        try:
+            return str(json.loads(line).get("brief", "")).strip()
+        except ValueError:
+            pass
+    return line
+
+
 def run_channel(channel: str, dry_run: bool = False) -> list:
     """Run every seed in THIS channel's queue (channels/<channel>/seeds/briefs.jsonl)
-    through the full chain, one complete chain at a time. Each line is {'brief': ...}
-    (the channel is the workspace, so it no longer needs to be named per line)."""
+    through the full chain, one complete chain at a time. Each line is a plain-text
+    idea (legacy JSON {'brief': ...} still works); the channel is the workspace."""
     paths = config.paths_for(channel)
     if not paths.seeds.exists():
         raise FileNotFoundError(
@@ -122,6 +133,7 @@ def run_channel(channel: str, dry_run: bool = False) -> list:
         line = line.strip()
         if not line or line.startswith("#") or line.startswith("//"):
             continue
-        obj = json.loads(line)
-        results.append(run_chain(obj["brief"], channel=channel, dry_run=dry_run))
+        brief = _brief_from_line(line)
+        if brief:
+            results.append(run_chain(brief, channel=channel, dry_run=dry_run))
     return results

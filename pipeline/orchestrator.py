@@ -211,6 +211,17 @@ def _save_artifact(*, stage, slug, number, version, status, brief, content, gate
 # ---------------------------------------------------------------------------
 # The hybrid loop (generic over a stage)
 # ---------------------------------------------------------------------------
+def _llm_call(log, what, fn, **kwargs):
+    """Run one LM call. If it throws (model not found, auth, API/timeout error),
+    log the FULL traceback to this run's log file before re-raising -- so failures
+    show up in the log instead of vanishing to the terminal."""
+    try:
+        return fn(**kwargs)
+    except Exception:
+        log.exception("LM CALL FAILED during %s -- this is why the run produced nothing:", what)
+        raise
+
+
 def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scripted: dict = None,
         channel: str = None) -> dict:
     stage = stages.get_stage(stage_name)
@@ -261,12 +272,12 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     passed = None
     for attempt in range(1, config.MAX_GEN_ATTEMPTS + 1):
         number = naming.next_number(search_dirs)
-        pred = generator(brief=brief, standard=gen_standard)
+        pred = _llm_call(log, "idea/content generation", generator, brief=brief, standard=gen_standard)
         content = _content(pred, stage)
         slug = naming.slugify(getattr(pred, stage.topic_field, "") or next(iter(content.values()), ""))
         first_field = content.get(stage.content_fields[0], "")
         log.info("[attempt %d] generating '%s' (%s_%04d)...", attempt, first_field, slug, number)
-        gate = evaluator(content=content, criteria=eval_criteria)
+        gate = _llm_call(log, "gate / evaluation (the OpenRouter judge)", evaluator, content=content, criteria=eval_criteria)
         if gate.verdict == "PASS":
             story_id = f"ST-{number:04d}"
             path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=1,
@@ -305,8 +316,8 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         version += 1
         critique = f"{gate.why}\nPush higher; current weak points: {gate.failed_checks}"
         log.info("[v%02d] iteration %d/%d on %s to raise score...", version, iterations, config.MAX_ITER, story_id)
-        content = iterator(content=content, critique=critique, standard=gen_standard)
-        gate = reevaluator(content=content, criteria=eval_criteria)
+        content = _llm_call(log, "iteration", iterator, content=content, critique=critique, standard=gen_standard)
+        gate = _llm_call(log, "re-evaluation (the OpenRouter judge)", reevaluator, content=content, criteria=eval_criteria)
         path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=version,
                                         status="revised", brief=brief, content=content, gate=gate,
                                         story_id=story_id, gen_model=gen_model, eval_model=eval_model,
@@ -324,7 +335,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     if best["score"] >= config.TARGET_SCORE:
         log.info("reached target (%d >= %d). Final reevaluation of best v%02d...",
                  best["score"], config.TARGET_SCORE, best["version"])
-        final_gate = reevaluator(content=best["content"], criteria=eval_criteria)
+        final_gate = _llm_call(log, "final re-evaluation (the OpenRouter judge)", reevaluator, content=best["content"], criteria=eval_criteria)
         path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
                                         status="ready_for_review", brief=brief, content=best["content"],
                                         gate=final_gate, story_id=story_id, gen_model=gen_model,
