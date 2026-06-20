@@ -98,9 +98,18 @@ def build_modules(stage, dry_run: bool = False, scripted: dict = None):
 # ---------------------------------------------------------------------------
 # Standards + upstream handoff
 # ---------------------------------------------------------------------------
-def _read_standard(filename: str, fallback: str) -> str:
+def _read_standard(filename: str, fallback: str, required: bool = False) -> str:
     path = config.STANDARDS_DIR / filename
-    return path.read_text(encoding="utf-8") if path.exists() else fallback
+    if path.exists():
+        return path.read_text(encoding="utf-8")
+    if required:
+        # LIVE runs: refuse to proceed with a placeholder standard -- that would
+        # spend real LLM calls grading/generating against nothing.
+        raise FileNotFoundError(
+            f"Missing required stage standard file '{filename}' at {path}. "
+            f"A live run cannot proceed without it -- create it before running."
+        )
+    return fallback
 
 
 def _extract_spine(text: str) -> str:
@@ -116,14 +125,25 @@ def _load_craft() -> str:
     return p.read_text(encoding="utf-8").strip() if p.exists() else ""
 
 
-def _load_channel(channel: str):
+def _load_channel(channel: str, live: bool = False):
     """Returns (spine, full) for a channel profile. spine = the positioning block fed
     to every stage; full = the whole profile fed to the deep stages only. HTML
-    comments (the meta note + markers) are stripped so they never reach a prompt."""
+    comments (the meta note + markers) are stripped so they never reach a prompt.
+
+    The two empty-result cases are distinct:
+      - channel falsy -> the legitimate "no channel" / _sandbox case; never raises.
+      - channel named but its profile.md is missing -> in a LIVE run, refuse to
+        proceed (no profile == no audience/voice == wasted paid LLM calls)."""
     if not channel:
         return "", ""
     path = config.CHANNELS_DIR / channel / "profile.md"
     if not path.exists():
+        if live:
+            raise FileNotFoundError(
+                f"Channel '{channel}' has no profile at {path}. A live run cannot "
+                f"proceed without the channel profile -- create it (e.g. "
+                f"`python run.py new-channel {channel}`) before running."
+            )
         return "", ""
     raw = path.read_text(encoding="utf-8")
     strip = lambda t: re.sub(r"<!--.*?-->", "", t, flags=re.DOTALL).strip()
@@ -231,13 +251,20 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     mode = "MANUAL (your content + scores)" if scripted else ("DRY-RUN (stub LMs)" if dry_run else "LIVE")
     log.info("mode=%s | stage=%s | channel=%s", mode, stage.name, channel or "(none)")
 
+    # LIVE = real paid LLM calls. Only then do we hard-fail on a missing standard or a
+    # named-but-missing channel profile (a placeholder there means money spent on nothing).
+    # dry_run / scripted (offline) and the "no channel" sandbox case keep their behavior.
+    live = (dry_run is False) and (scripted is None)
+
     gen_standard = _read_standard(stage.gen_standard_file,
-                                  "PLACEHOLDER: produce a complete artifact per the standard.")
+                                  "PLACEHOLDER: produce a complete artifact per the standard.",
+                                  required=live)
     eval_criteria = _read_standard(stage.eval_standard_file,
-                                   "PLACEHOLDER: PASS only if every check is met; score each 0..its weight.")
+                                   "PLACEHOLDER: PASS only if every check is met; score each 0..its weight.",
+                                   required=live)
     # The channel profile (audience + character/voice) rides into every generator/iterator
     # via the standard, so every stage stays on-audience and in-voice. Gates stay scoped.
-    spine, full = _load_channel(channel)
+    spine, full = _load_channel(channel, live=live)
     audience = full if stage.deep_channel else spine   # deep stages (idea/theme/story) get the whole doc
     craft = _load_craft()                              # shared craft, every genre
     layers = []
@@ -336,14 +363,30 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         log.info("reached target (%d >= %d). Final reevaluation of best v%02d...",
                  best["score"], config.TARGET_SCORE, best["version"])
         final_gate = _llm_call(log, "final re-evaluation (the OpenRouter judge)", reevaluator, content=best["content"], criteria=eval_criteria)
-        path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
-                                        status="ready_for_review", brief=brief, content=best["content"],
-                                        gate=final_gate, story_id=story_id, gen_model=gen_model,
-                                        eval_model=eval_model, dest_dir=paths.candidates,
-                                        parent_version=best["version"])
-        _metric_row(asset_id, final_version, "ready_for_review", final_gate)
-        outcome, final_score = "ready_for_review", final_gate.score
-        log.info("READY FOR REVIEW: %s (%s) | final score %d", path.name, story_id, final_gate.score)
+        # Only promote when the FINAL re-eval still agrees: PASS verdict AND at/above
+        # target. A regression here (REJECT, or a final score below target) must PARK,
+        # not land in candidates as ready_for_review. (Mirrors the iteration loop's
+        # non-PASS handling above.)
+        if final_gate.verdict == "PASS" and final_gate.score >= config.TARGET_SCORE:
+            path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
+                                            status="ready_for_review", brief=brief, content=best["content"],
+                                            gate=final_gate, story_id=story_id, gen_model=gen_model,
+                                            eval_model=eval_model, dest_dir=paths.candidates,
+                                            parent_version=best["version"])
+            _metric_row(asset_id, final_version, "ready_for_review", final_gate)
+            outcome, final_score = "ready_for_review", final_gate.score
+            log.info("READY FOR REVIEW: %s (%s) | final score %d", path.name, story_id, final_gate.score)
+        else:
+            log.info("    final re-eval REGRESSED (verdict %s, score %d) -- parking instead of promoting.",
+                     final_gate.verdict, final_gate.score)
+            path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
+                                            status="parked", brief=brief, content=best["content"],
+                                            gate=final_gate, story_id=story_id, gen_model=gen_model,
+                                            eval_model=eval_model, dest_dir=paths.parked,
+                                            parent_version=best["version"])
+            _metric_row(asset_id, final_version, "parked", final_gate)
+            outcome, final_score = "parked", final_gate.score
+            log.info("PARKED (final regression): %s (%s) | final score %d", path.name, story_id, final_gate.score)
     else:
         path, asset_id = _save_artifact(stage=stage, assembly=assembly, channel=channel, slug=slug, number=number, version=final_version,
                                         status="parked", brief=brief, content=best["content"],

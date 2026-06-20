@@ -1,2 +1,5 @@
 dspy==3.2.1
 python-dotenv>=1.0.0
+
+# Dev / test
+pytest>=8.0
