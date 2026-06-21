@@ -22,14 +22,15 @@ front half does not pass ideation.
 - As an IDEA: incomplete — no resolution defined, so it's only the front half → does **not** pass ideation. Define the payoff (and the viewer action) and it can.
 - Different from the slogan: the slogan never opened a loop at all; this opens it but stops there.
 
-## CRITERIA FOR A STORY
+## CRITERIA FOR A STORY  (each judges ONE thing)
 
-1. Reaction #1 / pull-in named and real? (LOL / WTF / WOW) → ____
-2. Reaction #2 / resolution named and real, landing the WHY (the desire + belief beneath the event, not just the WHAT)? (Aah / Oooh / Finally) → ____
-3. Are #1 and #2 TWO DIFFERENT emotions? (same emotion twice = FAIL) → ____
-4. Exactly ONE clear viewer action? (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect) → ____
-5. Open loop — the premise does NOT already give away the answer? → ____
-6. One-liner is concrete and speakable in under 4 seconds (no abstraction)? → ____
+1. Pull-in emotion — reaction #1 is real and strong? (LOL / WTF / WOW) → ____
+2. Resolution emotion — reaction #2 is real and strong? (Aah / Oooh / Finally) → ____
+3. The two emotions are DISTINCT from each other? (same emotion twice = FAIL) → ____
+4. The resolution lands the desire/belief WHY beneath the event, not just the WHAT? → ____
+5. Exactly ONE clear viewer action? (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect) → ____
+6. Open loop — the premise does NOT already give away the answer? → ____
+7. One-liner is concrete and speakable in under 4 seconds (no abstraction)? → ____
 
 ## SCORING (weighted, totals 100)
 
@@ -40,16 +41,17 @@ REJECT.
 
 | Check | What | Max points |
 |---|---|---|
-| 1 | pull-in emotion (LOL/WTF/WOW) | 25 |
-| 2 | resolution emotion (Aah/Oooh/Finally) — lands the desire/belief WHY, not just the event, and runs INSIDE-OUT (felt/expressed). Reward a resolution where the felt belief is EXPRESSED and that expression is what realizes the desire (it carries even when the outcome doesn't); reward one that reads desire as the CONSTANT and belief as the variable — emotional resistance dims belief or stalls him, then the desire RESURFACES (don't reward a desire that vanishes and "comes back" as if new). Reward belief shown on a SPECTRUM, not flipped binary on/off; reward a self-oriented motive read on the EGO→AUTHENTIC axis; reward others pulled in by MIRRORING (his pursuit serves THEIR OWN desire, carried WITH him), and identity treated as self-made — owned belief OR his own ceding to others' opinions. Dock a resolution framed around *proving*, permission, or worth granted by the external outcome (validation-seeking); dock desire that dies and returns rather than resurfaces; dock binary believe/don't-believe; dock him CARRYING others, or others acting FOR him (loyalty, sacrifice) or won by ego or an unfelt/false promise; dock identity handed down from outside | 25 |
-| 3 | two DIFFERENT emotions | 20 |
-| 4 | exactly one viewer action | 10 |
-| 5 | open loop (premise doesn't give the answer) | 10 |
-| 6 | one-liner concrete & speakable <4s | 10 |
+| 1 | pull-in emotion is real & strong (LOL/WTF/WOW) | 18 |
+| 2 | resolution emotion is real & strong (Aah/Oooh/Finally) | 18 |
+| 3 | the two emotions are DISTINCT from each other (same emotion twice = 0) | 16 |
+| 4 | resolution lands the desire/belief WHY, not just the event, and runs INSIDE-OUT (felt/expressed). Reward a resolution where the felt belief is EXPRESSED and that expression realizes the desire (it carries even when the outcome doesn't); reward one that reads desire as the CONSTANT and belief as the variable — emotional resistance dims belief or stalls him, then the desire RESURFACES (don't reward a desire that vanishes and "comes back" as if new). Reward belief shown on a SPECTRUM, not flipped binary; reward a self-oriented motive on the EGO→AUTHENTIC axis; reward others pulled in by MIRRORING (his pursuit serves THEIR OWN desire, carried WITH him), and identity treated as self-made — owned belief OR his own ceding to others' opinions. Dock *proving*/permission/validation-seeking; dock a desire that dies and returns rather than resurfaces; dock binary believe/don't; dock him CARRYING others, or others acting FOR him (loyalty, sacrifice) or won by ego or an unfelt/false promise; dock identity handed down from outside | 18 |
+| 5 | exactly one viewer action | 8 |
+| 6 | open loop (premise doesn't give the answer) | 12 |
+| 7 | one-liner concrete & speakable <4s | 10 |
 | | **TOTAL** | **100** |
 
-Emotion (checks 1–3) = 70 of 100. A merely-present idea scores low; a strong one
-scores high. The score drives iteration; the verdict (any 0 → REJECT) is the gate.
+Emotion + the WHY (checks 1–4) = 70 of 100. A merely-present idea scores low; a strong
+one scores high. The score drives iteration; the verdict (any 0 → REJECT) is the gate.
 
 ## VERDICT (for evaluators)
 
@@ -60,12 +62,13 @@ scores high. The score drives iteration; the verdict (any 0 → REJECT) is the g
 
 ```
 VERDICT: PASS | REJECT
-Score 1 (pull-in emotion /25): ____
-Score 2 (resolution emotion /25): ____
-Score 3 (two different /20): ____
-Score 4 (one viewer action /10): ____
-Score 5 (open loop /10): ____
-Score 6 (speakable <4s /10): ____
+Score 1 (pull-in emotion /18): ____
+Score 2 (resolution emotion /18): ____
+Score 3 (two emotions distinct /16): ____
+Score 4 (resolution lands the WHY /18): ____
+Score 5 (one viewer action /8): ____
+Score 6 (open loop /12): ____
+Score 7 (speakable <4s /10): ____
 TOTAL (/100): ____
 Reaction #1 (pull-in): ____
 Reaction #2 (resolution): ____
@@ -89,4 +92,4 @@ If REJECT — failed checks: <numbers + one line each>
 
 **REJECT** — "Dogs tilt their heads to hear you better."
 - One mild emotion; the premise answers itself; the loop is already closed.
-- Fails checks 2, 3, 5 → **REJECT.** Information, not a story. New idea — no iteration.
+- Fails checks 2, 3, 4, 6 → **REJECT.** Information, not a story. New idea — no iteration.

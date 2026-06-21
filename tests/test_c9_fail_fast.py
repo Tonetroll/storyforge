@@ -73,8 +73,8 @@ def test_scripted_missing_profile_does_not_raise(channel_ws):
     """A scripted/manual run with a missing profile must still run offline."""
     stage = stages.get_stage("idea")
     scripted = make_scripted(stage, eval_answers=[
-        _eval_answer(stage, {1: 25, 2: 25, 3: 20, 4: 9, 5: 9, 6: 7}, verdict="PASS"),
-        _eval_answer(stage, {1: 25, 2: 25, 3: 20, 4: 9, 5: 9, 6: 7}, verdict="PASS"),
+        _eval_answer(stage, {1: 18, 2: 18, 3: 16, 4: 18, 5: 8, 6: 12, 7: 5}, verdict="PASS"),
+        _eval_answer(stage, {1: 18, 2: 18, 3: 16, 4: 18, 5: 8, 6: 12, 7: 5}, verdict="PASS"),
     ])
     res = orchestrator.run(stage_name="idea", brief="x", channel="no-such-channel",
                            dry_run=False, scripted=scripted)

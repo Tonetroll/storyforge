@@ -29,7 +29,7 @@ def test_final_reject_is_parked_not_promoted(channel_ws):
 
     # gate PASS at exactly TARGET_SCORE (all six checks nonzero, sum = 95) so the
     # iteration loop does not run; then the FINAL re-eval REJECTs (-> score 0).
-    pass_scores = {1: 25, 2: 25, 3: 20, 4: 9, 5: 9, 6: 7}  # sums to 95 == TARGET_SCORE
+    pass_scores = {1: 18, 2: 18, 3: 16, 4: 18, 5: 8, 6: 12, 7: 5}  # sums to 95 == TARGET_SCORE
     assert sum(pass_scores.values()) == config.TARGET_SCORE
     eval_answers = [
         _eval_answer(stage, pass_scores, verdict="PASS"),
@@ -58,7 +58,7 @@ def test_final_pass_still_promotes(channel_ws):
     paths = channel_ws["paths"]
     stage = stages.get_stage("idea")
 
-    pass_scores = {1: 25, 2: 25, 3: 20, 4: 9, 5: 9, 6: 7}  # 95
+    pass_scores = {1: 18, 2: 18, 3: 16, 4: 18, 5: 8, 6: 12, 7: 5}  # 95
     eval_answers = [
         _eval_answer(stage, pass_scores, verdict="PASS"),   # gate
         _eval_answer(stage, pass_scores, verdict="PASS"),   # final re-eval

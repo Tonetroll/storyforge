@@ -26,22 +26,24 @@ idea — it does not pass the gate.
 ## CRITERIA FOR A STORY
 
 These are the EXACT checks the gate will run on what you produce. Satisfy ALL
-SIX before you output. Any NO and your idea dies at the gate — so build to pass
-every one.
+SEVEN before you output — each judges ONE thing. Any NO and your idea dies at the
+gate — so build to pass every one.
 
-1. Reaction #1 / pull-in named and real? (LOL / WTF / WOW) → ____
-2. Reaction #2 / resolution named and real, landing the WHY (the desire + belief), not just the event? (Aah / Oooh / Finally) → ____
-3. Are #1 and #2 TWO DIFFERENT emotions? (same emotion twice = FAIL) → ____
-4. Exactly ONE clear viewer action? (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect) → ____
-5. Open loop — the premise does NOT already give away the answer? → ____
-6. One-liner is concrete and speakable in under 4 seconds (no abstraction)? → ____
+1. Pull-in emotion — reaction #1 is real and strong? (LOL / WTF / WOW) → ____
+2. Resolution emotion — reaction #2 is real and strong? (Aah / Oooh / Finally) → ____
+3. The two emotions are DISTINCT from each other? (same emotion twice = FAIL) → ____
+4. The resolution lands the desire/belief WHY beneath the event, not just the WHAT? → ____
+5. Exactly ONE clear viewer action? (Do / Sale / Sign-up / Save / Share / Try / Apply / Reflect) → ____
+6. Open loop — the premise does NOT already give away the answer? → ____
+7. One-liner is concrete and speakable in under 4 seconds (no abstraction)? → ____
 
 ## WHERE THE POINTS ARE
 
-Emotion wins. The gate scores out of 100 and emotion is 70 of it: pull-in 25,
-resolution 25, two-different 20. The other three checks are 10 each. So pour your
-effort into the two reactions and making them genuinely different — that is where
-the score lives. A clean structure with flat emotion scores low.
+Emotion wins. The gate scores out of 100 and the emotion + WHY checks are 70 of it:
+pull-in 18, resolution 18, the two distinct 16, the resolution's desire/belief WHY 18.
+The other three (one action 8, open loop 12, speakable 10) are 30. So pour your effort
+into the two reactions, making them genuinely different, and landing the WHY — that is
+where the score lives. A clean structure with flat emotion scores low.
 
 ## THE SIN — DO NOT COMMIT IT
 

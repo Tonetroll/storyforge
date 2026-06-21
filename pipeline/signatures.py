@@ -36,22 +36,23 @@ class GenerateIdea(dspy.Signature):
 
 class GateIdea(dspy.Signature):
     """You are a strict, impartial gate. You did NOT write this idea; do not be
-    generous. Score each of the six checks 0..its max by HOW STRONGLY it is met.
-    A check scoring 0 = absent = REJECT. Otherwise PASS."""
+    generous. Score each of the seven checks 0..its max by HOW STRONGLY it is met.
+    Each check judges ONE thing only. A check scoring 0 = absent = REJECT. Otherwise PASS."""
 
     one_liner = dspy.InputField()
     resolution = dspy.InputField()
     reaction_1 = dspy.InputField()
     reaction_2 = dspy.InputField()
     viewer_action = dspy.InputField()
-    criteria = dspy.InputField(desc="The gate: the six checks, their weights, and the verdict rule.")
+    criteria = dspy.InputField(desc="The gate: the seven checks, their weights, and the verdict rule.")
     verdict = dspy.OutputField(desc="Exactly 'PASS' or 'REJECT'. REJECT if ANY check scores 0.")
-    score_1 = dspy.OutputField(desc="Check 1 pull-in emotion: integer 0-25. 0 = absent.")
-    score_2 = dspy.OutputField(desc="Check 2 resolution emotion -- lands the desire/belief WHY beneath the event, not just the WHAT: integer 0-25. 0 = absent.")
-    score_3 = dspy.OutputField(desc="Check 3 two DIFFERENT emotions: integer 0-20. 0 = same twice or one missing.")
-    score_4 = dspy.OutputField(desc="Check 4 exactly one viewer action: integer 0-10. 0 = none or more than one.")
-    score_5 = dspy.OutputField(desc="Check 5 open loop: integer 0-10. 0 = premise gives away the answer.")
-    score_6 = dspy.OutputField(desc="Check 6 concrete & speakable <4s: integer 0-10. 0 = abstract or too long.")
+    score_1 = dspy.OutputField(desc="Check 1 pull-in emotion real & strong (LOL/WTF/WOW): integer 0-18. 0 = absent.")
+    score_2 = dspy.OutputField(desc="Check 2 resolution emotion real & strong (Aah/Oooh/Finally): integer 0-18. 0 = absent.")
+    score_3 = dspy.OutputField(desc="Check 3 the pull-in and resolution emotions are DISTINCT from each other: integer 0-16. 0 = same emotion twice or one missing.")
+    score_4 = dspy.OutputField(desc="Check 4 resolution lands the desire/belief WHY beneath the event, not just the WHAT: integer 0-18. 0 = names only the event.")
+    score_5 = dspy.OutputField(desc="Check 5 exactly one viewer action: integer 0-8. 0 = none or more than one.")
+    score_6 = dspy.OutputField(desc="Check 6 open loop -- premise doesn't give away the answer: integer 0-12. 0 = gives it away.")
+    score_7 = dspy.OutputField(desc="Check 7 one-liner concrete & speakable <4s: integer 0-10. 0 = abstract or too long.")
     failed_checks = dspy.OutputField(desc="If REJECT: the failing check numbers + one line each. If PASS: 'none'.")
     why = dspy.OutputField(desc="One line.")
 
