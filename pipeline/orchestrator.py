@@ -405,7 +405,16 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         iterations += 1
         parent = version
         version += 1
-        critique = f"{gate.why}\nPush higher; current weak points: {gate.failed_checks}"
+        weak = [
+            f"#{k} {stage.labels[k]} scored {gate.breakdown.get(k, 0)}/{stage.weights[k]}"
+            for k in sorted(stage.weights)
+            if gate.breakdown.get(k, 0) < stage.weights[k]
+        ]
+        critique = (
+            f"Score {gate.score}/{config.SCORE_SCALE}. Raise ONLY the checks below full marks "
+            f"(leave everything already at full as it is): "
+            f"{'; '.join(weak) if weak else '(all checks already at full marks)'}."
+        )
         log.info("[v%02d] iteration %d/%d on %s to raise score...", version, iterations, config.MAX_ITER, story_id)
         content = _llm_call(log, "iteration", iterator, content=content, critique=critique, standard=gen_standard)
         gate = _llm_call(log, "re-evaluation (the OpenRouter judge)", reevaluator, content=content, criteria=eval_criteria)
