@@ -87,10 +87,12 @@ still reads fine, the beats are inert. Rewrite so each beat follows from the las
 
 ## 15. Belief shifts through reflection, never by being broken
 The old belief is never snapped by an external event, and nothing changes by chance.
-The character changes because they are *willing to reflect* — and reflecting on how they
-think changes how they feel. This is the inward work, underneath the surface, the hardest
-part. RELIEF is the signal it's moving the right way: toward ease and toward more authentic
-action. Dock or reject a change that happens TO the character by an event or a coincidence
+It usually starts when the character accepts that what they're doing isn't working, so they
+reflect, try something different, and find another opening — and reflecting on how they think
+changes how they feel. This is the inward work, underneath the surface, the hardest part, and
+it is the engine of the two emotions: the piece opens in frustration and grows into relief and
+expansion. RELIEF is the signal it's moving the right way: toward ease and toward more
+authentic action. Dock or reject a change that happens TO the character by an event or a coincidence
 rather than through their own reflection.
 
 ---
