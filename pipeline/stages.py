@@ -331,13 +331,14 @@ PACKAGING = Stage(
     iter_sig=S.IteratePackaging,
     content_fields=["title", "thumbnail_concept", "thumbnail_prompt"],
     topic_field="topic",
-    # 12 binary criteria, equal-ish (integer-constrained), summing to 100. Score ~= YES count scaled.
-    weights={1: 9, 2: 9, 3: 9, 4: 9, 5: 8, 6: 8, 7: 8, 8: 8, 9: 8, 10: 8, 11: 8, 12: 8},
+    # 12 weighted criteria summing to 100. Curiosity (Q9, the open loop) is the heaviest
+    # and is a KILL CHECK; the title side rewards value/strong curiosity, not numbers.
+    weights={1: 9, 2: 9, 3: 8, 4: 7, 5: 7, 6: 8, 7: 9, 8: 7, 9: 11, 10: 9, 11: 8, 12: 8},
     labels={
         1: "Q1 visual anchor", 2: "Q2 emotion/intrigue", 3: "Q3 directional cues",
-        4: "Q4 text readability", 5: "Q5 background", 6: "Q6 visual hierarchy",
-        7: "Q7 shows result", 8: "Q8 logos/icons", 9: "Q9 title curiosity gap",
-        10: "Q10 title specific outcome", 11: "Q11 title payoff clarity", 12: "Q12 title accessible language",
+        4: "Q4 on-screen text hook", 5: "Q5 background", 6: "Q6 visual hierarchy",
+        7: "Q7 shows transformation", 8: "Q8 iconic/symbolic anchor", 9: "Q9 opens loop (never resolves)",
+        10: "Q10 valuable / strong curiosity", 11: "Q11 stakes clear (not the answer)", 12: "Q12 accessible language",
     },
     gen_standard_file="packaging_generator.md",
     eval_standard_file="packaging_evaluator.md",
@@ -350,6 +351,7 @@ PACKAGING = Stage(
     penalty_points=0,
     verdict_floor=60,
     gate_reads_package=False,   # the gate scores ONLY the 12 title/thumbnail criteria, NOT the story package
+    kill_checks=(9,),           # Q9 open-loop: if the package resolves the loop (score 0), REJECT however high the total
 )
 
 

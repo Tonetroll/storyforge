@@ -537,38 +537,42 @@ class IterateScreenplay(dspy.Signature):
 class GeneratePackaging(dspy.Signature):
     """Produce the click for the video: a title and a thumbnail (as a plain concept
     + a ready-to-use image-generation prompt), built from the story. The thumbnail
-    stops the scroll; the title opens a loop AND promises a specific outcome. Plain
-    language, no jargon. Follow the 12-criteria standard."""
+    stops the scroll; the title opens a loop and promises real value OR creates
+    such strong curiosity the viewer must click - never a number or a how-to. The
+    package opens the loop and NEVER resolves it (the story does). Plain language,
+    no jargon. Follow the 12-criteria standard."""
 
     brief = dspy.InputField(desc="The story this video is about (idea + theme + structure + stakes).")
     standard = dspy.InputField(desc="The generator standard (rules/standards/packaging_generator.md).")
     topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
-    title = dspy.OutputField(desc="The YouTube title: 5-7 words, opens a curiosity gap AND promises a specific outcome, plain language.")
-    thumbnail_concept = dspy.OutputField(desc="The visual idea in plain words: the anchor (face+expression OR bold graphic), the emotion (the desire/belief WHY beneath the event, not just the surface event), the result shown, the background.")
+    title = dspy.OutputField(desc="The YouTube title: opens a loop AND promises something genuinely valuable, OR creates such strong curiosity it pulls the click on its own (transformation, loaded word, contrast, unresolved chord, symbolic single word, or idiom twist - never a number/how-to). Tight (~3-7 words; a powerful symbolic 1-2 word title is allowed). NEVER resolves the loop. Plain language.")
+    thumbnail_concept = dspy.OutputField(desc="The visual idea in plain words: the anchor (face+expression OR bold/iconic/symbolic graphic), the emotion (the desire/belief WHY beneath the event, not the surface event), the transformation/change it hints at, the background. If on-screen text is used, name it and the NEW angle it adds (never a caption).")
     thumbnail_prompt = dspy.OutputField(desc="The ready-to-use image prompt (the Base Prompt filled in for this story).")
 
 
 class GatePackaging(dspy.Signature):
     """You are a strict inspection engine. Score the title + thumbnail against the
-    12 binary thumbnail/title criteria - each YES = full points, NO = 0. Judge the
-    DESCRIBED thumbnail and the title only; do not consider the story package."""
+    12 weighted thumbnail/title criteria - each YES = full points, NO = 0. Judge the
+    DESCRIBED thumbnail and the title only; do not consider the story package.
+    Criterion 9 is a KILL CHECK: if the package resolves the loop / gives the answer
+    away, score_9 = 0 and the whole package is REJECTED however high the total."""
 
     title = dspy.InputField()
     thumbnail_concept = dspy.InputField()
     thumbnail_prompt = dspy.InputField()
-    criteria = dspy.InputField(desc="The 12 binary thumbnail/title criteria, weights, and the verdict rule.")
-    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
-    score_1 = dspy.OutputField(desc="Q1 visual anchor (face+expression AND/OR bold graphic): 0 or the weight.")
+    criteria = dspy.InputField(desc="The 12 weighted thumbnail/title criteria, weights, the kill check, and the verdict rule.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor + kill check; report your read).")
+    score_1 = dspy.OutputField(desc="Q1 visual anchor (face+expression AND/OR bold/iconic/symbolic graphic; no AI artifacts): 0 or the weight.")
     score_2 = dspy.OutputField(desc="Q2 emotion or intrigue (reads as the desire/belief WHY beneath the event, not just the surface event): 0 or the weight.")
-    score_3 = dspy.OutputField(desc="Q3 directional cues: 0 or the weight.")
-    score_4 = dspy.OutputField(desc="Q4 text readability (bold, high-contrast, max 4 words): 0 or the weight.")
-    score_5 = dspy.OutputField(desc="Q5 background (tutorial: clean; story: transformed setting): 0 or the weight.")
+    score_3 = dspy.OutputField(desc="Q3 directional cues (eye contact + a separate cue, or layout flow): 0 or the weight.")
+    score_4 = dspy.OutputField(desc="Q4 on-screen text hook (OPTIONAL - full points if none; if present it must add a 3rd angle or frame the feeling, never a caption, and be legible/bold/<=7 words/not over a face): 0 or the weight.")
+    score_5 = dspy.OutputField(desc="Q5 background (story: transformed setting; else clean/dark; must not fight the anchor): 0 or the weight.")
     score_6 = dspy.OutputField(desc="Q6 visual hierarchy: 0 or the weight.")
-    score_7 = dspy.OutputField(desc="Q7 shows result/transformation: 0 or the weight.")
-    score_8 = dspy.OutputField(desc="Q8 logos/icons/symbols: 0 or the weight.")
-    score_9 = dspy.OutputField(desc="Q9 title curiosity gap (loop turns on the desire/belief WHY beneath the event, not just naming what happened): 0 or the weight.")
-    score_10 = dspy.OutputField(desc="Q10 title specific outcome: 0 or the weight.")
-    score_11 = dspy.OutputField(desc="Q11 title payoff clarity: 0 or the weight.")
+    score_7 = dspy.OutputField(desc="Q7 shows the transformation/change (before->after), not a process or a static state: 0 or the weight.")
+    score_8 = dspy.OutputField(desc="Q8 iconic/symbolic anchor to latch onto (known figure / iconic object / meaningful symbol / the change itself - NOT necessarily a logo): 0 or the weight.")
+    score_9 = dspy.OutputField(desc="Q9 KILL CHECK - opens the loop and NEVER resolves it (withholds the answer). 0 if it gives away what happened or answers its own question; a 0 REJECTS the whole package: 0 or the weight.")
+    score_10 = dspy.OutputField(desc="Q10 promises something genuinely valuable AND/OR creates such strong curiosity it pulls the click (transformation = strongest form; loaded word/contrast/unresolved chord/symbolic word/idiom twist all count); never a number or how-to: 0 or the weight.")
+    score_11 = dspy.OutputField(desc="Q11 stakes clear without giving the answer (the viewer feels what's at stake and why it matters, but not how it ends): 0 or the weight.")
     score_12 = dspy.OutputField(desc="Q12 title accessible language (no jargon): 0 or the weight.")
     failed_checks = dspy.OutputField(desc="If REJECT: failing Q numbers + one line each. Else 'none'.")
     why = dspy.OutputField(desc="One line.")
@@ -576,8 +580,9 @@ class GatePackaging(dspy.Signature):
 
 class IteratePackaging(dspy.Signature):
     """Fix the title + thumbnail to pass the criteria it failed - add the missing
-    visual anchor / hierarchy / result, sharpen the title's outcome and curiosity.
-    Plain language, no jargon."""
+    visual anchor / hierarchy / transformation, sharpen the title's value and
+    curiosity, and make sure the loop is opened but NEVER resolved (the kill check).
+    Plain language, no jargon, never a number/how-to."""
 
     title = dspy.InputField()
     thumbnail_concept = dspy.InputField()
