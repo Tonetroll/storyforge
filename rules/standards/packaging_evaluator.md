@@ -19,8 +19,8 @@ the package never does.
 
 **Criterion 1 — Q1 visual anchor (9pt)**
 The thumbnail has one clear anchor — the single thing the eye lands on first. That
-anchor is a face showing a strong emotional expression, AND/OR a bold graphic,
-icon, or symbol that immediately pulls the eye. Award the points only if there are
+anchor is a face showing a strong emotional expression, a bold graphic/icon/symbol,
+AND/OR a key object from the story that immediately pulls the eye. Award the points only if there are
 NO AI-generation artifacts: extra hands or fingers, melted or warped text, garbled
 logos. Any such artifact makes the image look fake and fails the criterion
 outright, because it instantly destroys the viewer's trust.

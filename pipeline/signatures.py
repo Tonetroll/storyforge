@@ -546,7 +546,7 @@ class GeneratePackaging(dspy.Signature):
     standard = dspy.InputField(desc="The generator standard (rules/standards/packaging_generator.md).")
     topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
     title = dspy.OutputField(desc="The YouTube title: opens a loop AND promises something genuinely valuable, OR creates such strong curiosity it pulls the click on its own (transformation, loaded word, contrast, unresolved chord, symbolic single word, or idiom twist - never a number/how-to). Tight (~3-7 words; a powerful symbolic 1-2 word title is allowed). NEVER resolves the loop. Plain language.")
-    thumbnail_concept = dspy.OutputField(desc="The visual idea in plain words: the anchor (face+expression OR bold/iconic/symbolic graphic), the emotion (the desire/belief WHY beneath the event, not the surface event), the transformation/change it hints at, the background. If on-screen text is used, name it and the NEW angle it adds (never a caption).")
+    thumbnail_concept = dspy.OutputField(desc="The visual idea in plain words: the anchor (face+expression, bold/iconic/symbolic graphic, OR a key object from the story), the emotion (the desire/belief WHY beneath the event, not the surface event), the transformation/change it hints at, the background. If on-screen text is used, name it and the NEW angle it adds (never a caption).")
     thumbnail_prompt = dspy.OutputField(desc="The ready-to-use image prompt (the Base Prompt filled in for this story).")
 
 
@@ -562,7 +562,7 @@ class GatePackaging(dspy.Signature):
     thumbnail_prompt = dspy.InputField()
     criteria = dspy.InputField(desc="The 12 weighted thumbnail/title criteria, weights, the kill check, and the verdict rule.")
     verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor + kill check; report your read).")
-    score_1 = dspy.OutputField(desc="Q1 visual anchor (face+expression AND/OR bold/iconic/symbolic graphic; no AI artifacts): 0 or the weight.")
+    score_1 = dspy.OutputField(desc="Q1 visual anchor (face+expression, bold/iconic/symbolic graphic, AND/OR a key object from the story; no AI artifacts): 0 or the weight.")
     score_2 = dspy.OutputField(desc="Q2 emotion or intrigue (reads as the desire/belief WHY beneath the event, not just the surface event): 0 or the weight.")
     score_3 = dspy.OutputField(desc="Q3 directional cues (eye contact + a separate cue, or layout flow): 0 or the weight.")
     score_4 = dspy.OutputField(desc="Q4 on-screen text hook (OPTIONAL - full points if none; if present it must add a 3rd angle or frame the feeling, never a caption, and be legible/bold/<=7 words/not over a face): 0 or the weight.")

@@ -45,7 +45,7 @@ never a caption that just labels what's happening.
 ## WHAT YOU PRODUCE
 
 - **title** — short and load-bearing. It opens a loop (poses a question or tension the viewer needs resolved) AND promises something genuinely valuable, OR creates curiosity so strong it pulls the click on its own. Pick whichever title technique below makes the strongest curiosity for THIS story and channel — never default to a number or a "how-to." Plain language a non-expert understands; no jargon.
-- **thumbnail_concept** — the visual idea in plain words, naming four things: the anchor (the one thing the eye lands on first — a face with a strong expression OR a bold/iconic/symbolic graphic), the emotion the image carries (the desire/belief WHY beneath the event, not the surface event), the transformation or change it hints at, and the background behind it. If you use on-screen text, name it and say what *new* angle it adds.
+- **thumbnail_concept** — the visual idea in plain words, naming four things: the anchor (the one thing the eye lands on first — a face with a strong expression, a bold/iconic/symbolic graphic, OR a key object from the story), the emotion the image carries (the desire/belief WHY beneath the event, not the surface event), the transformation or change it hints at, and the background behind it. If you use on-screen text, name it and say what *new* angle it adds.
 - **thumbnail_prompt** — the finished image-generation prompt: take the Base Prompt below and fill it in for this specific story so it's ready to paste into an image generator.
 
 ## THE TITLE TECHNIQUE MENU (pick what makes the strongest curiosity — never a number)
@@ -68,7 +68,7 @@ Create a YouTube thumbnail for: [VIDEO TITLE]
 Visual requirements:
 - Background: the transformed setting the story ends in (story) OR a clean, dark,
   uncluttered background (dark grey or black with a subtle blue tint - never pure black)
-- Clear visual anchor: a bold face with a strong expression OR an iconic/symbolic graphic
+- Clear visual anchor: a bold face with a strong expression, an iconic/symbolic graphic, OR a key object from the story
 - Include a recognizable, meaningful anchor object where it fits (a known figure,
   an iconic object, a symbol that signals what the story is about)
 - Clean composition with obvious visual hierarchy
@@ -94,7 +94,7 @@ Aspect ratio: 16:9 (1920x1080)
 
 **The thumbnail**
 
-1. **Give the thumbnail one clear anchor — the single thing the eye lands on first.** It is either a face showing a strong expression OR a bold graphic, icon, or symbol. Every high-click-through thumbnail has one; this is non-negotiable.
+1. **Give the thumbnail one clear anchor — the single thing the eye lands on first.** It is a face showing a strong expression, a bold graphic/icon/symbol, OR a key object from the story (the thing the story turns on). Every high-click-through thumbnail has one; this is non-negotiable.
 
 2. **Reject any image with AI-generation artifacts.** Extra hands or fingers, melted or warped text, garbled logos — these instantly make the thumbnail look fake and untrustworthy, so they fail no matter how good the rest is.
 
