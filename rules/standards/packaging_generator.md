@@ -43,9 +43,9 @@ Visual requirements:
 - One focal point that draws the eye immediately
 
 Text requirements (if adding text):
-- Maximum 4 words (ideally 2-3, max 7)
+- Ideally 2-4 words, max 7
 - Bold font, high contrast against background
-- Text colour and font follow the channel's brand settings (defined in the channel profile, not fixed here)
+- Text colour and font follow the channel's brand settings (defined in the channel profile, not fixed here — e.g. a bold gold gradient for a trophy/sports channel)
 - Legible at small size (150px height)
 
 Style:
@@ -75,7 +75,7 @@ Aspect ratio: 16:9 (1920x1080)
 
 7. **Use eye contact with the viewer PLUS a separate cue that points the eye.** "Eye contact" means the face looks straight out at the viewer. The separate directional cue (the subject's gaze pointing somewhere, a pointing finger, an arrow, or the layout itself) then leads the eye toward the title or the key element. A gaze aimed at an object in the image does not count as eye contact — you need both. For a faceless or ambient thumbnail, use the layout's flow to lead the eye to the focal element.
 
-8. **Keep on-thumbnail text to four words max, bold, and high-contrast.** Text that blends into the background fails no matter how few words it is, so put it on a contrasting zone or give it a drop-shadow or outline so it stays legible at small size.
+8. **Keep on-thumbnail text short — ideally 2-4 words, 7 at the most — bold, and high-contrast.** Text that blends into the background fails no matter how few words it is, so put it on a contrasting zone or give it a drop-shadow or outline so it stays legible at small size.
 
 9. **Decide the content type first, then build to its checklist.** For a tutorial or tech thumbnail: an expressive face + eye contact + a pointing cue + a recognizable logo + the payoff object. For a story or ambient thumbnail: a single focal anchor + the transformed or target setting + a named emotional state the image visibly answers + a visible gap that shows "from X to Y" or withholds the payoff (no face required here).
 

@@ -46,8 +46,9 @@ the focal element.
 
 **Criterion 4 — Q4 text readability (9pt)**
 Any text on the thumbnail is legible at thumbnail size: bold font, high contrast,
-four words maximum. Word count is a hard gate, not a preference. And text that
-blends into the background fails regardless of how few words it is — it must sit on
+ideally 2-4 words and 7 at the absolute most. Word count is a hard gate — more than
+seven words fails. And text that blends into the background fails regardless of how
+few words it is — it must sit on
 a contrasting zone or carry a drop-shadow or outline to stay readable.
 
 **Criterion 5 — Q5 background (8pt)**
