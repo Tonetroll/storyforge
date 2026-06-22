@@ -105,7 +105,5 @@ one charged moment.
 
 ## What you output
 
-- **part_1** — scene 1 (slugline, action, dialogue).
-- **part_2** — scene 2 (slugline, action, dialogue).
-- **loop_notes** — say where the loop opens, where the head fake sits, and where the
-  payoff lands, and name the desire/belief WHY that makes the payoff land.
+- **part_1** — scene 1: a finished, shootable scene (slugline, action, dialogue) — no notes, no scaffolding beyond the screenplay form itself.
+- **part_2** — scene 2: a finished, shootable scene (slugline, action, dialogue) — no notes, no scaffolding beyond the screenplay form itself.

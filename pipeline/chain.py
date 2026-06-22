@@ -168,9 +168,19 @@ def run_chain(brief: str, channel: str = None, dry_run: bool = False, deliverabl
                           "score": None, "artifact": None, "skipped_reason": skipped_reason})
             incomplete.append(name)
 
+    # Assemble the ONE clean, readable package doc for this video (best-effort; a
+    # failure here must never break a completed run).
+    package_path = None
+    try:
+        from pipeline import packager
+        out = packager.build_package(channel)
+        package_path = str(out) if out else None
+    except Exception:
+        package_path = None
+
     result = {"brief": brief, "channel": channel, "stopped_at": None,
               "trail": trail, "deliverables": made,
-              "incomplete_deliverables": incomplete}
+              "incomplete_deliverables": incomplete, "package": package_path}
     if skipped_reason:
         result["skipped_reason"] = skipped_reason
     return result

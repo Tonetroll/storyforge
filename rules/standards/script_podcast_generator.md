@@ -63,43 +63,19 @@ Here is how to build it into the talk.
 
 ## What you output
 
-9. **hook** — the cold open: the single teaser line that opens the loop before
-   any setup.
-10. **body** — the conversation itself, labeled by speaker (HOST A / HOST B). This
-    is the whole story told through their back-and-forth, with the addiction loop
-    running underneath it.
-11. **payoff** — the line where the theme finally lands in the talk. Don't stop at
-    WHAT happened on the surface; say the desire and the belief underneath it —
-    what the person actually wanted, and what they believed. (For example, not
-    "his country caught him," but "they still believed he was the one who could
-    win, so they held that space open for him.")
-12. **Track one steady desire while the belief moves.** Across the conversation,
-    let the hosts keep circling the *one thing the character wants that never
-    changes*, while they follow the *belief* about it shifting over time. Give one
-    host the doubt or the heavy emotion that clouds that belief, and let the other
-    catch the moment the belief lifts again. (A "desire" is what the character
-    wants; a "belief" is what they think is true or possible about getting it. The
-    desire holds steady; the belief is what swings.)
-13. **When the feeling settles, write it as the desire resurfacing — not
-    returning.** When the emotion clears and the want comes back into view, have
-    the hosts frame it as something that was there the whole time and is now
-    visible again ("it never actually went anywhere"), not as a comeback or a
-    revival of something that had died.
-14. **Keep the two voices at different points on a belief spectrum.** The hosts
-    should not believe the same thing to the same degree at the same time. A
-    "belief spectrum" means they sit at different points — one more convinced, one
-    more doubtful — and they don't all land in the same place at the end.
-15. **Name the want as honest self-expression, and move the room by mirroring.**
-    Let the hosts describe what the character wants as authentic self-expression —
-    acting to express what he genuinely feels — rather than performing to win the
-    world's approval or prove himself to others. And when other people in the story
-    get swept up, let it be because they *mirror* his fire and pull in the same
-    direction on their own, never because he is carrying them or taking care of
-    them. ("Mirror" means they catch the same desire and move with it; "carry"
-    means he drags them along, which doesn't hold.)
-16. **cta** — the outro: one clear, single action you're asking the listener to take.
-17. **loop_notes** — a short map of where the loop opens, where the head fake
-    falls, and where each rehook sits in the conversation.
+- **script** — ONE finished, ready-to-deliver podcast conversation: the whole story
+  told through two real voices (HOST A / HOST B) talking it through, labeled by
+  speaker, opening cold on the loop and landing the payoff at the end. NO section
+  labels (no "hook:"/"body:"), NO notes or scaffolding — just the finished
+  conversation a pair could record start to finish. The payoff lands the WHY beneath
+  the event (the desire and the belief that drove it), not just what happened.
+
+## Run the belief engine through the talk
+
+- **Track one steady desire while the belief moves.** The hosts keep circling the one thing the character wants that never changes, while the belief about reaching it shifts over time. Give one host the doubt or heavy emotion that clouds the belief; let the other catch the moment it lifts.
+- **When the feeling settles, write the desire RESURFACING, not returning** — something that was there the whole time and is now visible again ("it never actually went anywhere"), not a comeback.
+- **Keep the two voices at different points on a belief spectrum** — not the same conviction at the same time, and not all landing in the same place at the end.
+- **Name the want as honest self-expression, and move the room by mirroring** — the character acts to express what he genuinely feels (not to win approval or prove himself), and others get swept up because they mirror his fire and pull the same way on their own, never because he carries them.
 
 ## Deliver the package
 

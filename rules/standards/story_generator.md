@@ -1,11 +1,14 @@
 # STORY STRUCTURE — GENERATOR
 
-Turn an accepted story idea into a full 3-act outline. The whole structure exists
-to serve ONE thing: the change that happens inside the protagonist — the moment
-they stop believing something false about the world and start believing something
-true. Every beat must move them closer to that change. If an outline hits all the
-plot beats but the protagonist never changes inside, it is just plot, not a story
-— throw it out and rebuild it.
+Turn an accepted story idea into a full 3-act outline. It runs on TWO things at
+once: the change inside the protagonist (they stop believing something false and
+start believing something true), AND a real antagonist whose OWN desire and belief
+DIFFER from the protagonist's and collide with them — that collision is the engine
+that drives the beats. When the brief centers two figures, the antagonist is a fully
+developed second character, not a looming background force (it may feel like a
+rivalry but need not be one). Beats with no inner change are just plot; an inner arc
+with no real opposing force is a monologue — you need BOTH, and the conflict between
+them is where the story lives.
 
 ## THE CORE — BELIEF DRIVES FEELING, AND YOU UNCOVER IT BIT BY BIT
 
@@ -37,6 +40,21 @@ These three are not a list — they form a chain, and the chain is non-negotiabl
 the misbelief feeds the fear, and the fear blocks the desire. Write all three so
 that you can clearly trace that chain from one to the next.
 
+## PHASE 2B — THE ANTAGONIST  (the opposing force; when the brief centers two figures, a full second character)
+
+The story needs a real opposing force, not a vague obstacle. Define the antagonist:
+- **Who they are** and why they stand directly between the protagonist and the goal.
+- **Their own desire** — what THEY want, DIFFERENT from the protagonist's.
+- **Their own belief** — what THEY hold true, DIFFERENT from the protagonist's.
+- **Their own fear** — what they are avoiding.
+
+When the brief centers two figures, develop the antagonist as fully as the
+protagonist — two different desires and beliefs in direct collision (it may feel like
+a rivalry, but need not be one). The plot's engine is that collision: every pinch
+point is the antagonist *actively pressing*, not a force "looming in the distance."
+Also pin the **point of no return** (the moment the protagonist can't reverse without
+changing) and **why they can't just walk away** (what they lose if they fail).
+
 ## PHASE 3 — THE 3-ACT STRUCTURE  (write every beat as a concrete bullet someone could say out loud)
 
 **THE HOOK** — open by grabbing the reader with the conflict happening *inside*
@@ -45,7 +63,7 @@ the protagonist, not just an exciting event.
 **ACT 1 / Loop 1**
 - **Setup:** something is about to happen to the protagonist, and the reader can feel it coming.
 - **Inciting incident:** something throws the protagonist out of their comfort zone.
-- **Build-up:** it becomes clear the protagonist will have to face this thing head on.
+- **Build-up:** it becomes clear the protagonist will have to face this thing head on — and the tension ESCALATES through visible ACTION. Show a surface problem looping into deeper panic: the character physically straining to hold the facade together (frantic small actions — scrubbing off makeup, brushing too hard, pacing) before it finally cracks. Never a line that merely says the pressure grew.
 - **1st plot point:** the protagonist makes a decision that determines what happens next.
 - **1st pinch point:** the opposition — the antagonist or whatever force is against them — looms in the distance.
 
@@ -80,7 +98,7 @@ desire and belief underneath it.
 
 ## THE RULES
 
-1. **Serve the inner change above all.** The structure exists to serve one thing: the change inside the protagonist. Every beat must move them toward overcoming a false belief. If an outline hits every beat but has no inner arc, it is just plot — throw it out.
+1. **Serve BOTH the inner change and the collision.** The structure runs on the change inside the protagonist AND the antagonist's OWN desire and belief — different from the protagonist's — colliding with theirs. Every beat moves the protagonist toward overcoming a false belief *through* that conflict. An outline with no inner arc is plot; an inner arc with no real opposing force is a monologue — reject either. When the brief centers two figures, the antagonist is a full second character and the collision of their different desires/beliefs is the engine (it need not be a "rivalry").
 
 2. **Lock the three Phase-2 pieces into a chain.** Define Desire (what they want and think will make them happy), Fear (what stops them from chasing it), and Misbelief (the false thing they believe about the world that keeps the fear alive). The chain is non-negotiable: the misbelief feeds the fear, and the fear blocks the desire. Write them so the chain is visible.
 

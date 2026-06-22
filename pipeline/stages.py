@@ -73,13 +73,13 @@ STORY = Stage(
     gate_sig=S.GateStory,
     iter_sig=S.IterateStory,
     content_fields=[
-        "premise", "desire", "fear", "misbelief", "hook",
+        "premise", "desire", "fear", "misbelief", "antagonist", "hook",
         "setup", "inciting_incident", "build_up", "plot_point_1", "pinch_point_1",
         "pre_midpoint", "midpoint", "post_midpoint", "pinch_point_2", "supposed_victory", "disaster",
         "dark_moment", "recovery", "climactic_confrontation", "victory", "resolution",
     ],
     topic_field="topic",
-    weights={1: 20, 2: 8, 3: 5, 4: 5, 5: 5, 6: 12, 7: 6, 8: 7, 9: 7, 10: 5, 11: 5, 12: 15},  # +the Dance (12); sums to 100
+    weights={1: 14, 2: 8, 3: 5, 4: 5, 5: 5, 6: 10, 7: 6, 8: 6, 9: 7, 10: 5, 11: 5, 12: 14, 13: 10},  # +antagonist/opposed-desires (13); the Dance (12) is the kill; sums to 100
     labels={
         1: "character engine (desire/fear/misbelief linked)",
         2: "character arc closes (misbelief overcome in Recovery)",
@@ -90,9 +90,10 @@ STORY = Stage(
         7: "disaster blindsides",
         8: "dark moment re-triggers fear",
         9: "structural completeness (all beats, right order)",
-        10: "hook grabs inner conflict",
+        10: "hook grabs conflict (inner + opposing force)",
         11: "resolution lands the WHY",
         12: "the Dance (therefore/but, not and-then)",
+        13: "antagonist & central conflict (opposed desires/beliefs)",
     },
     gen_standard_file="story_generator.md",
     eval_standard_file="story_evaluator.md",
@@ -187,19 +188,19 @@ STAKEBAKE = Stage(
 SCRIPT = Stage(
     name="script",
     content_label="SCRIPT (short-form)",
-    gen_sig=S.GenerateScript,
-    gate_sig=S.GateScript,
-    iter_sig=S.IterateScript,
-    content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
+    gen_sig=S.GenerateScriptShort,
+    gate_sig=S.GateScriptShort,
+    iter_sig=S.IterateScriptShort,
+    content_fields=["script"],
     topic_field="topic",
-    weights={1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15},  # D1, L1, L2, L3, V1, V2, +the Dance (7); sums to 100
+    weights={1: 15, 2: 12, 3: 20, 4: 13, 5: 15, 6: 10, 7: 15},  # length-cap(kill) + hook + snappy voice + delivers story + conflict + self-contained payoff + the Dance(kill); sums to 100
     labels={
-        1: "delivery (stakes/theme/structure/hook; payoff lands desire/belief WHY)",
-        2: "hook opens a loop",
-        3: "head fake",
-        4: "rehooks / no dead air",
-        5: "tight & punchy",
-        6: "visceral & speakable",
+        1: "length within cap (<=150 words / <=60s)",
+        2: "hook opens a loop in the first line",
+        3: "snappy short-form voice (not slow narration)",
+        4: "delivers the upstream story",
+        5: "conflict alive (protagonist AND antagonist)",
+        6: "self-contained payoff + one viewer action",
         7: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="script_generator.md",
@@ -213,7 +214,7 @@ SCRIPT = Stage(
     penalty_points=15,
     verdict_floor=60,
     gate_reads_package=True,   # the script gate reads the whole package to check delivery
-    kill_checks=(7,),          # the Dance: a 0 rejects even past the floor
+    kill_checks=(1, 7),        # length cap (1) + the Dance (7): a 0 on either rejects even past the floor
 )
 
 
@@ -223,7 +224,7 @@ SCRIPT_LONG = Stage(
     gen_sig=S.GenerateScript,
     gate_sig=S.GateScript,
     iter_sig=S.IterateScript,
-    content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
+    content_fields=["script"],
     topic_field="topic",
     weights={1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15},
     labels={
@@ -256,7 +257,7 @@ SCRIPT_SCREENPLAY = Stage(
     gen_sig=S.GenerateScreenplay,
     gate_sig=S.GateScreenplay,
     iter_sig=S.IterateScreenplay,
-    content_fields=["part_1", "part_2", "loop_notes"],
+    content_fields=["part_1", "part_2"],
     topic_field="topic",
     weights={1: 6, 2: 6, 3: 8, 4: 7, 5: 6, 6: 7, 7: 7, 8: 5, 9: 5, 10: 5, 11: 6, 12: 9, 13: 8, 14: 15},  # +the Dance (14); sums to 100
     labels={
@@ -296,7 +297,7 @@ SCRIPT_PODCAST = Stage(
     gen_sig=S.GenerateScript,
     gate_sig=S.GateScript,
     iter_sig=S.IterateScript,
-    content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
+    content_fields=["script"],
     topic_field="topic",
     weights={1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15},
     labels={

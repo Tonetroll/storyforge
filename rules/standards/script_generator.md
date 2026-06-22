@@ -112,15 +112,20 @@ evaluator checks under D1). Build the character's inner truth these four ways:
 
 ## What you output
 
-- **hook** — the opening line or lines; must open a loop within the first 1-3
-  seconds.
-- **body** — the voiceover narration; the story told with the addiction loop
-  running underneath it (stakes → big question → head fake → rehook).
-- **payoff** — the line that closes the main loop and lands the theme by
-  delivering the desire/belief WHY beneath the event, not just the event itself.
-- **cta** — one clear, single viewer action.
-- **loop_notes** — a plain map of where each open loop, head fake, and rehook
-  sits in the script (so the structure is easy to check).
+- **script** — ONE finished, ready-to-deliver short-form script. NOT labeled
+  sections (no "hook:"/"body:"/"payoff:" headers), NOT notes — the actual lines as
+  they'd be performed, with brief visual cues only where they genuinely help.
+
+### Hard rules for that script (the gate REJECTS on these)
+
+- **Length: 60 seconds / 150 words MAX.** Count them. Over the cap is an automatic reject — not a long video mislabeled "short."
+- **Dramatize — never narrate ABOUT the story.** Show it happening: a scene, an action, a moment of conflict with a consequence. A voiceover essay describing what people are like or what's at stake is *telling*, and telling is not a story. (See the rejected anti-example in `craft/anti-examples.md`.)
+- **Deliver the brief's actual subject.** When the brief centers two opposing figures, BOTH are on screen, in direct conflict (their different desires/beliefs colliding) — never one person narrated about with the other a background mirror. (It may feel like a rivalry, but need not be one.)
+- **Current.** Write to the channel's live moment (its timeframe in the profile), never a retrospective of a settled past event.
+- **Snappy, hard cadence.** Short punchy lines, fast-cut, lead on the strongest hook — no warm-up, no slow narration.
+- **Build tension through ACTION.** When the pressure rises, SHOW it escalating — the character physically trying to hold the facade together (scrubbing, pacing, frantic small actions) before it cracks — never a line that just says tension grew.
+- **Self-contained.** Land its own payoff (the desire/belief WHY beneath the event) and end on ONE clear viewer action — never a cliffhanger or "watch the full video."
+- **No scaffolding in the output.** No loop notes, no labels, no meta — just the finished script.
 
 ## Deliver the package
 

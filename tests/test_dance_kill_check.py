@@ -10,14 +10,14 @@ from dspy.utils.dummies import DummyLM
 from pipeline import stages
 from pipeline.evaluator import Evaluator
 
-SCRIPT_FIELDS = ["hook", "body", "payoff", "cta", "loop_notes"]
+SCRIPT_FIELDS = ["script"]
 
 
 def _script_gate_answer(dance_score: int, verdict: str = "PASS") -> dict:
     """A GateScript answer: every non-Dance check full, the Dance (score_7) set to
     dance_score, jargon false. With the Dance full the total is 100; with it 0 the
     rest still totals 85 (well past the floor of 60)."""
-    full = {1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15}
+    full = {1: 15, 2: 12, 3: 20, 4: 13, 5: 15, 6: 10, 7: 15}
     a = {"reasoning": "t", "verdict": verdict, "failed_checks": "none", "why": "t", "jargon": "false"}
     for k in range(1, 8):
         a[f"score_{k}"] = str(dance_score if k == 7 else full[k])
@@ -33,7 +33,7 @@ def test_dance_zero_kills_even_past_the_floor():
     """script is a floor stage (PASS at 60). Dance=0 with everything else full =
     total 85 >= 60, but the Dance is a kill check, so the verdict MUST be REJECT."""
     stage = stages.get_stage("script")
-    assert stage.kill_checks == (7,), "script should mark the Dance (criterion 7) as a kill check"
+    assert stage.kill_checks == (1, 7), "script should mark length (1) + the Dance (7) as kill checks"
     ev = _evaluator_for(stage)
     ev.set_lm(DummyLM([_script_gate_answer(dance_score=0)]))
     out = ev(content={f: "x" for f in SCRIPT_FIELDS}, criteria="c")
@@ -55,7 +55,7 @@ def test_dance_full_passes_on_floor_stage():
 
 def test_all_beat_stages_mark_the_dance_as_kill():
     """Every beat stage carries the Dance as a kill check on its last criterion."""
-    expected = {"story": (12,), "script": (7,),
+    expected = {"story": (12,), "script": (1, 7),
                 "script_long": (7,), "script_podcast": (7,), "script_screenplay": (14,)}
     for name, kc in expected.items():
         assert stages.get_stage(name).kill_checks == kc, f"{name} kill_checks should be {kc}"

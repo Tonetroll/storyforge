@@ -101,16 +101,12 @@ the second states the want and belief underneath it.
 
 ## What you output
 
-- **hook** — the opening that opens the spine loop (the one big question the whole
-  piece will eventually answer).
-- **body** — the full narration: the story across its whole arc, with loops nested
-  inside each other and chained across the length.
-- **payoff** — the line or passage that closes the spine loop and lands the theme by
-  naming the WHY beneath the event: the desire and the belief that drove it, not just
-  what happened on the surface.
-- **cta** — one clear action for the viewer to take.
-- **loop_notes** — a map of the loops, head fakes, and rehooks across the piece, so a
-  reader can see where each one opens and closes.
+- **script** — ONE finished, ready-to-deliver long-form narration script: the whole
+  story as continuous, immersive narration, told like a story from the opening hook
+  to the payoff. NO section labels (no "hook:"/"body:"), NO notes or scaffolding. The
+  spine loop opens in the first lines and the payoff closes it, landing the WHY beneath
+  the event (the desire and belief that drove it). It reads as a finished script a
+  narrator could record start to finish — not a draft of one.
 
 ## Deliver the package
 

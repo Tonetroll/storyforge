@@ -70,9 +70,12 @@ This is a multi-stage **engine**, not a single generator. A *stage* (`idea`, `th
 
 The engine — these files — is generic and is what you **do not** touch when adding a stage: `orchestrator.py`, `naming.py`, `logging_setup.py`, `render.py`, `router.py`, `metric.py`, `generator.py`, `evaluator.py`, `iterator.py`, `reevaluator.py`, and the thresholds/paths in `config.py`. See `ADDING_A_STAGE.md` for the full recipe.
 
-Two consistency rules that aren't obvious:
+Consistency rules that aren't obvious — **MANDATORY**, and a change is not "done" until they are verified:
 - A stage's `weights` dict in `stages.py` **must sum to 100** (`SCORE_SCALE`); any check scoring 0 forces a REJECT.
-- The written standard (`rules/standards/*.md`) and the model-enforced version (signature docstrings + `OutputField(desc=...)` in `signatures.py`) must say the same thing — they are two copies of one contract.
+- The written standard (`rules/standards/*.md`) and the model-enforced version (signature docstrings + `OutputField(desc=...)` in `signatures.py`) must say the same thing — **two copies of one contract. If you change one, you change the other in the SAME pass — never one without the other.** (This is the single most common way this repo silently rots: editing a standard and forgetting its signature, or vice versa.)
+- For every stage: `#weights == #labels == #gate score-fields`, and each gate `score_k`'s stated max **equals** its stage weight.
+
+**Verification gate — run BEFORE calling ANY standard/signature/stage change "done":** `tests/test_signature_weight_sync.py` enforces all three rules above automatically across every stage, so `.venv/Scripts/python -m pytest -q` must be **green** before a change is finished. It fails the instant a signature drifts from its weights. Never claim a change is done without a green suite — and a `.md` edit with no matching signature edit (or the reverse) is, by definition, not done.
 
 ### The orchestrator loop (`pipeline/orchestrator.run`)
 

@@ -85,10 +85,13 @@ class IterateIdea(dspy.Signature):
 # STORY STRUCTURE stage  (downstream of idea)
 # ===========================================================================
 class GenerateStory(dspy.Signature):
-    """Turn the premise (an accepted idea) into a full 3-act outline driven by
-    the protagonist's internal change. The misbelief named in Act 1 MUST be the
-    thing overcome in Recovery. Hitting beats without an internal arc is plot,
-    not story. Bullet every beat: concrete and speakable."""
+    """Turn the premise (an accepted idea) into a full 3-act outline. It needs BOTH:
+    a protagonist whose Act-1 misbelief is overcome in Recovery (the inner arc), AND a
+    real ANTAGONIST whose OWN desire and belief DIFFER from the protagonist's and
+    collide with them (the engine). When the brief centers two figures, develop the
+    antagonist as fully as the protagonist - not a looming force; it may feel like a
+    rivalry but need not be one. Beats with no inner arc are plot; an inner arc with no
+    real opposing force is a monologue - you need both. Bullet every beat: concrete and speakable."""
 
     brief = dspy.InputField(desc="The accepted idea this outline is built from (the premise).")
     standard = dspy.InputField(desc="The generator standard (rules/standards/story_generator.md).")
@@ -96,10 +99,11 @@ class GenerateStory(dspy.Signature):
     desire = dspy.OutputField(desc="What the protagonist wants + thinks will make them happy.")
     fear = dspy.OutputField(desc="What stops them going after what would make them happy.")
     misbelief = dspy.OutputField(desc="The false thing they believe about the world, which feeds off the fear.")
-    hook = dspy.OutputField(desc="Grab the reader with the protagonist's inner conflict.")
+    antagonist = dspy.OutputField(desc="The opposing force as a REAL character (or force): who they are, their OWN desire (what they want) AND their OWN belief (what they hold true) - both DIFFERENT from the protagonist's - and why those differences put them in direct conflict over the goal. When the brief centers two figures, develop the antagonist as fully as the protagonist - NOT a looming background force. The engine is the COLLISION of their different desires and beliefs (it may feel like a rivalry, but need not be one).")
+    hook = dspy.OutputField(desc="Grab the reader with the protagonist's inner conflict AND the collision with the antagonist.")
     setup = dspy.OutputField(desc="Something is about to happen to the protagonist; the reader can feel it.")
     inciting_incident = dspy.OutputField(desc="Something throws the protagonist outside their comfort zone.")
-    build_up = dspy.OutputField(desc="The protagonist will have to face this thing head on.")
+    build_up = dspy.OutputField(desc="The protagonist will have to face this thing head on - and the tension ESCALATES through visible ACTION (a surface problem looping into deeper panic; the character physically holding the facade together - scrubbing, pacing - before it cracks), never a narrated 'the pressure grew'.")
     plot_point_1 = dspy.OutputField(desc="A decision that determines what happens next.")
     pinch_point_1 = dspy.OutputField(desc="The opposition / antagonistic force looms in the distance.")
     pre_midpoint = dspy.OutputField(desc="In pursuit of the goal, but something stands in the way (reactionary hero).")
@@ -117,9 +121,12 @@ class GenerateStory(dspy.Signature):
 
 
 class GateStory(dspy.Signature):
-    """You are a strict, impartial gate for a story outline. A structure that hits
-    beats but has no internal arc is plot, not story - score it low. Grade each
-    check 0..its max by how strongly it is met. A check at 0 = absent = REJECT."""
+    """You are a strict, impartial gate for a story outline. It needs BOTH a real
+    inner arc AND a real antagonist whose OWN desire and belief differ from and
+    collide with the protagonist's (when the brief centers two figures, a full second
+    character - not a looming force). Beats with no inner arc = plot; an inner arc with
+    no real opposing force = monologue - require both. Grade each check 0..its max. A
+    check at 0 = absent = REJECT."""
 
     premise = dspy.InputField()
     desire = dspy.InputField()
@@ -142,20 +149,22 @@ class GateStory(dspy.Signature):
     climactic_confrontation = dspy.InputField()
     victory = dspy.InputField()
     resolution = dspy.InputField()
-    criteria = dspy.InputField(desc="The gate: the twelve checks, their weights, and the verdict rule.")
+    antagonist = dspy.InputField()
+    criteria = dspy.InputField(desc="The gate: the thirteen checks, their weights, the kill check, and the verdict rule.")
     verdict = dspy.OutputField(desc="Exactly 'PASS' or 'REJECT'. REJECT if ANY check scores 0.")
-    score_1 = dspy.OutputField(desc="Check 1 character engine -- desire/fear/misbelief all defined, concrete, causally linked (misbelief feeds fear; fear blocks desire): integer 0-25. 0 = absent.")
-    score_2 = dspy.OutputField(desc="Check 2 character arc closes -- the Act-1 misbelief is exactly what's overcome in Recovery; the protagonist visibly changes: integer 0-10. 0 = absent.")
+    score_1 = dspy.OutputField(desc="Check 1 character engine -- desire/fear/misbelief all defined, concrete, causally linked (misbelief feeds fear; fear blocks desire): integer 0-14. 0 = absent.")
+    score_2 = dspy.OutputField(desc="Check 2 character arc closes -- the Act-1 misbelief is exactly what's overcome in Recovery; the protagonist visibly changes: integer 0-8. 0 = absent.")
     score_3 = dspy.OutputField(desc="Check 3 desire stays constant -- dock if the arc runs on the desire leaving and returning (only belief/clarity rises and falls; Recovery is the desire resurfacing): integer 0-5. 0 = absent.")
     score_4 = dspy.OutputField(desc="Check 4 ego toward authentic -- dock if the change is learning to carry/care-for others or earning the world's verdict rather than ego toward authentically expressing his own desire: integer 0-5. 0 = absent.")
     score_5 = dspy.OutputField(desc="Check 5 team mirrors, not shouldered -- if a team turns with him it must be mutual mirroring, not him shouldering them: integer 0-5. 0 = absent.")
-    score_6 = dspy.OutputField(desc="Check 6 midpoint reversal -- a true reversal: everything changes; reactionary-hero flips to action-hero, not a minor bump: integer 0-15. 0 = absent.")
-    score_7 = dspy.OutputField(desc="Check 7 disaster blindsides -- foreshadowed for the reader but blindsides the protagonist: integer 0-8. 0 = absent.")
-    score_8 = dspy.OutputField(desc="Check 8 dark moment re-triggers fear -- the dark moment re-triggers the SPECIFIC fear from check 1: integer 0-7. 0 = absent.")
-    score_9 = dspy.OutputField(desc="Check 9 structural completeness -- every beat present and in order across the 3 acts/loops; pinch points escalate the opposition: integer 0-10. 0 = absent.")
-    score_10 = dspy.OutputField(desc="Check 10 hook grabs the inner conflict: integer 0-5. 0 = absent.")
+    score_6 = dspy.OutputField(desc="Check 6 midpoint reversal -- a true reversal: everything changes; reactionary-hero flips to action-hero, not a minor bump: integer 0-10. 0 = absent.")
+    score_7 = dspy.OutputField(desc="Check 7 disaster blindsides -- foreshadowed for the reader but blindsides the protagonist: integer 0-6. 0 = absent.")
+    score_8 = dspy.OutputField(desc="Check 8 dark moment re-triggers fear -- the dark moment re-triggers the SPECIFIC fear from check 1: integer 0-6. 0 = absent.")
+    score_9 = dspy.OutputField(desc="Check 9 structural completeness & rising build-up -- every beat present and in order across the 3 acts/loops; pinch points escalate the opposition; AND the build-up escalates through visible ACTION (the facade-holding panic before it cracks), not a narrated 'the tension grew': integer 0-7. 0 = absent.")
+    score_10 = dspy.OutputField(desc="Check 10 hook grabs the conflict -- the protagonist's inner stakes AND the opposing force, not a flat external event alone: integer 0-5. 0 = absent.")
     score_11 = dspy.OutputField(desc="Check 11 resolution lands the WHY -- wraps loose ends and satisfies AND lands the desire+belief that drove it, not just the WHAT: integer 0-5. 0 = absent.")
-    score_12 = dspy.OutputField(desc="Check 12 the Dance -- every beat follows the last by THEREFORE (a consequence) or BUT (a reversal), never AND THEN: integer 0-15. 0 = 'and then' detail-piling (KILL check: a 0 rejects the story).")
+    score_12 = dspy.OutputField(desc="Check 12 the Dance -- every beat follows the last by THEREFORE (a consequence) or BUT (a reversal), never AND THEN: integer 0-14. 0 = 'and then' detail-piling (KILL check: a 0 rejects the story).")
+    score_13 = dspy.OutputField(desc="Check 13 antagonist & central conflict -- the antagonist is a real opposing force with their OWN desire and belief, DIFFERENT from the protagonist's, and the story's engine is the direct COLLISION of those opposed desires/beliefs (not necessarily a 'rivalry' - any genuine opposition; when the brief centers two figures, a full second character, not a looming force): integer 0-10. 0 = absent.")
     failed_checks = dspy.OutputField(desc="If REJECT: failing check numbers + one line each. If PASS: 'none'.")
     why = dspy.OutputField(desc="One line.")
 
@@ -186,9 +195,11 @@ class IterateStory(dspy.Signature):
     climactic_confrontation = dspy.InputField()
     victory = dspy.InputField()
     resolution = dspy.InputField()
+    antagonist = dspy.InputField()
     critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
     standard = dspy.InputField(desc="The generator standard to hold to.")
     improved_premise = dspy.OutputField()
+    improved_antagonist = dspy.OutputField()
     improved_desire = dspy.OutputField()
     improved_fear = dspy.OutputField()
     improved_misbelief = dspy.OutputField()
@@ -411,40 +422,85 @@ class IterateStakebake(dspy.Signature):
 # ===========================================================================
 # SCRIPT stage  (downstream of stakebake; writes the short-form video script)
 # ===========================================================================
-class GenerateScript(dspy.Signature):
-    """Write the short-form video script from the assembled story. DELIVER the
-    stakes, the theme's belief-shift, the structure's arc, and the hook in the
-    words. Run the addiction loop (stakes -> big question -> head fake -> rehook),
-    open a loop in the first line, and write TIGHT, compact, punchy sentences.
-    No clinical/AI jargon."""
+class GenerateScriptShort(dspy.Signature):
+    """Write a FINISHED short-form video script from the assembled story - ONE
+    continuous, ready-to-deliver script, NOT labeled sections (no 'hook:'/'body:'
+    headers, no notes). HARD LIMIT: 60 seconds / 150 words MAX - count them. Snappy,
+    hard cadence, short punchy lines, fast-cut, leads on the strongest hook, lands
+    its OWN payoff (never a cliffhanger or 'watch the full video'). It must
+    dramatize the brief's ACTUAL subject: when the brief centers two opposing figures,
+    BOTH are on screen in direct conflict - never one person narrated about. Current to
+    the channel's live moment, never a past retrospective. No clinical/AI jargon."""
 
     brief = dspy.InputField(desc="The assembled story (idea + theme + structure + raised-stakes beats) to script.")
     standard = dspy.InputField(desc="The generator standard (rules/standards/script_generator.md).")
     topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
-    hook = dspy.OutputField(desc="The opening line(s) - opens a loop in the first 1-3 seconds.")
-    body = dspy.OutputField(desc="The VO narration - the story told with the loop running (stakes/question/head-fake/rehook).")
-    payoff = dspy.OutputField(desc="The line that closes the main loop and lands the theme by delivering the desire/belief WHY beneath the event, not just the event itself.")
-    cta = dspy.OutputField(desc="One clear viewer action.")
-    loop_notes = dspy.OutputField(desc="Where the open loops / head fakes / rehooks are.")
+    script = dspy.OutputField(desc="The FINISHED short-form script, 150 words / 60s MAX: continuous ready-to-deliver lines (brief visual cues ok), NO section labels, NO scaffolding or notes. Snappy hard cadence, opens on the strongest hook, dramatizes the brief's actual conflict (when two figures, both in direct conflict), lands its own self-contained payoff + one viewer action. Current, not a past retrospective.")
+
+
+class GateScriptShort(dspy.Signature):
+    """Strict inspection engine for a FINISHED short-form script. Enforce the HARD
+    length cap (150 words / 60s) and the conflict, the snappy short-form voice,
+    delivery of the story, a self-contained payoff, and the Dance. Length (score_1)
+    and the Dance (score_7) are KILL checks: a 0 on either REJECTS regardless of total."""
+
+    script = dspy.InputField()
+    criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, the length cap, the kill checks, and the floor.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by floor + kill checks; report your read).")
+    score_1 = dspy.OutputField(desc="LENGTH within cap - 150 words / 60s spoken MAX. COUNT THE WORDS. KILL: 0 if it runs over the cap (rejects regardless of total), else the weight.")
+    score_2 = dspy.OutputField(desc="Hook in the FIRST line - opens a loop immediately, no warm-up: 0 or the weight.")
+    score_3 = dspy.OutputField(desc="Snappy short-form voice - hard cadence, short punchy lines, fast-cut; NOT slow narration and NOT the opening chapter of a long story: integer 0..weight.")
+    score_4 = dspy.OutputField(desc="Delivers the upstream story - the stakes, the theme's belief-shift, the arc: integer 0..weight.")
+    score_5 = dspy.OutputField(desc="Conflict alive - when the brief centers two opposing figures, both on screen in direct conflict (protagonist AND antagonist with different desires/beliefs), not one person monologued about: integer 0..weight.")
+    score_6 = dspy.OutputField(desc="Self-contained payoff - lands its own ending (no cliffhanger / 'watch the full video' tease) plus one clear viewer action: 0 or the weight.")
+    score_7 = dspy.OutputField(desc="The Dance - every beat follows the last by THEREFORE or BUT, never AND THEN. KILL: 0 = 'and then' detail-piling (rejects regardless of total), else integer up to the weight.")
+    jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class IterateScriptShort(dspy.Signature):
+    """Sharpen the FINISHED short-form script using the gate's critique. If it runs
+    over 150 words / 60s, CUT it down hard. Tighten the cadence, make BOTH
+    opposing figures land in direct conflict, DRAMATIZE it (show it happening, don't
+    narrate about it), keep it self-contained. Output ONE finished script - no labels,
+    no notes. No jargon."""
+
+    script = dspy.InputField()
+    critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
+    standard = dspy.InputField(desc="The generator standard to hold to.")
+    improved_script = dspy.OutputField(desc="The tightened finished script, 150 words / 60s MAX, no labels, no notes.")
+
+
+# ---- shared script signatures (long-form + any other narration-format stage) ----
+class GenerateScript(dspy.Signature):
+    """Write ONE finished, performable video script from the assembled story, in the
+    length and format the STANDARD specifies - a real script told like a story, NOT a
+    labeled draft (no 'hook:'/'body:' headers, no notes). DELIVER the stakes, the
+    theme's belief-shift, the arc, and the hook woven into the opening. DRAMATIZE it
+    (show it happening); never narrate ABOUT it. Run the addiction loop underneath.
+    No clinical/AI jargon."""
+
+    brief = dspy.InputField(desc="The assembled story (idea + theme + structure + raised-stakes beats) to script.")
+    standard = dspy.InputField(desc="The generator standard for this format.")
+    topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
+    script = dspy.OutputField(desc="ONE finished, ready-to-deliver script in the length and format the STANDARD specifies - continuous performable lines (brief visual cues ok), NO section labels (no 'hook:'/'body:'), NO notes/scaffolding. Opens on the strongest hook woven in, dramatizes the story (shows it, never narrates ABOUT it), delivers the package, lands its own payoff.")
 
 
 class GateScript(dspy.Signature):
-    """You are a strict inspection engine for a short-form script. Score delivery,
-    the addiction loop, and voice. Binary where marked, graded otherwise. Flag jargon."""
+    """You are a strict inspection engine for a FINISHED script (one continuous piece,
+    no section labels). Score delivery, the addiction loop, and voice/format fit per
+    the format's standard. Binary where marked, graded otherwise. Flag jargon."""
 
-    hook = dspy.InputField()
-    body = dspy.InputField()
-    payoff = dspy.InputField()
-    cta = dspy.InputField()
-    loop_notes = dspy.InputField()
+    script = dspy.InputField()
     criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, and floor.")
     verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
-    score_1 = dspy.OutputField(desc="D1 delivery - carries stakes/theme/structure/hook from the package, and the payoff lands the desire/belief WHY beneath the event (not just the event): integer 0-20.")
+    score_1 = dspy.OutputField(desc="D1 delivery - carries stakes/theme/structure/hook from the package, and the payoff lands the desire/belief WHY beneath the event (not just the event): integer 0-16.")
     score_2 = dspy.OutputField(desc="L1 hook opens a loop in the first line: 0 or 12.")
     score_3 = dspy.OutputField(desc="L2 head fake - earned reveal that breaks the prediction: 0 or 12.")
     score_4 = dspy.OutputField(desc="L3 rehooks / no dead air: integer 0-13.")
-    score_5 = dspy.OutputField(desc="V1 voice & format fit per the format's standard (tight & punchy for short-form, immersive for long-form): integer 0-25.")
-    score_6 = dspy.OutputField(desc="V2 visceral & speakable - concrete, present tense, to one viewer: integer 0-18.")
+    score_5 = dspy.OutputField(desc="V1 voice & format fit per the format's standard (tight & punchy for short-form, immersive for long-form): integer 0-18.")
+    score_6 = dspy.OutputField(desc="V2 visceral & speakable - concrete, present tense, to one viewer: integer 0-14.")
     score_7 = dspy.OutputField(desc="L4 the Dance -- every beat follows the last by THEREFORE or BUT, never AND THEN: integer 0-15. 0 = 'and then' detail-piling (KILL check: a 0 rejects regardless of total).")
     jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
     failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
@@ -452,22 +508,14 @@ class GateScript(dspy.Signature):
 
 
 class IterateScript(dspy.Signature):
-    """Tighten and sharpen the short-form script using the gate's critique. Add the
-    missing loop element (a head fake, a rehook), cut filler, make every sentence
-    hit harder, and make sure the package still lands. No jargon."""
+    """Sharpen the FINISHED script using the gate's critique - tighten, cut filler,
+    make every line hit harder, keep it a performable script (no labels, no notes),
+    and make sure the package still lands. No jargon."""
 
-    hook = dspy.InputField()
-    body = dspy.InputField()
-    payoff = dspy.InputField()
-    cta = dspy.InputField()
-    loop_notes = dspy.InputField()
+    script = dspy.InputField()
     critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
     standard = dspy.InputField(desc="The generator standard to hold to.")
-    improved_hook = dspy.OutputField()
-    improved_body = dspy.OutputField()
-    improved_payoff = dspy.OutputField()
-    improved_cta = dspy.OutputField()
-    improved_loop_notes = dspy.OutputField()
+    improved_script = dspy.OutputField(desc="The tightened finished script, no labels, no notes.")
 
 
 # ===========================================================================
@@ -485,7 +533,6 @@ class GenerateScreenplay(dspy.Signature):
     topic = dspy.OutputField(desc="3-6 words naming what this is about, for the filename. No generic words.")
     part_1 = dspy.OutputField(desc="Scene 1: slugline (INT./EXT.), visual action, dialogue. Opens the loop / sets the head fake. Image-generatable.")
     part_2 = dspy.OutputField(desc="Scene 2: slugline, visual action, dialogue. The head-fake payoff / the turn, landing the desire/belief WHY beneath the event (not just the surface reversal). Image-generatable.")
-    loop_notes = dspy.OutputField(desc="Where the loop opens, the head fake, and the payoff sit across the two parts.")
 
 
 class GateScreenplay(dspy.Signature):
@@ -494,11 +541,10 @@ class GateScreenplay(dspy.Signature):
 
     part_1 = dspy.InputField()
     part_2 = dspy.InputField()
-    loop_notes = dspy.InputField()
     criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, and floor.")
     verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
-    score_1 = dspy.OutputField(desc="Delivery - stakes -- the stakes are dramatized across the two parts (verify against THE STORY PACKAGE): integer 0-8.")
-    score_2 = dspy.OutputField(desc="Delivery - belief-shift -- the theme's belief-shift is dramatized across the two parts (verify against the package): integer 0-8.")
+    score_1 = dspy.OutputField(desc="Delivery - stakes -- the stakes are dramatized across the two parts (verify against THE STORY PACKAGE): integer 0-6.")
+    score_2 = dspy.OutputField(desc="Delivery - belief-shift -- the theme's belief-shift is dramatized across the two parts (verify against the package): integer 0-6.")
     score_3 = dspy.OutputField(desc="Delivery - arc & hook -- the structure's arc and hook are dramatized across the two parts (verify against the package): integer 0-8.")
     score_4 = dspy.OutputField(desc="Part 1 opens a loop -- a visual question we need answered: 0 or 10.")
     score_5 = dspy.OutputField(desc="Head fake - earned reversal -- part 2 pays off with an earned reversal, not just the surface event; withhold if the turn has no visible desire/belief: 0 or 8.")
@@ -507,8 +553,8 @@ class GateScreenplay(dspy.Signature):
     score_8 = dspy.OutputField(desc="Belief on a spectrum -- withhold if belief flips absolute (doubt->certainty) instead of moving along a spectrum: 0 or 5.")
     score_9 = dspy.OutputField(desc="Expressed, not performed -- withhold if he performs the want for a crowd's verdict instead of expressing it: 0 or 5.")
     score_10 = dspy.OutputField(desc="Team turn = mirroring -- withhold if a team's turn is asserted in dialogue rather than shown as mirroring (others catching the same fire in frame): 0 or 5.")
-    score_11 = dspy.OutputField(desc="Parts chain -- part 1 makes us need part 2; no dead beat between: integer 0-9.")
-    score_12 = dspy.OutputField(desc="Visual & image-generatable -- each part is a clear, shootable image in proper screenplay form (slugline / action / dialogue): integer 0-12.")
+    score_11 = dspy.OutputField(desc="Parts chain -- part 1 makes us need part 2; no dead beat between: integer 0-6.")
+    score_12 = dspy.OutputField(desc="Visual & image-generatable -- each part is a clear, shootable image in proper screenplay form (slugline / action / dialogue): integer 0-9.")
     score_13 = dspy.OutputField(desc="Concrete & dramatic -- real action and dialogue, not narration or interiority: integer 0-8.")
     score_14 = dspy.OutputField(desc="The Dance -- every beat follows the last by THEREFORE or BUT, never AND THEN: integer 0-15. 0 = 'and then' detail-piling (KILL check: a 0 rejects regardless of total).")
     jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
@@ -523,12 +569,10 @@ class IterateScreenplay(dspy.Signature):
 
     part_1 = dspy.InputField()
     part_2 = dspy.InputField()
-    loop_notes = dspy.InputField()
     critique = dspy.InputField(desc="The gate's why + weak points to push higher.")
     standard = dspy.InputField(desc="The generator standard to hold to.")
     improved_part_1 = dspy.OutputField()
     improved_part_2 = dspy.OutputField()
-    improved_loop_notes = dspy.OutputField()
 
 
 # ===========================================================================

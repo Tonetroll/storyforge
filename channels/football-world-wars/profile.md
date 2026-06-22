@@ -7,6 +7,7 @@
 **What they actually want underneath:** belonging — to feel inside the moment, with national pride, recognition, social currency, and a clear reason to care.
 **Voice:** dramatic, funny, emotionally clear cartoon storytelling — caricature, comedy, rivalry, exaggerated but emotionally true. Not dry, not tactical, not male-coded, not neutral news.
 **Refuse to validate (anti-audience):** boring neutrality, tactical-only analysis, male-only assumptions, club-first framing, highlight-only clips, and ignoring smaller nations / women / families / diaspora. Never treat the World Cup like ordinary football.
+**Timeframe / currency:** This channel is about the **FIFA World Cup 2026** (upcoming/ongoing). Every story is written FORWARD to 2026 — the open stakes, the pressure no one knows the outcome of yet — NEVER a retrospective of a past tournament (e.g. 2022 Qatar).
 **Visual branding (thumbnail/title text):** bold gold gradient (#FFD700 → #E8A800) in a heavy display font (e.g. Montserrat Black), high contrast; cartoon-caricature style matching the channel voice. **Background follows the story:** the transformed setting the seed/script ends in (whatever that is — a stadium only if that's where the story lands, never as a default).
 <!-- SPINE:END -->
 

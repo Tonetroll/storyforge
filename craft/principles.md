@@ -95,6 +95,37 @@ expansion. RELIEF is the signal it's moving the right way: toward ease and towar
 authentic action. Dock or reject a change that happens TO the character by an event or a coincidence
 rather than through their own reflection.
 
+## 16. Currency — write for the live moment, never a stale retrospective
+The piece must be current to the channel's live moment. A story built on a settled
+past event — one whose ending the audience already knows — is dead on arrival for a
+channel riding the present, unless that pastness is explicitly the hook. For an
+upcoming or ongoing event, write FORWARD into it: the unresolved pressure, the open
+stakes, the question nobody knows the answer to yet — never a recap of a tournament
+that finished years ago. The channel profile names the specific moment (e.g. the
+FIFA World Cup 2026); obey it. **REJECT any piece that drifts to a past cycle.**
+
+## 17. Fidelity to the premise — write the story the brief actually asked for
+Deliver the premise you were handed, in its actual shape. If the brief centers two
+opposing figures (a protagonist and a real antagonist with different desires and
+beliefs), the piece IS that conflict — both present, in dynamic collision, playing
+off each other, the tension cutting between them — not one of them alone in his head
+with the other shrunk to a background mirror. (It may feel like a rivalry, but need
+not be one.) Don't quietly swap
+the subject, drop a character, or collapse a two-hander into a solo arc because that
+form is easier to write. The emotional/belief work must SERVE the premise the brief
+set, never replace it. **REJECT a piece that abandons the brief's actual subject.**
+
+## STANDING AUTO-REJECTS — encode once, enforce forever (Tone never re-specifies these)
+These are the failures Tone has flagged over and over. Every gate REJECTS on ANY of
+them, automatically — she should never have to point them out again:
+- **Stale / wrong era** — built on a settled past event when the channel is about a current/upcoming one (a 2022 retrospective for a 2026 channel). REJECT. (#16)
+- **Off-brief subject** — abandons the brief's actual subject: drops the antagonist / opposing force, writes one person when the brief centers two figures, swaps the topic. REJECT. (#17)
+- **Telling, not a story** — narrates ABOUT events (a voiceover essay) instead of dramatizing them in a scene with action and consequence. REJECT. (see `craft/anti-examples.md`)
+- **Wrong length for the format** — a "short" that runs long, or any format ignoring its length spec. REJECT.
+- **Labeled / unfinished output** — a script delivered as hook/body/payoff/cta sections, or with scaffolding (loop notes) instead of ONE finished, formatted piece. REJECT.
+- **Flat, narrated tension** — a build-up that *says* tension rose instead of escalating it through visible action (the facade cracking). REJECT/dock.
+- **"And then" beat-piling** — beats strung by "and then" instead of "therefore"/"but" (the Dance). REJECT. (#14)
+
 ---
 
 **The test for any piece:** Is it specific? Does it open a loop and earn its
