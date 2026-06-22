@@ -45,7 +45,7 @@ Visual requirements:
 Text requirements (if adding text):
 - Maximum 4 words (ideally 2-3, max 7)
 - Bold font, high contrast against background
-- Gold/yellow gradient text (#FFD700 to #E8A800) in Montserrat Black
+- Text colour and font follow the channel's brand settings (defined in the channel profile, not fixed here)
 - Legible at small size (150px height)
 
 Style:
