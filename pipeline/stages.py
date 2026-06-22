@@ -159,20 +159,17 @@ STAKEBAKE = Stage(
                     "dark_moment", "recovery", "climactic_confrontation", "victory", "resolution",
                     "stakes_added"],
     topic_field="topic",
-    weights={1: 9, 2: 9, 3: 9, 4: 9, 5: 9, 6: 8, 7: 5, 8: 4, 9: 4, 10: 4, 11: 15, 12: 15},  # R1-R5, G1a-G1e, G2, +the Dance (12); sums to 100
+    weights={1: 10, 2: 10, 3: 10, 4: 10, 5: 10, 6: 10, 7: 12, 8: 13, 9: 15},  # 6 stakes pillars + emotional + sacrifice + specific; sums to 100. The belief engine lives in theme/story; the Dance kill lives in story + scripts.
     labels={
         1: "value established early",
         2: "ticking clock / urgency",
-        3: "tough choice / no-win",
-        4: "personal consequences",
-        5: "no safety nets",
-        6: "deeper need tied",
-        7: "threat on belief",
-        8: "belief on a spectrum",
-        9: "express not prove",
-        10: "team mirror not carrying",
-        11: "specific & relatable",
-        12: "the Dance (therefore/but, not and-then)",
+        3: "increase conflict",
+        4: "tough choice / no-win",
+        5: "personal consequences",
+        6: "no safety nets",
+        7: "emotional stakes / deeper need",
+        8: "disproportionate (illogical) sacrifice",
+        9: "specific & relatable",
     },
     gen_standard_file="stakebake_generator.md",
     eval_standard_file="stakebake_evaluator.md",
@@ -184,7 +181,6 @@ STAKEBAKE = Stage(
     ),
     penalty_points=15,    # jargon penalty
     verdict_floor=60,     # hybrid: PASS if score >= 60, iterate toward target
-    kill_checks=(12,),    # the Dance: a 0 rejects even past the floor
 )
 
 

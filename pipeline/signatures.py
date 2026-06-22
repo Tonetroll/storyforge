@@ -313,8 +313,9 @@ class GenerateStakebake(dspy.Signature):
 
 
 class GateStakebake(dspy.Signature):
-    """You are a strict inspection engine for the RAISED-STAKES beats. R1-R5 are
-    binary (full points or zero). G1-G2 are graded. Flag jargon. Only inspect."""
+    """You are a strict inspection engine for the RAISED-STAKES beats. Criteria 1-6 are
+    binary (full points or zero); 7-9 are graded. Flag jargon. Only inspect. Stakebake's
+    job is the STAKES; the belief engine and the Dance kill live in theme/story."""
 
     premise = dspy.InputField()
     desire = dspy.InputField()
@@ -340,18 +341,15 @@ class GateStakebake(dspy.Signature):
     stakes_added = dspy.InputField()
     criteria = dspy.InputField(desc="The gate: the binary rules, graded checks, weights, and verdict floor.")
     verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
-    score_1 = dspy.OutputField(desc="R1 value established early -- what the character values / has to lose is clear before it's threatened (in the setup): 0 or 12.")
-    score_2 = dspy.OutputField(desc="R2 ticking clock / urgency -- a time limit or immediate pressure (in the build-up): 0 or 12.")
-    score_3 = dspy.OutputField(desc="R3 tough choice / no-win -- a moral dilemma between two unfavorable options (at a plot point): 0 or 12.")
-    score_4 = dspy.OutputField(desc="R4 personal consequences -- affects the character's life, safety, or relationships, not just external events: 0 or 12.")
-    score_5 = dspy.OutputField(desc="R5 no safety nets -- no plot armor; mistakes carry consequences: 0 or 12.")
-    score_6 = dspy.OutputField(desc="G1a deeper need tied -- external goal tied to a deeper psychological/emotional need; stakes land the desire-vs-belief at risk (the WHY beneath the event): integer 0-8.")
-    score_7 = dspy.OutputField(desc="G1b threat on belief, not desire -- dock when the threat is aimed at the desire itself (desire 'dies'/'comes back') instead of the belief/clarity that it's reachable: integer 0-5.")
-    score_8 = dspy.OutputField(desc="G1c belief on a spectrum -- dock when everyone's belief moves in lockstep instead of sitting at different points: integer 0-4.")
-    score_9 = dspy.OutputField(desc="G1d express, not prove -- dock when stakes ride on PROVING the want for the crowd's verdict rather than losing the chance to EXPRESS it authentically: integer 0-4.")
-    score_10 = dspy.OutputField(desc="G1e team mirror, not carrying -- dock when team stakes make him responsible for carrying others rather than the mutual mirror lifting or breaking: integer 0-4.")
-    score_11 = dspy.OutputField(desc="G2 specific & relatable -- the stakes are specific to the audience avatar, not generic: integer 0-15.")
-    score_12 = dspy.OutputField(desc="G3 the Dance -- every beat follows the last by THEREFORE or BUT, never AND THEN: integer 0-15. 0 = 'and then' detail-piling (KILL check: a 0 rejects regardless of total).")
+    score_1 = dspy.OutputField(desc="Criterion 1 value established early -- what the character values / has to lose is clear before it's threatened (in the setup): 0 or 10.")
+    score_2 = dspy.OutputField(desc="Criterion 2 ticking clock / urgency -- a time limit or immediate pressure (in the build-up): 0 or 10.")
+    score_3 = dspy.OutputField(desc="Criterion 3 increase conflict -- the obstacles between the character and the goal get harder, not easier, as the story goes on: 0 or 10.")
+    score_4 = dspy.OutputField(desc="Criterion 4 tough choice / no-win -- a moral dilemma between two unfavorable options (at a plot point): 0 or 10.")
+    score_5 = dspy.OutputField(desc="Criterion 5 personal consequences -- affects the character's life, safety, or relationships, not just external events: 0 or 10.")
+    score_6 = dspy.OutputField(desc="Criterion 6 no safety nets -- no plot armor; mistakes carry consequences: 0 or 10.")
+    score_7 = dspy.OutputField(desc="Criterion 7 emotional stakes / deeper need -- the external goal is tied to a deeper psychological/emotional need (surface want vs deeper need); the WHY beneath the event is what is at risk: integer 0-12.")
+    score_8 = dspy.OutputField(desc="Criterion 8 disproportionate (illogical) sacrifice -- a sacrifice out of all proportion, made purely out of devotion (agnostic: to a person, teammate, country, cause, pet -- anything), shown as a real moment, proving how deep the devotion runs and how much is at stake: integer 0-13.")
+    score_9 = dspy.OutputField(desc="Criterion 9 specific & relatable -- the stakes are specific to the audience avatar, not generic: integer 0-15.")
     jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
     failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
     why = dspy.OutputField(desc="One line.")

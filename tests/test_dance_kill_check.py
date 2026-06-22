@@ -55,7 +55,9 @@ def test_dance_full_passes_on_floor_stage():
 
 def test_all_beat_stages_mark_the_dance_as_kill():
     """Every beat stage carries the Dance as a kill check on its last criterion."""
-    expected = {"story": (12,), "stakebake": (12,), "script": (7,),
+    expected = {"story": (12,), "script": (7,),
                 "script_long": (7,), "script_podcast": (7,), "script_screenplay": (14,)}
     for name, kc in expected.items():
         assert stages.get_stage(name).kill_checks == kc, f"{name} kill_checks should be {kc}"
+    # stakebake re-colours existing beats with stakes; the Dance is NOT a kill there.
+    assert stages.get_stage("stakebake").kill_checks == (), "stakebake should carry no Dance kill"
