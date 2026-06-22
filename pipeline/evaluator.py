@@ -30,12 +30,13 @@ def normalize_verdict(raw) -> str:
 
 
 class Evaluator(dspy.Module):
-    def __init__(self, gate_sig, weights: dict, penalty_points: int = 0, verdict_floor=None):
+    def __init__(self, gate_sig, weights: dict, penalty_points: int = 0, verdict_floor=None, kill_checks=()):
         super().__init__()
         self.gate = dspy.ChainOfThought(gate_sig)
         self.weights = weights              # {criterion_number: max_points}
         self.penalty_points = penalty_points  # e.g. jargon penalty; 0 = no penalty
         self.verdict_floor = verdict_floor    # None = all-pass mode; int = PASS if score >= floor
+        self.kill_checks = tuple(kill_checks or ())  # criteria that REJECT on a 0 even past the floor
 
     def forward(self, content: dict, criteria: str) -> dspy.Prediction:
         o = self.gate(**content, criteria=criteria)
@@ -51,9 +52,12 @@ class Evaluator(dspy.Module):
             penalty = self.penalty_points
         total = max(0, total - penalty)
 
+        # A "kill check" REJECTS on a 0 even on a floor stage -- a must-not-fail rule
+        # (e.g. the Dance) cannot be bought back by points earned on other checks.
+        killed = any(breakdown.get(k, 0) == 0 for k in self.kill_checks)
         if self.verdict_floor is not None:
-            # Hybrid / ratio style: PASS if it clears the floor (a missing rule costs points, doesn't auto-kill).
-            verdict = "PASS" if total >= self.verdict_floor else "REJECT"
+            # Hybrid / ratio style: PASS if it clears the floor, UNLESS a kill check scored 0.
+            verdict = "PASS" if (total >= self.verdict_floor and not killed) else "REJECT"
             score = total
         else:
             # All-pass style: any criterion at 0 = absent = REJECT.

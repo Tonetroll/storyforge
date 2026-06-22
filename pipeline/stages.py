@@ -31,6 +31,7 @@ class Stage:
     verdict_floor: Optional[int] = None  # None = all-pass verdict; int = hybrid PASS if score >= floor
     gate_reads_package: bool = False  # if True, the assembled package is given to the gate (delivery check)
     deep_channel: bool = False        # if True, the FULL channel profile feeds this stage; else only the spine
+    kill_checks: tuple = ()           # criterion numbers that REJECT on a 0 even on a floor stage (a "kill check")
 
 
 IDEA = Stage(
@@ -41,15 +42,21 @@ IDEA = Stage(
     iter_sig=S.IterateIdea,
     content_fields=["one_liner", "resolution", "reaction_1", "reaction_2", "viewer_action"],
     topic_field="topic",
-    weights={1: 18, 2: 18, 3: 16, 4: 18, 5: 8, 6: 12, 7: 10},  # atomic: one thing per check; sums to 100
+    weights={1: 18, 2: 18, 3: 16, 4: 5, 5: 3, 6: 3, 7: 2, 8: 2, 9: 2, 10: 1, 11: 8, 12: 12, 13: 10},  # atomic: one thing per check; sums to 100
     labels={
         1: "pull-in emotion real & strong (LOL/WTF/WOW)",
         2: "resolution emotion real & strong (Aah/Oooh/Finally)",
         3: "the two emotions are DISTINCT (pull-in ≠ resolution)",
         4: "resolution lands the desire/belief WHY (not just the event)",
-        5: "exactly one viewer action",
-        6: "open loop (premise doesn't give away the answer)",
-        7: "one-liner concrete & speakable in <4s",
+        5: "inside-out: felt belief EXPRESSED, not proven",
+        6: "desire is the CONSTANT, RESURFACES",
+        7: "belief on a SPECTRUM, not binary",
+        8: "self-oriented on EGO→AUTHENTIC axis",
+        9: "others pulled in by MIRRORING",
+        10: "identity is self-made",
+        11: "exactly one viewer action",
+        12: "open loop (premise doesn't give away the answer)",
+        13: "one-liner concrete & speakable in <4s",
     },
     gen_standard_file="generator.md",
     eval_standard_file="evaluator.md",
@@ -72,14 +79,20 @@ STORY = Stage(
         "dark_moment", "recovery", "climactic_confrontation", "victory", "resolution",
     ],
     topic_field="topic",
-    weights={1: 25, 2: 20, 3: 15, 4: 15, 5: 15, 6: 10},
+    weights={1: 20, 2: 8, 3: 5, 4: 5, 5: 5, 6: 12, 7: 6, 8: 7, 9: 7, 10: 5, 11: 5, 12: 15},  # +the Dance (12); sums to 100
     labels={
         1: "character engine (desire/fear/misbelief linked)",
         2: "character arc closes (misbelief overcome in Recovery)",
-        3: "midpoint is a true reversal",
-        4: "disaster + dark moment land",
-        5: "structural completeness (all beats, right order)",
-        6: "hook + resolution (resolution lands the desire/belief WHY)",
+        3: "desire stays constant",
+        4: "ego toward authentic",
+        5: "team mirrors, not shouldered",
+        6: "midpoint reversal",
+        7: "disaster blindsides",
+        8: "dark moment re-triggers fear",
+        9: "structural completeness (all beats, right order)",
+        10: "hook grabs inner conflict",
+        11: "resolution lands the WHY",
+        12: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="story_generator.md",
     eval_standard_file="story_evaluator.md",
@@ -92,6 +105,7 @@ STORY = Stage(
         "Build the 3-act outline so the protagonist's misbelief -> Recovery dramatizes this belief shift."
     ),
     deep_channel=True,   # the audience's wound becomes the protagonist's misbelief
+    kill_checks=(12,),   # the Dance is a kill check (story is all-pass, so a 0 already rejects)
 )
 
 
@@ -103,14 +117,22 @@ THEME = Stage(
     iter_sig=S.IterateTheme,
     content_fields=["topic", "theme_statement", "central_question", "belief_shift"],
     topic_field="topic",
-    weights={1: 25, 2: 20, 3: 20, 4: 15, 5: 10, 6: 10},
+    weights={1: 25, 2: 9, 3: 6, 4: 5, 5: 5, 6: 9, 7: 5, 8: 4, 9: 4, 10: 3, 11: 8, 12: 7, 13: 5, 14: 5},
     labels={
         1: "stance, not a topic",
-        2: "genuine tension (desire vs belief, non-yes/no)",
-        3: "implies a belief-shift",
-        4: "not a moral",
-        5: "universal through the specific",
-        6: "one center of gravity",
+        2: "genuine tension (non-yes/no)",
+        3: "tension is desire vs belief",
+        4: "constant desire, variable belief",
+        5: "spectrum of belief",
+        6: "implies a start→end belief-shift",
+        7: "felt → self acts (not willed/forced)",
+        8: "others read authenticity → it carries",
+        9: "expressing, not proving",
+        10: "mirroring, not carrying",
+        11: "not a moral",
+        12: "invites reflection",
+        13: "universal through the specific",
+        14: "one center of gravity",
     },
     gen_standard_file="theme_generator.md",
     eval_standard_file="theme_evaluator.md",
@@ -137,15 +159,20 @@ STAKEBAKE = Stage(
                     "dark_moment", "recovery", "climactic_confrontation", "victory", "resolution",
                     "stakes_added"],
     topic_field="topic",
-    weights={1: 12, 2: 12, 3: 12, 4: 12, 5: 12, 6: 25, 7: 15},  # R1-R5 binary, G1-G2 graded; sums to 100
+    weights={1: 9, 2: 9, 3: 9, 4: 9, 5: 9, 6: 8, 7: 5, 8: 4, 9: 4, 10: 4, 11: 15, 12: 15},  # R1-R5, G1a-G1e, G2, +the Dance (12); sums to 100
     labels={
         1: "value established early",
         2: "ticking clock / urgency",
         3: "tough choice / no-win",
         4: "personal consequences",
         5: "no safety nets",
-        6: "emotional stakes land",
-        7: "specific & relatable",
+        6: "deeper need tied",
+        7: "threat on belief",
+        8: "belief on a spectrum",
+        9: "express not prove",
+        10: "team mirror not carrying",
+        11: "specific & relatable",
+        12: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="stakebake_generator.md",
     eval_standard_file="stakebake_evaluator.md",
@@ -157,6 +184,7 @@ STAKEBAKE = Stage(
     ),
     penalty_points=15,    # jargon penalty
     verdict_floor=60,     # hybrid: PASS if score >= 60, iterate toward target
+    kill_checks=(12,),    # the Dance: a 0 rejects even past the floor
 )
 
 
@@ -168,7 +196,7 @@ SCRIPT = Stage(
     iter_sig=S.IterateScript,
     content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
     topic_field="topic",
-    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},  # D1, L1, L2, L3, V1, V2; sums to 100
+    weights={1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15},  # D1, L1, L2, L3, V1, V2, +the Dance (7); sums to 100
     labels={
         1: "delivery (stakes/theme/structure/hook; payoff lands desire/belief WHY)",
         2: "hook opens a loop",
@@ -176,6 +204,7 @@ SCRIPT = Stage(
         4: "rehooks / no dead air",
         5: "tight & punchy",
         6: "visceral & speakable",
+        7: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="script_generator.md",
     eval_standard_file="script_evaluator.md",
@@ -188,6 +217,7 @@ SCRIPT = Stage(
     penalty_points=15,
     verdict_floor=60,
     gate_reads_package=True,   # the script gate reads the whole package to check delivery
+    kill_checks=(7,),          # the Dance: a 0 rejects even past the floor
 )
 
 
@@ -199,7 +229,7 @@ SCRIPT_LONG = Stage(
     iter_sig=S.IterateScript,
     content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
     topic_field="topic",
-    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
+    weights={1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15},
     labels={
         1: "delivery (stakes/theme/structure/hook; payoff lands desire/belief WHY)",
         2: "hook opens a loop",
@@ -207,6 +237,7 @@ SCRIPT_LONG = Stage(
         4: "loops chain / no dead air",
         5: "immersive narration",
         6: "visceral & concrete",
+        7: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="script_long_generator.md",
     eval_standard_file="script_long_evaluator.md",
@@ -219,6 +250,7 @@ SCRIPT_LONG = Stage(
     penalty_points=15,
     verdict_floor=60,
     gate_reads_package=True,
+    kill_checks=(7,),
 )
 
 
@@ -230,14 +262,22 @@ SCRIPT_SCREENPLAY = Stage(
     iter_sig=S.IterateScreenplay,
     content_fields=["part_1", "part_2", "loop_notes"],
     topic_field="topic",
-    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
+    weights={1: 6, 2: 6, 3: 8, 4: 7, 5: 6, 6: 7, 7: 7, 8: 5, 9: 5, 10: 5, 11: 6, 12: 9, 13: 8, 14: 15},  # +the Dance (14); sums to 100
     labels={
-        1: "delivery (stakes/theme/structure/hook)",
-        2: "part 1 opens a loop",
-        3: "head fake in part 2 (lands desire/belief WHY)",
-        4: "parts chain",
-        5: "visual & image-generatable",
-        6: "concrete & dramatic",
+        1: "delivery — stakes",
+        2: "delivery — belief-shift",
+        3: "delivery — arc & hook",
+        4: "part 1 opens a loop",
+        5: "head fake — earned reversal",
+        6: "WHY readable — desire-image",
+        7: "WHY readable — belief shifts visually",
+        8: "belief on a spectrum",
+        9: "expressed, not performed",
+        10: "team turn = mirroring",
+        11: "parts chain",
+        12: "visual & image-generatable",
+        13: "concrete & dramatic",
+        14: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="script_screenplay_generator.md",
     eval_standard_file="script_screenplay_evaluator.md",
@@ -250,6 +290,7 @@ SCRIPT_SCREENPLAY = Stage(
     penalty_points=15,
     verdict_floor=60,
     gate_reads_package=True,
+    kill_checks=(14,),
 )
 
 
@@ -261,7 +302,7 @@ SCRIPT_PODCAST = Stage(
     iter_sig=S.IterateScript,
     content_fields=["hook", "body", "payoff", "cta", "loop_notes"],
     topic_field="topic",
-    weights={1: 20, 2: 12, 3: 12, 4: 13, 5: 25, 6: 18},
+    weights={1: 16, 2: 12, 3: 12, 4: 13, 5: 18, 6: 14, 7: 15},
     labels={
         1: "delivery (stakes/theme/structure/hook; payoff lands the desire/belief WHY)",
         2: "cold open opens a loop",
@@ -269,6 +310,7 @@ SCRIPT_PODCAST = Stage(
         4: "rehooks / volley",
         5: "natural conversation",
         6: "visceral & concrete",
+        7: "the Dance (therefore/but, not and-then)",
     },
     gen_standard_file="script_podcast_generator.md",
     eval_standard_file="script_podcast_evaluator.md",
@@ -281,6 +323,7 @@ SCRIPT_PODCAST = Stage(
     penalty_points=15,
     verdict_floor=60,
     gate_reads_package=True,
+    kill_checks=(7,),
 )
 
 
@@ -322,10 +365,12 @@ DESCRIPTION = Stage(
     iter_sig=S.IterateDescription,
     content_fields=["hook_line", "mirror_lines", "audience_signal"],
     topic_field="topic",
-    weights={1: 25, 2: 25, 3: 15, 4: 10, 5: 15, 6: 10},   # hook + mirror lead (50); sums to 100
+    weights={1: 20, 2: 5, 3: 8, 4: 8, 5: 5, 6: 4, 7: 8, 8: 7, 9: 10, 10: 15, 11: 10},   # hook + mirror lead; sums to 100
     labels={
-        1: "above-the-fold hook", 2: "mirrors the wound (the desire/belief beneath it)", 3: "no spoiler/overpromise",
-        4: "repels anti-audience", 5: "algorithm signal", 6: "tight, plain, ~600 chars",
+        1: "above-fold hook", 2: "hook no summary/spoil", 3: "names the wound",
+        4: "lands the WHY", 5: "authentic desire", 6: "belief not fixed",
+        7: "no spoiler", 8: "no overpromise", 9: "repels anti-audience",
+        10: "algorithm signal", 11: "tight, plain, ~600 chars",
     },
     gen_standard_file="description_generator.md",
     eval_standard_file="description_evaluator.md",

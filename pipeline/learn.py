@@ -64,7 +64,7 @@ def compile_generator(stage_name: str = "idea", channel: str = None, dry_run: bo
     # Grade demos with the SAME hybrid gate runtime uses (penalty_points + verdict_floor),
     # identical to orchestrator.build_modules -- so optimization selects demos under the
     # exact production rules, not the all-pass/no-penalty branch.
-    evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
+    evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor, stage.kill_checks)
     if dry_run:
         from dspy.utils.dummies import DummyLM
         gen_a = {"reasoning": "r", stage.topic_field: "t"}

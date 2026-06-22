@@ -74,6 +74,25 @@ Decide short-form (one tight punch) or long-form (developed, layered) and fully 
 it. Falling between — too thin to be deep, too slow to be punchy — fails both. Know the
 format before the first line.
 
+## 14. The Dance — connect beats with "therefore" or "but," never "and then"
+A story is a dance between context and conflict: a little context (the characters are
+on a mission, doing something), then — oh no — a conflict; a little more context, then
+another conflict. The connective tissue between any two beats must be **"therefore"**
+(a consequence) or **"but"** (a reversal) — never **"and then."** "And then… and then"
+just piles detail on detail and the viewer drifts; "therefore" and "but" open conflict
+loops and close them, and that is what keeps anyone watching, in a feature film or a
+30-second short. **The test:** read your beats with "and then" between them — if it
+still reads fine, the beats are inert. Rewrite so each beat follows from the last by
+*therefore* or *but*.
+
+## 15. Belief shifts through reflection, never by being broken
+The old belief is never snapped by an external event, and nothing changes by chance.
+The character changes because they are *willing to reflect* — and reflecting on how they
+think changes how they feel. This is the inward work, underneath the surface, the hardest
+part. RELIEF is the signal it's moving the right way: toward ease and toward more authentic
+action. Dock or reject a change that happens TO the character by an event or a coincidence
+rather than through their own reflection.
+
 ---
 
 **The test for any piece:** Is it specific? Does it open a loop and earn its

@@ -106,8 +106,8 @@ def _stage_dummy_lms(stage):
 def build_modules(stage, dry_run: bool = False, scripted: dict = None, paths=None):
     generator = Generator(stage.gen_sig)
     iterator = Iterator(stage.iter_sig, stage.content_fields)
-    evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
-    reevaluator = Reevaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor)
+    evaluator = Evaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor, stage.kill_checks)
+    reevaluator = Reevaluator(stage.gate_sig, stage.weights, stage.penalty_points, stage.verdict_floor, stage.kill_checks)
     # lm_iter/lm_reeval default to SHARING the gen-side/eval-side LM. That is the
     # correct behavior for dry_run/scripted (the dummy/scripted answers are built
     # for the gen/eval pair; building separate dummies there would be wrong). Only
@@ -337,6 +337,15 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     if stage.gate_reads_package and assembly:
         eval_criteria = ("THE STORY PACKAGE (the script MUST deliver all of this):\n"
                          f"{_assembly_text(assembly)}\n\n=== GATE CRITERIA ===\n{eval_criteria}")
+    # The gate must hold the work to the SAME craft doctrine the generator was given,
+    # or it cannot enforce it. Craft was injected into the generator/iterator but never
+    # the evaluator/reevaluator -- so the judge never saw the craft rules (e.g. the Dance:
+    # "and then" beat-piling) it is meant to reject. Inject craft into the gate too, so
+    # evaluator AND reevaluator judge against it everywhere.
+    if craft:
+        eval_criteria = ("CRAFT (universal craft the work MUST satisfy -- judge against this "
+                         "as well as the gate criteria below):\n" + craft +
+                         "\n\n=== STAGE GATE CRITERIA ===\n" + eval_criteria)
 
     generator, evaluator, iterator, reevaluator, loaded_compiled = build_modules(
         stage, dry_run=dry_run, scripted=scripted, paths=paths)
