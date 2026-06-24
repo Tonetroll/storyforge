@@ -346,6 +346,16 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         eval_criteria = ("CRAFT (universal craft the work MUST satisfy -- judge against this "
                          "as well as the gate criteria below):\n" + craft +
                          "\n\n=== STAGE GATE CRITERIA ===\n" + eval_criteria)
+    # The gate must also enforce THIS channel's positioning (the hard rules the profile sets --
+    # e.g. "forward to 2026, never a retrospective"). The generator already gets the profile; until
+    # now the evaluator never did, so it could not enforce whatever the channel mandates. Feed the
+    # channel's spine (positioning) into the gate's criteria so it judges against it. Generic: whatever
+    # the profile says, the gate enforces; no hard-coded rule. (Provider separation is untouched --
+    # separation is about WHICH model runs the evaluator, not what text it receives.)
+    if spine:
+        eval_criteria = ("CHANNEL POSITIONING (the hard rules this channel's work MUST obey; "
+                         "a violation fails the gate):\n" + spine +
+                         "\n\n=== STAGE GATE CRITERIA ===\n" + eval_criteria)
 
     generator, evaluator, iterator, reevaluator, loaded_compiled = build_modules(
         stage, dry_run=dry_run, scripted=scripted, paths=paths)
@@ -360,6 +370,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
         logging_setup.write_metric(paths, {
             "run_id": run_id, "stage": stage.name, "asset_id": asset_id, "version": version,
             "status": status, "verdict": getattr(gate, "verdict", None), "score": getattr(gate, "score", None),
+            "breakdown": getattr(gate, "breakdown", None),
             "generator_lm": gen_model, "evaluator_lm": eval_model,
         })
 
@@ -367,9 +378,10 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
 
     # --- GATE: generate until one PASSES (reject -> brand-new one) ---------
     passed = None
+    gen_brief = brief   # accumulates each rejection's reason so a later attempt fixes the actual failure instead of repeating blindly
     for attempt in range(1, config.MAX_GEN_ATTEMPTS + 1):
         number = naming.next_number(search_dirs)
-        pred = _llm_call(log, "idea/content generation", generator, brief=brief, standard=gen_standard)
+        pred = _llm_call(log, "idea/content generation", generator, brief=gen_brief, standard=gen_standard)
         content = _content(pred, stage)
         slug = naming.slugify(getattr(pred, stage.topic_field, "") or next(iter(content.values()), ""))
         first_field = content.get(stage.content_fields[0], "")
@@ -395,13 +407,21 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
                                             dest_dir=paths.rejected)
             _metric_row(asset_id, 1, "rejected", gate)
             log.info("    REJECT -> %s | failed: %s", path.name, gate.failed_checks)
+            # Feed this rejection into the next generation attempt so it fixes the real failure
+            # instead of producing the same artifact again (the old loop regenerated blindly,
+            # which is how a stage could fail N times with near-identical output).
+            reason = (getattr(gate, "failed_checks", "") or getattr(gate, "why", "") or "did not pass the gate").strip()
+            gen_brief = (f"{brief}\n\n"
+                         f"Your PREVIOUS attempt was REJECTED by the gate because: {reason}. "
+                         f"Generate a DIFFERENT version that fixes exactly this -- do not repeat the same approach.")
 
     if passed is None:
         log.info("NO ARTIFACT PASSED THE GATE in %d attempts.", config.MAX_GEN_ATTEMPTS)
         logging_setup.append_run_index(paths, {"run_id": run_id, "stage": stage.name, "mode": mode,
                                                "result": "no_pass", "attempts": config.MAX_GEN_ATTEMPTS})
         log.info("=== run %04d complete (no pass) ===", run_id)
-        return {"result": "no_pass", "stage": stage.name, "attempts": config.MAX_GEN_ATTEMPTS, "run_id": run_id}
+        return {"result": "no_pass", "outcome": "no_pass", "stage": stage.name,
+                "attempts": config.MAX_GEN_ATTEMPTS, "final_score": None, "run_id": run_id}
 
     # --- SCORE + ITERATE the passing artifact ------------------------------
     number, slug, story_id = passed["number"], passed["slug"], passed["story_id"]
@@ -410,6 +430,7 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
     best = {"version": 1, "score": gate.score, "content": content, "gate": gate}
 
     iterations = 0
+    no_improve = 0   # circuit breaker: stop early if the best score stalls (oscillation / plateau)
     while best["score"] < config.TARGET_SCORE and iterations < config.MAX_ITER:
         iterations += 1
         parent = version
@@ -438,6 +459,17 @@ def run(stage_name: str = "idea", brief: str = None, dry_run: bool = False, scri
             break
         if gate.score > best["score"]:
             best = {"version": version, "score": gate.score, "content": content, "gate": gate}
+            no_improve = 0
+        else:
+            # Circuit breaker (bounded-loop practice): if the best score has not risen for two
+            # consecutive iterations the generator is oscillating, not converging. Stop burning
+            # iterations and let it park with a clear "plateaued" signal + the still-weak checks.
+            no_improve += 1
+            log.info("    no improvement (best still %d, %d stale iteration(s)).", best["score"], no_improve)
+            if no_improve >= 2:
+                log.info("    PLATEAU (circuit breaker): best %d unchanged for %d iterations -- stopping early. "
+                         "Weak: %s.", best["score"], no_improve, "; ".join(weak) if weak else "none")
+                break
 
     # --- finalize: reached target -> ready_for_review, else PARK -----------
     final_version = version + 1

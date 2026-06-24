@@ -44,7 +44,7 @@ REEVALUATOR_LM = {"model": "openrouter/google/gemma-3-27b-it", "temperature": 0.
 # Loop / scoring policy
 # ---------------------------------------------------------------------------
 SCORE_SCALE      = 100   # scores are integers 0..100 (applied to ideas that PASS the gate)
-TARGET_SCORE     = 95    # iterate any passing idea scoring BELOW this (set 100 to always iterate to the cap)
+TARGET_SCORE     = 85    # TEMPORARY for the first post-split live test (was 95; restore/adjust after Tone reviews the run)
 MAX_ITER         = 3     # max iteration attempts; if still below target after these, the idea is PARKED
 MAX_GEN_ATTEMPTS = 5     # gate: regenerate a NEW idea up to this many times until one PASSES
 

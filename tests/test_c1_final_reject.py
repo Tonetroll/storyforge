@@ -27,12 +27,14 @@ def test_final_reject_is_parked_not_promoted(channel_ws):
     paths = channel_ws["paths"]
     stage = stages.get_stage("idea")
 
-    # gate PASS at exactly TARGET_SCORE (all 13 checks nonzero, sum = 95) so the
-    # iteration loop does not run; then the FINAL re-eval REJECTs (-> score 0).
-    # Every criterion gets its full weight except #12 (12 -> 7), docking 5 to hit 95.
-    pass_scores = {1: 18, 2: 18, 3: 16, 4: 5, 5: 3, 6: 3, 7: 2,
-                   8: 2, 9: 2, 10: 1, 11: 8, 12: 7, 13: 10}  # sums to 95 == TARGET_SCORE
+    # gate PASS at exactly TARGET_SCORE (all checks nonzero) so the iteration loop
+    # does not run; then the FINAL re-eval REJECTs. Build pass_scores from the stage's
+    # full weights and dock (SCORE_SCALE - TARGET_SCORE) from check 1, so it sums to
+    # TARGET_SCORE at any target and every check stays nonzero (a clean all-pass PASS).
+    pass_scores = dict(stage.weights)
+    pass_scores[1] = stage.weights[1] - (config.SCORE_SCALE - config.TARGET_SCORE)
     assert sum(pass_scores.values()) == config.TARGET_SCORE
+    assert all(v > 0 for v in pass_scores.values()), "docked check must stay > 0 for a clean PASS"
     eval_answers = [
         _eval_answer(stage, pass_scores, verdict="PASS"),
         _eval_answer(stage, {k: 0 for k in stage.weights}, verdict="REJECT",
@@ -60,8 +62,9 @@ def test_final_pass_still_promotes(channel_ws):
     paths = channel_ws["paths"]
     stage = stages.get_stage("idea")
 
-    pass_scores = {1: 18, 2: 18, 3: 16, 4: 5, 5: 3, 6: 3, 7: 2,
-                   8: 2, 9: 2, 10: 1, 11: 8, 12: 7, 13: 10}  # 95
+    pass_scores = dict(stage.weights)
+    pass_scores[1] = stage.weights[1] - (config.SCORE_SCALE - config.TARGET_SCORE)
+    assert sum(pass_scores.values()) == config.TARGET_SCORE
     eval_answers = [
         _eval_answer(stage, pass_scores, verdict="PASS"),   # gate
         _eval_answer(stage, pass_scores, verdict="PASS"),   # final re-eval

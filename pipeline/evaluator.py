@@ -64,7 +64,7 @@ class Evaluator(dspy.Module):
             verdict = normalize_verdict(o.verdict)
             if any(v == 0 for v in breakdown.values()):
                 verdict = "REJECT"
-            score = total if verdict == "PASS" else 0
+            score = total   # always the real criteria total; the verdict carries pass/fail, so a high-quality REJECT logs honestly (not as 0)
 
         return dspy.Prediction(
             verdict=verdict,

@@ -14,29 +14,34 @@ or zero, nothing in between).
 
 ### Delivery
 
-- **D1 Delivery (graded, 0–16)** — This is one score covering several sub-checks.
-  Read each plainly and lower the score for this row whenever any of them fails:
-  - The narration actually carries the stakes, the theme's belief-shift (what the
-    character believed at the start versus the end), the structure's arc, and the
-    hook. Check each one against THE STORY PACKAGE above — it must be present in the
-    narration, not just assumed.
-  - The payoff lands the WHY beneath the event — the desire the character wanted and
-    the belief that drove them — not just the surface event. A payoff that reports
-    only WHAT happened, without the wanting and believing underneath, scores low.
-  - The narration uses the long-form room to show the engine running: dock if the
-    desire (what the character wants) does not stay constant while the belief (that
-    the desire is reachable) visibly wavers under emotional resistance — a setback,
-    loss, or simply not feeling it — and then resurfaces later as if it was always
-    there, rather than being switched back on like a comeback.
-  - Dock if everyone sits at the same level of belief instead of spread across a
-    spectrum (some convinced, some doubting, some given up).
-  - Dock if the character's drive reads as ego — proving himself for the crowd's
-    approval — or as him carrying or rescuing the others, rather than him
-    authentically expressing his own want (acting on what he genuinely feels, for its
-    own sake).
-  - Dock if the team comes together by anything other than its people mirroring each
-    other's desire (each drawn toward the same value), rather than one person hauling
-    them along.
+- **D1 Package delivery (graded, 0–5)** — The narration carries the stakes, the
+  theme's belief-shift (what the character believed at the start versus the end), the
+  structure's arc, and the hook. Check each against THE STORY PACKAGE above — each
+  must be present in the narration, not just assumed. 0 = the package is absent.
+
+- **D2 Payoff lands the WHY (graded, 0–4)** — The payoff lands the WHY beneath the
+  event — the desire the character wanted and the belief that drove them — not just
+  the surface event. A payoff that reports only WHAT happened, without the wanting and
+  believing underneath, scores toward 0.
+
+- **D3 Desire constant, resurfaces (graded, 0–3)** — The desire stays constant while
+  the belief that it is reachable visibly wavers under emotional resistance — a
+  setback, loss, or simply not feeling it — and then resurfaces later as if it was
+  always there, rather than being switched back on like a comeback. Dock a desire that
+  dies and "comes back." 0 = desire vanishes and returns.
+
+- **D4 Belief on a spectrum (graded, 0–2)** — People sit at different points of
+  belief (some convinced, some doubting, some given up), not all at the same level.
+  0 = everyone locked at one shared conviction.
+
+- **D5 Authentic, not ego/proving (graded, 0–1)** — The character's drive is authentic
+  self-expression (acting on what he genuinely feels, for its own sake), not ego —
+  proving himself for the crowd's approval — and not him carrying or rescuing the
+  others. 0 = ego/proving or carrying others.
+
+- **D6 Team mirrors (graded, 0–1)** — Any team comes together by its people mirroring
+  each other's desire (each drawn toward the same value), not by one person hauling
+  them along. 0 = hauled/carried.
 
 ### The addiction loop
 
@@ -93,20 +98,25 @@ rather than as a separate score.
   iterating toward a higher target.
 - **REJECT below 60** — it fails because it doesn't deliver the package, doesn't hook,
   or sags into dead air.
-- **The Dance (criterion #7) is a KILL check** — if it scores 0 the artifact is
+- **The Dance (criterion #12) is a KILL check** — if it scores 0 the artifact is
   REJECTED regardless of whether the total clears the floor. (The engine enforces this.)
 
 ## OUTPUT (use exactly)
 
 ```
 VERDICT: PASS | REJECT
-Score 1 (D1 delivery /16): ____
-Score 2 (L1 hook opens loop /12): ____
-Score 3 (L2 head fake /12): ____
-Score 4 (L3 loops chain /13): ____
-Score 5 (V1 immersive narration /18): ____
-Score 6 (V2 visceral & concrete /14): ____
-Score 7 (the Dance /15): ____
+Score 1 (D1 package delivery /5): ____
+Score 2 (D2 payoff lands the WHY /4): ____
+Score 3 (D3 desire constant, resurfaces /3): ____
+Score 4 (D4 belief on a spectrum /2): ____
+Score 5 (D5 authentic, not ego/proving /1): ____
+Score 6 (D6 team mirrors /1): ____
+Score 7 (L1 hook opens loop /12): ____
+Score 8 (L2 head fake /12): ____
+Score 9 (L3 loops chain /13): ____
+Score 10 (V1 immersive narration /18): ____
+Score 11 (V2 visceral & concrete /14): ____
+Score 12 (the Dance /15): ____
 JARGON present (true/false): ____
 TOTAL after penalty (/100): ____
 Why: <one line>

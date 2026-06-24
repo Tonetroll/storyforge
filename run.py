@@ -92,8 +92,10 @@ def main():
         for r in results:
             print(f"\nseed: {r['brief'][:70]}")
             for s in r["trail"]:
-                mark = "OK " if s["outcome"] == "ready_for_review" else "STOP"
-                print(f"  [{mark}] {s['stage']:<10} {s['outcome']:<16} score={s['score']}")
+                mark = "OK " if s.get("outcome") == "ready_for_review" else "STOP"
+                outcome = s.get("outcome") or "-"
+                score = s.get("score")
+                print(f"  [{mark}] {s['stage']:<10} {outcome:<16} score={score if score is not None else '-'}")
             if r["stopped_at"]:
                 print(f"  >> WEAK LINK: stopped at '{r['stopped_at']}' ({r['reason']}) - review/fix this stage.")
             else:

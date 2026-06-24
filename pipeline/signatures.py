@@ -518,6 +518,60 @@ class IterateScript(dspy.Signature):
     improved_script = dspy.OutputField(desc="The tightened finished script, no labels, no notes.")
 
 
+class GateScriptLong(dspy.Signature):
+    """Strict inspection engine for a FINISHED long-form narration script (one
+    continuous piece, no section labels). Score delivery, the addiction loop, and
+    the long-form voice per the standard. The old single "D1 delivery" row is split
+    into six atomic checks so a weak script points at the exact failure. Binary
+    where marked, graded otherwise. Flag jargon."""
+
+    script = dspy.InputField()
+    criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, and floor.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
+    score_1 = dspy.OutputField(desc="D1 package delivery -- carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE): integer 0-5. 0 = package absent.")
+    score_2 = dspy.OutputField(desc="D2 payoff lands the WHY -- the payoff lands the desire and belief beneath the event, not just the event: integer 0-4. 0 = reports only WHAT happened.")
+    score_3 = dspy.OutputField(desc="D3 desire constant, resurfaces -- desire stays constant while belief wavers under emotional resistance then resurfaces (was always there), not a desire that dies and 'comes back': integer 0-3. 0 = desire vanishes and returns.")
+    score_4 = dspy.OutputField(desc="D4 belief on a spectrum -- people sit at different points of belief, not one shared conviction: integer 0-2. 0 = lockstep belief.")
+    score_5 = dspy.OutputField(desc="D5 authentic, not ego/proving -- authentic self-expression, not proving for the crowd's verdict or carrying others: integer 0-1. 0 = ego/proving or carrying.")
+    score_6 = dspy.OutputField(desc="D6 team mirrors -- any team comes together by mirroring the desire, not one person hauling them: integer 0-1. 0 = hauled/carried.")
+    score_7 = dspy.OutputField(desc="L1 hook opens a loop in the first line: 0 or 12.")
+    score_8 = dspy.OutputField(desc="L2 head fake -- an earned reveal that breaks the prediction: 0 or 12.")
+    score_9 = dspy.OutputField(desc="L3 loops chain / no dead air -- nested loops keep the piece moving; lower toward zero where the chain goes slack: integer 0-13.")
+    score_10 = dspy.OutputField(desc="V1 immersive narration -- flows and breathes, builds as it goes, gives moments room to land; lower toward zero as it turns clipped or stops building: integer 0-18.")
+    score_11 = dspy.OutputField(desc="V2 visceral & concrete -- concrete detail, specific and close; lower toward zero as it turns vague or abstract: integer 0-14.")
+    score_12 = dspy.OutputField(desc="The Dance -- every beat follows the last by THEREFORE or BUT, never AND THEN: integer 0-15. 0 = 'and then' detail-piling (KILL check: a 0 rejects regardless of total).")
+    jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
+class GateScriptPodcast(dspy.Signature):
+    """Strict inspection engine for a FINISHED podcast script (two people talking
+    out loud). Score delivery, the addiction loop, and the podcast voice per the
+    standard. The old single "D1 delivery" row is split into six atomic checks so a
+    weak talk points at the exact failure. Binary where marked, graded otherwise.
+    Flag jargon."""
+
+    script = dspy.InputField()
+    criteria = dspy.InputField(desc="THE STORY PACKAGE (to verify delivery) + the gate criteria, weights, and floor.")
+    verdict = dspy.OutputField(desc="'PASS' or 'REJECT' (the engine decides by the floor; report your read).")
+    score_1 = dspy.OutputField(desc="D1 package delivery -- carries the stakes, the theme's belief-shift, the structure's arc, and the hook (verify against THE STORY PACKAGE): integer 0-5. 0 = package absent.")
+    score_2 = dspy.OutputField(desc="D2 payoff lands the WHY -- the payoff lands the desire and belief beneath the event, not just the event: integer 0-4. 0 = reports only WHAT happened.")
+    score_3 = dspy.OutputField(desc="D3 desire constant, resurfaces -- desire stays constant while belief wavers then resurfaces (was always there), not a desire that dies and 'comes back': integer 0-3. 0 = desire vanishes and returns.")
+    score_4 = dspy.OutputField(desc="D4 belief on a spectrum -- the hosts sit at different points of belief, not one shared conviction: integer 0-2. 0 = lockstep belief.")
+    score_5 = dspy.OutputField(desc="D5 authentic, not ego/proving -- authentic self-expression, not proving for the crowd's verdict or carrying others: integer 0-1. 0 = ego/proving or carrying.")
+    score_6 = dspy.OutputField(desc="D6 team mirrors -- any team comes together by mirroring the desire, not one person hauling them: integer 0-1. 0 = hauled/carried.")
+    score_7 = dspy.OutputField(desc="L1 cold open opens a loop -- the teaser before any setup plants a question the listener wants answered: 0 or 12.")
+    score_8 = dspy.OutputField(desc="L2 head fake -- an earned reveal that breaks a prediction: 0 or 12.")
+    score_9 = dspy.OutputField(desc="L3 rehooks / volley keeps going -- each answer re-opens the next question with 'wait, but then' momentum, no flat stretch: integer 0-13.")
+    score_10 = dspy.OutputField(desc="V1 natural conversation -- two real voices in spoken cadence, interrupting/reacting/pushing back, banter that serves the story; lower toward zero if it reads as narration or monologue dressed as dialogue: integer 0-18.")
+    score_11 = dspy.OutputField(desc="V2 visceral & concrete -- specific, vivid, the way people actually talk; lower toward zero as it turns vague or abstract: integer 0-14.")
+    score_12 = dspy.OutputField(desc="The Dance -- every beat follows the last by THEREFORE or BUT, never AND THEN: integer 0-15. 0 = 'and then' detail-piling (KILL check: a 0 rejects regardless of total).")
+    jargon = dspy.OutputField(desc="'true' if clinical/AI jargon is present, else 'false'.")
+    failed_checks = dspy.OutputField(desc="If REJECT: failing checks + one line each. Else 'none'.")
+    why = dspy.OutputField(desc="One line.")
+
+
 # ===========================================================================
 # SCREENPLAY stage  (a script alternate; two image-generatable parts)
 # ===========================================================================
@@ -546,8 +600,8 @@ class GateScreenplay(dspy.Signature):
     score_1 = dspy.OutputField(desc="Delivery - stakes -- the stakes are dramatized across the two parts (verify against THE STORY PACKAGE): integer 0-6.")
     score_2 = dspy.OutputField(desc="Delivery - belief-shift -- the theme's belief-shift is dramatized across the two parts (verify against the package): integer 0-6.")
     score_3 = dspy.OutputField(desc="Delivery - arc & hook -- the structure's arc and hook are dramatized across the two parts (verify against the package): integer 0-8.")
-    score_4 = dspy.OutputField(desc="Part 1 opens a loop -- a visual question we need answered: 0 or 10.")
-    score_5 = dspy.OutputField(desc="Head fake - earned reversal -- part 2 pays off with an earned reversal, not just the surface event; withhold if the turn has no visible desire/belief: 0 or 8.")
+    score_4 = dspy.OutputField(desc="Part 1 opens a loop -- a visual question we need answered: 0 or 7.")
+    score_5 = dspy.OutputField(desc="Head fake - earned reversal -- part 2 pays off with an earned reversal, not just the surface event; withhold if the turn has no visible desire/belief: 0 or 6.")
     score_6 = dspy.OutputField(desc="WHY readable - desire-image -- a constant desire-image carries across both parts: 0 or 7.")
     score_7 = dspy.OutputField(desc="WHY readable - belief shifts visually -- what visibly shifts is belief, clouded in part 1, resurfacing in part 2; withhold if desire is narrated as 'returning': 0 or 7.")
     score_8 = dspy.OutputField(desc="Belief on a spectrum -- withhold if belief flips absolute (doubt->certainty) instead of moving along a spectrum: 0 or 5.")

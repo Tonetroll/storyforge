@@ -114,8 +114,12 @@ def route_all(channel: str = None, verbose: bool = True) -> list:
         dest.write_text(json.dumps(record, indent=2), encoding="utf-8")
         stage = stages.get_stage(record.get("stage", "idea"))
         (dest_dir / f"{new_base}.txt").write_text(render.to_text(record, stage), encoding="utf-8")
-        src.unlink()
-        src.with_suffix(".txt").unlink(missing_ok=True)
+        # Move (not delete) the routed source into archived/ -- nothing is ever destroyed.
+        paths.archived.mkdir(parents=True, exist_ok=True)
+        src_txt = src.with_suffix(".txt")
+        src.replace(paths.archived / src.name)
+        if src_txt.exists():
+            src_txt.replace(paths.archived / src_txt.name)
         actions.append({"asset_id": asset_id, "version": version, "result": new_status,
                         "moved_to": str(dest.relative_to(config.BASE_DIR)),
                         "next_action": review.get("next_action")})

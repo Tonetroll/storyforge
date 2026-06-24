@@ -46,8 +46,12 @@ def _promote(artifact_path: str, paths) -> Path:
     dest.write_text(json.dumps(record, indent=2), encoding="utf-8")
     stage = stages.get_stage(record.get("stage", "idea"))
     (paths.accepted / f"{new_base}.txt").write_text(render.to_text(record, stage), encoding="utf-8")
-    src.unlink(missing_ok=True)
-    src.with_suffix(".txt").unlink(missing_ok=True)
+    # Move (not delete) the promoted source into archived/ -- nothing is ever destroyed.
+    paths.archived.mkdir(parents=True, exist_ok=True)
+    txt = src.with_suffix(".txt")
+    src.replace(paths.archived / src.name)
+    if txt.exists():
+        txt.replace(paths.archived / txt.name)
     return dest
 
 
