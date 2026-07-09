@@ -44,6 +44,34 @@ first weak link. All four script formats are produced off the accepted stakebake
 holds the whole story). Every artifact of one video shares a single `ST-####`,
 while the formats stay separable by stage.
 
+## Stage reference
+
+Every stage in the chain, with its inputs, gate logic, and what it reads:
+
+| Stage | Upstream | Content fields | Criteria | Gate mode | Kill checks | Penalty | Reads package | Deep channel |
+|-------|----------|----------------|----------|-----------|-------------|---------|---------------|--------------|
+| idea | none | 5 | 13 | all-pass | none | 0 | no | yes |
+| theme | idea | 4 | 14 | all-pass | none | 0 | no | yes |
+| story | theme | 22 beats | 13 | all-pass | 12 (Dance) | 0 | no | yes |
+| stakebake | story | 22 beats + stakes_added | 9 | floor 60 | none | 15 | no | no |
+| script | stakebake | script | 7 | floor 60 | 1 (length), 7 (Dance) | 15 | yes | no |
+| script_long | stakebake | script | 7 | floor 60 | 7 (Dance) | 15 | yes | no |
+| script_screenplay | stakebake | part_1, part_2 | 14 | floor 60 | 14 (Dance) | 15 | yes | no |
+| script_podcast | stakebake | script | 7 | floor 60 | 7 (Dance) | 15 | yes | no |
+| packaging | script_long | title, thumbnail_concept, thumbnail_prompt | 12 | floor 60 | 9 (open loop) | 0 | no | no |
+| description | script_long | hook_line, mirror_lines, audience_signal | 11 | floor 60 | none | 0 | yes | yes |
+
+**Column meanings:**
+
+- **Upstream** — which stage feeds this one.
+- **Content fields** — what the stage produces (e.g. the 22 story beats, or a finished script).
+- **Criteria** — how many scored checks the evaluator runs on the output.
+- **Gate mode** — `all-pass` means every criterion must pass; `floor 60` means the total score must reach 60.
+- **Kill checks** — hard vetoes that instantly reject the output (e.g. "Dance" = the beat where the story dances around the emotion without landing it; "open loop" = a thumbnail that doesn't close its visual loop).
+- **Penalty** — points subtracted from the score when a kill check fires.
+- **Reads package** — whether this stage can see the accumulated work from earlier stages.
+- **Deep channel** — whether the output goes through a deeper narrative channel (longer generation, richer context).
+
 ## Setup
 
 Requires Python 3.11.
